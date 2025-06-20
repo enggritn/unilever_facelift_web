@@ -1,0 +1,137 @@
+﻿@{
+    Layout = null;
+}
+@model Facelift_App.Models.ShipmentDTO
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@Model.TransactionCode</title>
+    <style type="text/css">
+        body {
+            font-family: "DejaVu Sans Mono", monospace;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: gray;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <table width='100%'>
+        <tbody>
+            <tr>
+                <td align="center" valign="middle">
+                    <img style="width:70px;height:70px;" src="@ViewBag.Logo" />
+                </td>
+                <td align="center" valign="middle">
+                    <h1>
+                        <b>Facelift [Delivery Note]</b>
+                    </h1>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center" valign="middle">
+                    <img style="width:150px;height:150px;" src="@ViewBag.QrCode" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table width='100%'>
+        <tbody>
+            <tr>
+                <td width="29%">Document No.</td>
+                <td width="1%">:</td>
+                <td width="70%">@Model.TransactionCode</td>
+            </tr>
+            <tr>
+                <td width="29%">Date</td>
+                <td width="1%">:</td>
+                <td width="70%">@Model.CreatedAt</td>
+            </tr>
+            <tr>
+                <td>Origin</td>
+                <td>:</td>
+                <td>@(Model.WarehouseCode) - @(Model.WarehouseName)</td>
+            </tr>
+            <tr>
+                <td>Destination</td>
+                <td>:</td>
+                <td>@(Model.DestinationCode) - @(Model.DestinationName)</td>
+            </tr>
+            <tr>
+                <td>Transporter</td>
+                <td>:</td>
+                <td>@Model.TransporterName</td>
+            </tr>
+            <tr>
+                <td>Driver</td>
+                <td>:</td>
+                <td>@Model.DriverName</td>
+            </tr>
+            <tr>
+                <td>Plate No.</td>
+                <td>:</td>
+                <td>@Model.PlateNumber</td>
+            </tr>
+            <tr>
+                <td>Pallet Quantity</td>
+                <td>:</td>
+                <td>@Model.PalletQty</td>
+            </tr>
+            <tr>
+                <td>Shipment No.</td>
+                <td>:</td>
+                <td>@Model.ShipmentNumber</td>
+            </tr>
+            <tr>
+                <td>Created By</td>
+                <td>:</td>
+                <td>@Model.CreatedBy</td>
+            </tr>
+            <tr>
+                <td>Remarks</td>
+                <td>:</td>
+                <td>@Model.Remarks</td>
+            </tr>
+        </tbody>
+    </table>
+    <table width='100%' style="margin-top:30px;">
+        <tbody>
+            <tr>
+                <td style="border: 1px solid;" width="20%" align="center"><b>PIC Signature</b></td>
+                <td style="border: 1px solid;" width="20%" align="center"><b>Driver Signature</b></td>
+                <td style="border: 1px solid;" width="20%" align="center"><b>@(Model.WarehouseName) Security Signature</b></td>
+                <td style="border: 1px solid;" width="20%" align="center"><b>@(Model.DestinationName) Security Signature</b></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid;" width="20%" align="center" height="50"><b></b></td>
+                <td style="border: 1px solid;" width="20%" align="center" height="50"><b></b></td>
+                <td style="border: 1px solid;" width="20%" align="center" height="50"><b></b></td>
+                <td style="border: 1px solid;" width="20%" align="center" height="50"><b></b></td>
+            </tr>
+        </tbody>
+    </table>
+    <table style="margin-top:2px;">
+        <tbody>
+            <tr>
+                <td style="font-size:10px;">Generated At @DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="footer">
+        <p>Copyright © @DateTime.Now.Year <b>PT. Unilever Indonesia</b>. All Rights Reserved.</p>
+    </div>
+</body>
+
+</html>

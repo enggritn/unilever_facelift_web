@@ -1,0 +1,2827 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FaceliftModels.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="InvoiceEmail">
+    <Key>
+      <PropertyRef Name="Email" />
+    </Key>
+    <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Warehouses" Type="text" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogAccidentDocument">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="RefNumber" Type="varchar" MaxLength="30" />
+    <Property Name="AccidentType" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Remarks" Type="text" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TransactionStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+    <Property Name="ApprovedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ApprovedAt" Type="datetime" />
+    <Property Name="Version" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogAccidentHeader">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ActionName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ExecutedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ExecutedAt" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogCycleCountDocument">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="Remarks" Type="text" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TransactionStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="AccidentId" Type="varchar" MaxLength="30" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+    <Property Name="ApprovedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ApprovedAt" Type="datetime" />
+    <Property Name="Version" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogCycleCountHeader">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ActionName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ExecutedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ExecutedAt" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogInspectionDocument">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="RefNumber" Type="varchar" MaxLength="30" />
+    <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PIC" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Classification" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ApproverWarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ApproverWarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ApproverWarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Remarks" Type="text" Nullable="false" />
+    <Property Name="TransactionStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ApprovedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ApprovedAt" Type="datetime" />
+    <Property Name="ApprovalStatus" Type="varchar" MaxLength="20" />
+    <Property Name="Version" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogInspectionHeader">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ActionName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ExecutedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ExecutedAt" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogRecallDocument">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="Remarks" Type="varchar(max)" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TransactionStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+    <Property Name="ApprovedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ApprovedAt" Type="datetime" />
+    <Property Name="ApprovalStatus" Type="varchar" MaxLength="20" />
+    <Property Name="Version" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogRecallHeader">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ActionName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ExecutedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ExecutedAt" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogRegistrationDocument">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="DeliveryNote" Type="varchar" MaxLength="50" />
+    <Property Name="Description" Type="text" />
+    <Property Name="PalletTypeId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletOwner" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PalletProducer" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ProducedDate" Type="date" Nullable="false" />
+    <Property Name="TransactionStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+    <Property Name="ApprovedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ApprovedAt" Type="datetime" />
+    <Property Name="Version" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogRegistrationHeader">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ActionName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ExecutedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ExecutedAt" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogScanTagIdNotRegister">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" />
+    <Property Name="TagId" Type="varchar" MaxLength="50" />
+    <Property Name="ScannedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ScannedAt" Type="datetime" />
+    <Property Name="StatusShipment" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="LogShipmentDocument">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ShipmentNumber" Type="varchar" MaxLength="50" />
+    <Property Name="Remarks" Type="text" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DestinationId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="DestinationCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DestinationName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TransporterId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransporterName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DriverId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="DriverName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TruckId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PlateNumber" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="PalletQty" Type="int" Nullable="false" />
+    <Property Name="TransactionStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="ShipmentStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="AccidentId" Type="varchar" MaxLength="30" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+    <Property Name="ApprovedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ApprovedAt" Type="datetime" />
+    <Property Name="Version" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogShipmentHeader">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ActionName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ExecutedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ExecutedAt" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogShipmentOfflineHeader">
+    <Key>
+      <PropertyRef Name="TransactionCode" />
+    </Key>
+    <Property Name="TransactionCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ShipmentNumber" Type="varchar" MaxLength="50" />
+    <Property Name="Remarks" Type="text" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DestinationName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TransporterName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DriverName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PlateNumber" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="PalletQty" Type="int" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="UploadedAt" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogShipmentOfflineItem">
+    <Key>
+      <PropertyRef Name="TransactionItemId" />
+    </Key>
+    <Property Name="TransactionItemId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TransactionCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ScannedAt" Type="datetime" Nullable="false" />
+    <Property Name="UploadedAt" Type="datetime" Nullable="false" />
+    <Property Name="ShipmentType" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MsBillingConfiguration">
+    <Key>
+      <PropertyRef Name="BillingId" />
+    </Key>
+    <Property Name="BillingId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="BillingYear" Type="int" Nullable="false" />
+    <Property Name="BillingPrice" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MsCompany">
+    <Key>
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="CompanyId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CompanyAbb" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MsDriver">
+    <Key>
+      <PropertyRef Name="DriverId" />
+    </Key>
+    <Property Name="DriverId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransporterId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="DriverName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Phone" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="LicenseNumber" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MsEquipment">
+    <Key>
+      <PropertyRef Name="EquipmentId" />
+    </Key>
+    <Property Name="EquipmentId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" />
+    <Property Name="Location" Type="varchar" MaxLength="30" />
+    <Property Name="Ip" Type="varchar" MaxLength="20" />
+    <Property Name="port" Type="varchar" MaxLength="10" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="Receive" Type="bit" Nullable="false" />
+    <Property Name="Ship" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="MsMainMenu">
+    <Key>
+      <PropertyRef Name="MenuId" />
+    </Key>
+    <Property Name="MenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MenuIndex" Type="int" Nullable="false" />
+    <Property Name="MenuName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MenuIcon" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="MenuType" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="MsMenu">
+    <Key>
+      <PropertyRef Name="MenuId" />
+    </Key>
+    <Property Name="MenuId" Type="int" Nullable="false" />
+    <Property Name="MenuParentId" Type="int" Nullable="false" />
+    <Property Name="MenuIndex" Type="int" Nullable="false" />
+    <Property Name="MenuName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MenuTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MenuPath" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MenuIcon" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MsPallet">
+    <Key>
+      <PropertyRef Name="TagId" />
+    </Key>
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletTypeId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletCondition" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CompanyId" Type="varchar" MaxLength="40" />
+    <Property Name="PalletOwner" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PalletProducer" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ProducedDate" Type="date" Nullable="false" />
+    <Property Name="Description" Type="text" />
+    <Property Name="SapId" Type="varchar" MaxLength="50" />
+    <Property Name="RegisteredBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="RegisteredAt" Type="datetime" Nullable="false" />
+    <Property Name="ReceivedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ReceivedAt" Type="datetime" Nullable="false" />
+    <Property Name="PalletMovementStatus" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="LastTransactionName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastTransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="LastTransactionDate" Type="date" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MsPalletAging">
+    <Key>
+      <PropertyRef Name="AgingId" />
+    </Key>
+    <Property Name="AgingId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AgingType" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ReceivedAt" Type="datetime" Nullable="false" />
+    <Property Name="CurrentMonth" Type="int" Nullable="false" />
+    <Property Name="CurrentYear" Type="int" Nullable="false" />
+    <Property Name="TotalMinutes" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MsPalletType">
+    <Key>
+      <PropertyRef Name="PalletTypeId" />
+    </Key>
+    <Property Name="PalletTypeId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletDescription" Type="text" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MsProducer">
+    <Key>
+      <PropertyRef Name="ProducerName" />
+    </Key>
+    <Property Name="ProducerName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MsRole">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="RoleDescription" Type="text" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MsRolePermission">
+    <Key>
+      <PropertyRef Name="PermissionId" />
+    </Key>
+    <Property Name="PermissionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="MenuId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MsStatusType">
+    <Key>
+      <PropertyRef Name="StatusCode" />
+    </Key>
+    <Property Name="StatusCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="StatusName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MsTransporter">
+    <Key>
+      <PropertyRef Name="TransporterId" />
+    </Key>
+    <Property Name="TransporterId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransporterName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Address" Type="text" />
+    <Property Name="PIC" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Phone" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MsTransporterAccess">
+    <Key>
+      <PropertyRef Name="TransporterAccessId" />
+    </Key>
+    <Property Name="TransporterAccessId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransporterId" Type="varchar" MaxLength="40" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MsTruck">
+    <Key>
+      <PropertyRef Name="TruckId" />
+    </Key>
+    <Property Name="TruckId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransporterId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PlateNumber" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MsUser">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="UserEmail" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="UserPassword" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="FullName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="RoleId" Type="varchar" MaxLength="40" />
+    <Property Name="LastVisitUrl" Type="varchar" MaxLength="30" />
+    <Property Name="LastVisitAt" Type="datetime" />
+    <Property Name="LastLoginAt" Type="datetime" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+    <Property Name="ChPassAt" Type="datetime" />
+    <Property Name="DefaultWarehouseId" Type="varchar" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="MsWarehouse">
+    <Key>
+      <PropertyRef Name="WarehouseId" />
+    </Key>
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseAlias" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="Address" Type="text" />
+    <Property Name="Phone" Type="varchar" MaxLength="20" />
+    <Property Name="PIC1" Type="varchar" MaxLength="30" />
+    <Property Name="PIC2" Type="varchar" MaxLength="30" />
+    <Property Name="MaxCapacity" Type="int" Nullable="false" />
+    <Property Name="CategoryId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MsWarehouseAccess">
+    <Key>
+      <PropertyRef Name="WarehouseAccessId" />
+    </Key>
+    <Property Name="WarehouseAccessId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MsWarehouseCategory">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="int" Nullable="false" />
+    <Property Name="CategoryName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MsWarehouseCompany">
+    <Key>
+      <PropertyRef Name="WarehouseCompanyId" />
+    </Key>
+    <Property Name="WarehouseCompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="CompanyId" Type="varchar" MaxLength="40" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NLog">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="Level" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Logger" Type="varchar" MaxLength="1000" Nullable="false" />
+    <Property Name="Message" Type="varchar" MaxLength="3600" Nullable="false" />
+    <Property Name="Callsite" Type="varchar" MaxLength="3600" />
+  </EntityType>
+  <EntityType Name="PalletAgingDaily">
+    <Key>
+      <PropertyRef Name="AgingId" />
+    </Key>
+    <Property Name="AgingId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="CompanyId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="CurrentDate" Type="date" Nullable="false" />
+    <Property Name="TotalPallet" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PalletAgingDetail">
+    <Key>
+      <PropertyRef Name="AgingId" />
+    </Key>
+    <Property Name="AgingId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="CompanyId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="CurrentMonth" Type="int" Nullable="false" />
+    <Property Name="CurrentYear" Type="int" Nullable="false" />
+    <Property Name="TotalDays" Type="int" Nullable="false" />
+    <Property Name="CutOffAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TrxAccidentHeader">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+    </Key>
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="RefNumber" Type="varchar" MaxLength="30" />
+    <Property Name="AccidentType" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Remarks" Type="text" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TransactionStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+    <Property Name="ApprovedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ApprovedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TrxAccidentItem">
+    <Key>
+      <PropertyRef Name="TransactionItemId" />
+    </Key>
+    <Property Name="TransactionItemId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ReasonType" Type="varchar" MaxLength="50" />
+    <Property Name="ReasonName" Type="varchar" MaxLength="50" />
+    <Property Name="ScannedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ScannedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TrxBillingRentHistoryHeader">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+    </Key>
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AgingType" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CurrentMonth" Type="int" Nullable="false" />
+    <Property Name="CurrentYear" Type="int" Nullable="false" />
+    <Property Name="Tax" Type="int" Nullable="false" />
+    <Property Name="Payment" Type="int" Nullable="false" />
+    <Property Name="Remarks" Type="text" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="StartPeriod" Type="date" Nullable="false" />
+    <Property Name="LastPeriod" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TrxBillingRentHistoryItem">
+    <Key>
+      <PropertyRef Name="TransactionItemId" />
+    </Key>
+    <Property Name="TransactionItemId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="AgingId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CurrentMonth" Type="int" Nullable="false" />
+    <Property Name="CurrentYear" Type="int" Nullable="false" />
+    <Property Name="TotalMinutes" Type="int" Nullable="false" />
+    <Property Name="BillingId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="BillingYear" Type="int" Nullable="false" />
+    <Property Name="BillingPrice" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TrxCycleCountHeader">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+    </Key>
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Remarks" Type="text" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TransactionStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="AccidentId" Type="varchar" MaxLength="30" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+    <Property Name="ApprovedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ApprovedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TrxCycleCountItem">
+    <Key>
+      <PropertyRef Name="TransactionItemId" />
+    </Key>
+    <Property Name="TransactionItemId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletCondition" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="ScannedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ScannedAt" Type="datetime" />
+    <Property Name="PalletMovementStatus" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TrxInspectionHeader">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+    </Key>
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="RefNumber" Type="varchar" MaxLength="30" />
+    <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PIC" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Classification" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ApproverWarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ApproverWarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ApproverWarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Remarks" Type="text" Nullable="false" />
+    <Property Name="TransactionStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+    <Property Name="ApprovedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ApprovedAt" Type="datetime" />
+    <Property Name="ApprovalStatus" Type="varchar" MaxLength="20" />
+    <Property Name="IssuedBy" Type="varchar" MaxLength="30" />
+    <Property Name="IssuedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TrxInspectionItem">
+    <Key>
+      <PropertyRef Name="TransactionItemId" />
+    </Key>
+    <Property Name="TransactionItemId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ScannedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ScannedAt" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TrxInvoiceDeffect">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+    </Key>
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CurrentMonth" Type="int" Nullable="false" />
+    <Property Name="CurrentYear" Type="int" Nullable="false" />
+    <Property Name="Allowance" Type="int" Nullable="false" />
+    <Property Name="TotalPallet" Type="int" Nullable="false" />
+    <Property Name="CurrentDeffect" Type="int" Nullable="false" />
+    <Property Name="PreviousDeffect" Type="int" Nullable="false" />
+    <Property Name="TotalDeffect" Type="int" Nullable="false" />
+    <Property Name="AllowanceQty" Type="int" Nullable="false" />
+    <Property Name="TotalExceed" Type="int" Nullable="false" />
+    <Property Name="LastExceed" Type="int" Nullable="false" />
+    <Property Name="ExceedQty" Type="int" Nullable="false" />
+    <Property Name="PricePerPallet" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Tax" Type="int" Nullable="false" />
+    <Property Name="Remarks" Type="text" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TrxInvoiceDeffectItem">
+    <Key>
+      <PropertyRef Name="TransactionItemId" />
+    </Key>
+    <Property Name="TransactionItemId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DeffectType" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TrxInvoiceRentHeader">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+    </Key>
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CurrentMonth" Type="int" Nullable="false" />
+    <Property Name="CurrentYear" Type="int" Nullable="false" />
+    <Property Name="Tax" Type="int" Nullable="false" />
+    <Property Name="Remarks" Type="text" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TrxRecallHeader">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+    </Key>
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Remarks" Type="varchar(max)" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TransactionStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+    <Property Name="ApprovedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ApprovedAt" Type="datetime" />
+    <Property Name="ApprovalStatus" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="TrxRecallItem">
+    <Key>
+      <PropertyRef Name="TransactionItemId" />
+    </Key>
+    <Property Name="TransactionItemId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PreviousWarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PreviousWarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PreviousWarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ScannedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ScannedAt" Type="datetime" Nullable="false" />
+    <Property Name="PreviousPalletCondition" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="NewPalletCondition" Type="varchar" MaxLength="50" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TrxRegistrationHeader">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+    </Key>
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="DeliveryNote" Type="varchar" MaxLength="50" />
+    <Property Name="Description" Type="text" />
+    <Property Name="PalletTypeId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CompanyId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletOwner" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PalletProducer" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ProducedDate" Type="date" Nullable="false" />
+    <Property Name="TransactionStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+    <Property Name="ApprovedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ApprovedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TrxRegistrationItem">
+    <Key>
+      <PropertyRef Name="TransactionItemId" />
+    </Key>
+    <Property Name="TransactionItemId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletTagId" Type="varchar" MaxLength="50" />
+    <Property Name="InsertedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="InsertedAt" Type="datetime" Nullable="false" />
+    <Property Name="InsertMethod" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TrxShipmentHeader">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+    </Key>
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ShipmentNumber" Type="varchar" MaxLength="50" />
+    <Property Name="Remarks" Type="text" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DestinationId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="DestinationCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DestinationName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TransporterId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransporterName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DriverId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="DriverName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TruckId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PlateNumber" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="PalletQty" Type="int" Nullable="false" />
+    <Property Name="TransactionStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="ShipmentStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="AccidentId" Type="varchar" MaxLength="30" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+    <Property Name="ApprovedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ApprovedAt" Type="datetime" />
+    <Property Name="WarningCount" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TrxShipmentItem">
+    <Key>
+      <PropertyRef Name="TransactionItemId" />
+    </Key>
+    <Property Name="TransactionItemId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ScannedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ScannedAt" Type="datetime" Nullable="false" />
+    <Property Name="DispatchedBy" Type="varchar" MaxLength="30" />
+    <Property Name="DispatchedAt" Type="datetime" />
+    <Property Name="ReceivedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ReceivedAt" Type="datetime" />
+    <Property Name="PalletMovementStatus" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TrxShipmentItemTemp">
+    <Key>
+      <PropertyRef Name="TempID" />
+    </Key>
+    <Property Name="TempID" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ScannedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ScannedAt" Type="datetime" Nullable="false" />
+    <Property Name="StatusShipment" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwAccidentItem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwAccidentItem">
+    <Key>
+      <PropertyRef Name="TransactionItemId" />
+      <PropertyRef Name="TransactionId" />
+      <PropertyRef Name="TagId" />
+      <PropertyRef Name="PalletName" />
+      <PropertyRef Name="PalletOwner" />
+      <PropertyRef Name="PalletProducer" />
+    </Key>
+    <Property Name="TransactionItemId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletOwner" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PalletProducer" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ReasonType" Type="varchar" MaxLength="50" />
+    <Property Name="ReasonName" Type="varchar" MaxLength="50" />
+    <Property Name="ScannedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ScannedAt" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwAgingShipment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwAgingShipment">
+    <Key>
+      <PropertyRef Name="DeliveryNumber" />
+      <PropertyRef Name="OriginId" />
+      <PropertyRef Name="OriginName" />
+      <PropertyRef Name="DestinationId" />
+      <PropertyRef Name="DestinationCode" />
+      <PropertyRef Name="DestinationName" />
+      <PropertyRef Name="TransactionStatus" />
+      <PropertyRef Name="ShipmentStatus" />
+      <PropertyRef Name="CreatedAt" />
+    </Key>
+    <Property Name="DeliveryNumber" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="OriginId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="OriginCode" Type="varchar" MaxLength="50" />
+    <Property Name="OriginName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DestinationId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="DestinationCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DestinationName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TransactionStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="ShipmentStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="AgingDay" Type="int" />
+    <Property Name="AgingMin" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwBillingRentDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwBillingRentDetail">
+    <Key>
+      <PropertyRef Name="AgingId" />
+      <PropertyRef Name="PalletId" />
+      <PropertyRef Name="CurrentMonth" />
+      <PropertyRef Name="CurrentYear" />
+      <PropertyRef Name="PalletName" />
+      <PropertyRef Name="WarehouseCode" />
+      <PropertyRef Name="WarehouseName" />
+      <PropertyRef Name="PalletOwner" />
+      <PropertyRef Name="PalletProducer" />
+      <PropertyRef Name="WarehouseId" />
+      <PropertyRef Name="BillingId" />
+      <PropertyRef Name="BillingYear" />
+      <PropertyRef Name="BillingPrice" />
+      <PropertyRef Name="TotalDays" />
+      <PropertyRef Name="PalletCondition" />
+      <PropertyRef Name="LastTransactionDate" />
+    </Key>
+    <Property Name="AgingId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CurrentMonth" Type="int" Nullable="false" />
+    <Property Name="CurrentYear" Type="int" Nullable="false" />
+    <Property Name="PalletName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CompanyId" Type="varchar" MaxLength="40" />
+    <Property Name="PalletOwner" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PalletProducer" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletAgeMonth" Type="int" />
+    <Property Name="PalletAgeYear" Type="int" />
+    <Property Name="BillingId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="BillingYear" Type="int" Nullable="false" />
+    <Property Name="BillingPrice" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="TotalDays" Type="int" Nullable="false" />
+    <Property Name="TotalBilling" Type="float" />
+    <Property Name="PalletCondition" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="LastTransactionDate" Type="date" Nullable="false" />
+    <Property Name="CutOffAt" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwBillingRentHistoryItem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwBillingRentHistoryItem">
+    <Key>
+      <PropertyRef Name="TransactionItemId" />
+      <PropertyRef Name="TransactionId" />
+      <PropertyRef Name="AgingId" />
+      <PropertyRef Name="PalletId" />
+      <PropertyRef Name="CurrentMonth" />
+      <PropertyRef Name="CurrentYear" />
+      <PropertyRef Name="PalletName" />
+      <PropertyRef Name="PalletOwner" />
+      <PropertyRef Name="PalletProducer" />
+      <PropertyRef Name="TotalMinutes" />
+      <PropertyRef Name="BillingYear" />
+      <PropertyRef Name="BillingPrice" />
+    </Key>
+    <Property Name="TransactionItemId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="AgingId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CurrentMonth" Type="int" Nullable="false" />
+    <Property Name="CurrentYear" Type="int" Nullable="false" />
+    <Property Name="PalletName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletOwner" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PalletProducer" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TotalMinutes" Type="int" Nullable="false" />
+    <Property Name="TotalHours" Type="float" />
+    <Property Name="TotalDays" Type="float" />
+    <Property Name="BillingYear" Type="int" Nullable="false" />
+    <Property Name="BillingPrice" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="TotalBilling" Type="float" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwCycleCountItem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwCycleCountItem">
+    <Key>
+      <PropertyRef Name="TransactionItemId" />
+      <PropertyRef Name="TransactionId" />
+      <PropertyRef Name="TagId" />
+      <PropertyRef Name="PalletCondition" />
+      <PropertyRef Name="PalletName" />
+      <PropertyRef Name="PalletOwner" />
+      <PropertyRef Name="PalletProducer" />
+      <PropertyRef Name="PalletMovementStatus" />
+    </Key>
+    <Property Name="TransactionItemId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletCondition" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="PalletName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletOwner" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PalletProducer" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ScannedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ScannedAt" Type="datetime" />
+    <Property Name="PalletMovementStatus" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwInvoiceRent' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwInvoiceRent">
+    <Key>
+      <PropertyRef Name="WarehouseCode" />
+      <PropertyRef Name="WarehouseName" />
+      <PropertyRef Name="CategoryName" />
+      <PropertyRef Name="CurrentMonth" />
+      <PropertyRef Name="CurrentYear" />
+      <PropertyRef Name="MGV" />
+    </Key>
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CategoryName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CurrentMonth" Type="int" Nullable="false" />
+    <Property Name="CurrentYear" Type="int" Nullable="false" />
+    <Property Name="TotalBillingRent" Type="float" />
+    <Property Name="MGV" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="TotalBillingMGV" Type="float" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwPallet' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwPallet">
+    <Key>
+      <PropertyRef Name="TagId" />
+      <PropertyRef Name="PalletCode" />
+      <PropertyRef Name="PalletTypeId" />
+      <PropertyRef Name="PalletName" />
+      <PropertyRef Name="PalletCondition" />
+      <PropertyRef Name="WarehouseId" />
+      <PropertyRef Name="WarehouseCode" />
+      <PropertyRef Name="WarehouseName" />
+      <PropertyRef Name="PalletOwner" />
+      <PropertyRef Name="PalletProducer" />
+      <PropertyRef Name="ProducedDate" />
+      <PropertyRef Name="RegisteredBy" />
+      <PropertyRef Name="RegisteredAt" />
+      <PropertyRef Name="ReceivedBy" />
+      <PropertyRef Name="ReceivedAt" />
+      <PropertyRef Name="PalletMovementStatus" />
+      <PropertyRef Name="LastTransactionName" />
+      <PropertyRef Name="LastTransactionCode" />
+      <PropertyRef Name="LastTransactionDate" />
+      <PropertyRef Name="OriginId" />
+      <PropertyRef Name="OriginCode" />
+      <PropertyRef Name="OriginName" />
+    </Key>
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletTypeId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletCondition" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletOwner" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PalletProducer" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ProducedDate" Type="date" Nullable="false" />
+    <Property Name="Description" Type="text" />
+    <Property Name="SapId" Type="varchar" MaxLength="50" />
+    <Property Name="RegisteredBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="RegisteredAt" Type="datetime" Nullable="false" />
+    <Property Name="ReceivedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ReceivedAt" Type="datetime" Nullable="false" />
+    <Property Name="PalletMovementStatus" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="LastTransactionName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastTransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="LastTransactionDate" Type="date" Nullable="false" />
+    <Property Name="OriginId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="OriginCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="OriginName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwPalletAge' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwPalletAge">
+    <Key>
+      <PropertyRef Name="PalletTypeId" />
+      <PropertyRef Name="PalletName" />
+      <PropertyRef Name="PalletCondition" />
+      <PropertyRef Name="WarehouseId" />
+      <PropertyRef Name="WarehouseName" />
+      <PropertyRef Name="PalletOwner" />
+      <PropertyRef Name="PalletProducer" />
+    </Key>
+    <Property Name="PalletTypeId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletCondition" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletOwner" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PalletProducer" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="RegDate" Type="date" />
+    <Property Name="TotalPallet" Type="int" />
+    <Property Name="PalletAgeDay" Type="int" />
+    <Property Name="PalletAgeMonth" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwPalletAging' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwPalletAging">
+    <Key>
+      <PropertyRef Name="AgingId" />
+      <PropertyRef Name="PalletId" />
+      <PropertyRef Name="AgingType" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="WarehouseId" />
+      <PropertyRef Name="ReceivedAt" />
+      <PropertyRef Name="CurrentMonth" />
+      <PropertyRef Name="CurrentYear" />
+      <PropertyRef Name="PalletStatus" />
+    </Key>
+    <Property Name="AgingId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AgingType" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ReceivedAt" Type="datetime" Nullable="false" />
+    <Property Name="CurrentMonth" Type="int" Nullable="false" />
+    <Property Name="CurrentYear" Type="int" Nullable="false" />
+    <Property Name="TotalMinutes" Type="int" />
+    <Property Name="PalletStatus" Type="varchar" MaxLength="9" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwPalletBilling' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwPalletBilling">
+    <Key>
+      <PropertyRef Name="AgingId" />
+      <PropertyRef Name="PalletId" />
+      <PropertyRef Name="AgingType" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="ReceivedAt" />
+      <PropertyRef Name="CurrentMonth" />
+      <PropertyRef Name="CurrentYear" />
+      <PropertyRef Name="PalletName" />
+      <PropertyRef Name="WarehouseCode" />
+      <PropertyRef Name="WarehouseName" />
+      <PropertyRef Name="PalletOwner" />
+      <PropertyRef Name="PalletProducer" />
+      <PropertyRef Name="WarehouseId" />
+      <PropertyRef Name="PalletStatus" />
+      <PropertyRef Name="BillingId" />
+      <PropertyRef Name="BillingYear" />
+      <PropertyRef Name="BillingPrice" />
+    </Key>
+    <Property Name="AgingId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AgingType" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="ReceivedAt" Type="datetime" Nullable="false" />
+    <Property Name="CurrentMonth" Type="int" Nullable="false" />
+    <Property Name="CurrentYear" Type="int" Nullable="false" />
+    <Property Name="PalletName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletOwner" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PalletProducer" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletStatus" Type="varchar" MaxLength="9" Nullable="false" />
+    <Property Name="TotalMinutes" Type="int" />
+    <Property Name="TotalHours" Type="float" />
+    <Property Name="TotalDays" Type="float" />
+    <Property Name="PalletAgeMonth" Type="int" />
+    <Property Name="PalletAgeYear" Type="int" />
+    <Property Name="BillingId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="BillingYear" Type="int" Nullable="false" />
+    <Property Name="BillingPrice" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="TotalBilling" Type="float" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwPalletDeffectHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwPalletDeffectHistory">
+    <Key>
+      <PropertyRef Name="TagId" />
+      <PropertyRef Name="WarehouseCode" />
+      <PropertyRef Name="WarehouseName" />
+      <PropertyRef Name="ScannedAt" />
+      <PropertyRef Name="ScannedBy" />
+      <PropertyRef Name="TransactionCode" />
+    </Key>
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ScannedAt" Type="datetime" Nullable="false" />
+    <Property Name="ScannedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="TransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PalletCondition" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwPalletGroup' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwPalletGroup">
+    <Key>
+      <PropertyRef Name="PalletTypeId" />
+      <PropertyRef Name="PalletName" />
+      <PropertyRef Name="PalletCondition" />
+      <PropertyRef Name="WarehouseId" />
+      <PropertyRef Name="WarehouseName" />
+      <PropertyRef Name="PalletOwner" />
+      <PropertyRef Name="PalletProducer" />
+    </Key>
+    <Property Name="PalletTypeId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletCondition" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletOwner" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PalletProducer" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="RegDate" Type="date" />
+    <Property Name="TotalPallet" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwPalletGroup2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwPalletGroup2">
+    <Key>
+      <PropertyRef Name="PalletTypeId" />
+      <PropertyRef Name="PalletName" />
+      <PropertyRef Name="PalletCondition" />
+      <PropertyRef Name="WarehouseId" />
+      <PropertyRef Name="WarehouseName" />
+      <PropertyRef Name="PalletOwner" />
+      <PropertyRef Name="PalletProducer" />
+    </Key>
+    <Property Name="PalletTypeId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletCondition" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletOwner" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PalletProducer" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="RegisteredDate" Type="date" />
+    <Property Name="ReceivedDate" Type="date" />
+    <Property Name="TotalPallet" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwPalletHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwPalletHistory">
+    <Key>
+      <PropertyRef Name="TagId" />
+      <PropertyRef Name="PalletCode" />
+      <PropertyRef Name="PalletTypeId" />
+      <PropertyRef Name="PalletName" />
+      <PropertyRef Name="WarehouseId" />
+      <PropertyRef Name="WarehouseName" />
+      <PropertyRef Name="OriginId" />
+      <PropertyRef Name="OriginName" />
+      <PropertyRef Name="PalletOwner" />
+      <PropertyRef Name="PalletProducer" />
+      <PropertyRef Name="ProducedDate" />
+      <PropertyRef Name="TransactionId" />
+      <PropertyRef Name="TransactionCode" />
+      <PropertyRef Name="TransactionStatus" />
+      <PropertyRef Name="TransactionDate" />
+      <PropertyRef Name="TransactionType" />
+    </Key>
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletTypeId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PalletName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="OriginId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="OriginCode" Type="varchar" MaxLength="50" />
+    <Property Name="OriginName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletOwner" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PalletProducer" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ProducedDate" Type="date" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="TransactionStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+    <Property Name="TransactionType" Type="varchar" MaxLength="12" Nullable="false" />
+    <Property Name="ScannedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ScannedDate" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwPalletMovement' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwPalletMovement">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+      <PropertyRef Name="TransactionCode" />
+      <PropertyRef Name="WarehouseId" />
+      <PropertyRef Name="WarehouseName" />
+      <PropertyRef Name="TagId" />
+      <PropertyRef Name="TransactionDate" />
+    </Key>
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletName" Type="varchar" MaxLength="50" />
+    <Property Name="ScannedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ScannedDate" Type="datetime" />
+    <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwPalletShipment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwPalletShipment">
+    <Key>
+      <PropertyRef Name="TagId" />
+      <PropertyRef Name="PalletCode" />
+      <PropertyRef Name="PalletName" />
+      <PropertyRef Name="PalletCondition" />
+      <PropertyRef Name="WarehouseName" />
+      <PropertyRef Name="PalletOwner" />
+      <PropertyRef Name="PalletProducer" />
+      <PropertyRef Name="ProducedDate" />
+      <PropertyRef Name="RegisteredBy" />
+      <PropertyRef Name="RegisteredAt" />
+      <PropertyRef Name="ReceivedBy" />
+      <PropertyRef Name="ReceivedAt" />
+      <PropertyRef Name="PalletMovementStatus" />
+      <PropertyRef Name="LastTransactionName" />
+      <PropertyRef Name="LastTransactionCode" />
+      <PropertyRef Name="LastTransactionDate" />
+      <PropertyRef Name="OriginId" />
+      <PropertyRef Name="OriginName" />
+      <PropertyRef Name="DestinationId" />
+      <PropertyRef Name="DestinationName" />
+    </Key>
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletCondition" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletOwner" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PalletProducer" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ProducedDate" Type="date" Nullable="false" />
+    <Property Name="RegisteredBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="RegisteredAt" Type="datetime" Nullable="false" />
+    <Property Name="ReceivedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ReceivedAt" Type="datetime" Nullable="false" />
+    <Property Name="PalletMovementStatus" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="LastTransactionName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastTransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="LastTransactionDate" Type="date" Nullable="false" />
+    <Property Name="OriginId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="OriginName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DestinationId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="DestinationName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwPalletWarehouse' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwPalletWarehouse">
+    <Key>
+      <PropertyRef Name="WarehouseId" />
+      <PropertyRef Name="WarehouseCode" />
+      <PropertyRef Name="WarehouseName" />
+      <PropertyRef Name="OriginId" />
+    </Key>
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TotalPallet" Type="int" />
+    <Property Name="OriginId" Type="varchar" MaxLength="40" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwPalletWarehouseCondition' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwPalletWarehouseCondition">
+    <Key>
+      <PropertyRef Name="WarehouseId" />
+      <PropertyRef Name="WarehouseCode" />
+      <PropertyRef Name="WarehouseName" />
+      <PropertyRef Name="PalletCondition" />
+      <PropertyRef Name="OriginId" />
+    </Key>
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletCondition" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="TotalPallet" Type="int" />
+    <Property Name="OriginId" Type="varchar" MaxLength="40" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwRegistrationItem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwRegistrationItem">
+    <Key>
+      <PropertyRef Name="TransactionItemId" />
+      <PropertyRef Name="TransactionId" />
+      <PropertyRef Name="WarehouseId" />
+      <PropertyRef Name="TagId" />
+      <PropertyRef Name="InsertedBy" />
+      <PropertyRef Name="InsertedAt" />
+      <PropertyRef Name="InsertMethod" />
+      <PropertyRef Name="ItemStatus" />
+    </Key>
+    <Property Name="TransactionItemId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="InsertedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="InsertedAt" Type="datetime" Nullable="false" />
+    <Property Name="InsertMethod" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="ItemStatus" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwShipmentAccident' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwShipmentAccident">
+    <Key>
+      <PropertyRef Name="AccidentTransactionId" />
+      <PropertyRef Name="AccidentTransactionCode" />
+      <PropertyRef Name="AccidentReasonType" />
+      <PropertyRef Name="AccidentWarehouseId" />
+      <PropertyRef Name="AccidentWarehouseCode" />
+      <PropertyRef Name="AccidentWarehouseName" />
+      <PropertyRef Name="AccidentTransactionStatus" />
+      <PropertyRef Name="AccidentIsDeleted" />
+      <PropertyRef Name="AccidentCreatedBy" />
+      <PropertyRef Name="AccidentCreatedAt" />
+      <PropertyRef Name="ShipmentTransactionId" />
+      <PropertyRef Name="ShipmentTransactionCode" />
+      <PropertyRef Name="ShipmentWarehouseId" />
+      <PropertyRef Name="ShipmentWarehouseName" />
+      <PropertyRef Name="ShipmentDestinationId" />
+      <PropertyRef Name="ShipmentDestinationCode" />
+      <PropertyRef Name="ShipmentDestinationName" />
+      <PropertyRef Name="ShipmentTransporterId" />
+      <PropertyRef Name="ShipmentTransporterName" />
+      <PropertyRef Name="ShipmentDriverId" />
+      <PropertyRef Name="ShipmentDriverName" />
+      <PropertyRef Name="ShipmentTruckId" />
+      <PropertyRef Name="ShipmentPlateNumber" />
+      <PropertyRef Name="ShipmentPalletQty" />
+      <PropertyRef Name="ShipmentTransactionStatus" />
+      <PropertyRef Name="ShipmentShipmentStatus" />
+      <PropertyRef Name="ShipmentIsDeleted" />
+      <PropertyRef Name="ShipmentCreatedBy" />
+      <PropertyRef Name="ShipmentCreatedAt" />
+    </Key>
+    <Property Name="AccidentTransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="AccidentTransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="AccidentRefNumber" Type="varchar" MaxLength="30" />
+    <Property Name="AccidentReasonType" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AccidentRemarks" Type="text" />
+    <Property Name="AccidentWarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="AccidentWarehouseCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AccidentWarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AccidentTransactionStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="AccidentIsDeleted" Type="bit" Nullable="false" />
+    <Property Name="AccidentCreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="AccidentCreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="AccidentModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="AccidentModifiedAt" Type="datetime" />
+    <Property Name="AccidentApprovedBy" Type="varchar" MaxLength="30" />
+    <Property Name="AccidentApprovedAt" Type="datetime" />
+    <Property Name="ShipmentTransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ShipmentTransactionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ShipmentShipmentNumber" Type="varchar" MaxLength="50" />
+    <Property Name="ShipmentRemarks" Type="text" />
+    <Property Name="ShipmentWarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ShipmentWarehouseCode" Type="varchar" MaxLength="50" />
+    <Property Name="ShipmentWarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ShipmentDestinationId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ShipmentDestinationCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ShipmentDestinationName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ShipmentTransporterId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ShipmentTransporterName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ShipmentDriverId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ShipmentDriverName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ShipmentTruckId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ShipmentPlateNumber" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="ShipmentPalletQty" Type="int" Nullable="false" />
+    <Property Name="ShipmentTransactionStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="ShipmentShipmentStatus" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="ShipmentIsDeleted" Type="bit" Nullable="false" />
+    <Property Name="ShipmentAccidentId" Type="varchar" MaxLength="30" />
+    <Property Name="ShipmentCreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ShipmentCreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ShipmentModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ShipmentModifiedAt" Type="datetime" />
+    <Property Name="ShipmentApprovedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ShipmentApprovedAt" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.VwShipmentItem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VwShipmentItem">
+    <Key>
+      <PropertyRef Name="TransactionItemId" />
+      <PropertyRef Name="TransactionId" />
+      <PropertyRef Name="TagId" />
+      <PropertyRef Name="PalletName" />
+      <PropertyRef Name="PalletOwner" />
+      <PropertyRef Name="PalletProducer" />
+      <PropertyRef Name="ScannedBy" />
+      <PropertyRef Name="ScannedAt" />
+      <PropertyRef Name="PalletMovementStatus" />
+    </Key>
+    <Property Name="TransactionItemId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="TagId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PalletOwner" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PalletProducer" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ScannedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ScannedAt" Type="datetime" Nullable="false" />
+    <Property Name="DispatchedBy" Type="varchar" MaxLength="30" />
+    <Property Name="DispatchedAt" Type="datetime" />
+    <Property Name="ReceivedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ReceivedAt" Type="datetime" />
+    <Property Name="PalletMovementStatus" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_LogAccidentDocument_TrxAccidentHeader">
+    <End Role="TrxAccidentHeader" Type="Self.TrxAccidentHeader" Multiplicity="1" />
+    <End Role="LogAccidentDocument" Type="Self.LogAccidentDocument" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxAccidentHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="LogAccidentDocument">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LogAccidentHeader_TrxAccidentHeader">
+    <End Role="TrxAccidentHeader" Type="Self.TrxAccidentHeader" Multiplicity="1" />
+    <End Role="LogAccidentHeader" Type="Self.LogAccidentHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxAccidentHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="LogAccidentHeader">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LogCycleCountDocument_TrxCycleCountHeader">
+    <End Role="TrxCycleCountHeader" Type="Self.TrxCycleCountHeader" Multiplicity="1" />
+    <End Role="LogCycleCountDocument" Type="Self.LogCycleCountDocument" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxCycleCountHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="LogCycleCountDocument">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LogCycleCountHeader_TrxCycleCountHeader">
+    <End Role="TrxCycleCountHeader" Type="Self.TrxCycleCountHeader" Multiplicity="1" />
+    <End Role="LogCycleCountHeader" Type="Self.LogCycleCountHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxCycleCountHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="LogCycleCountHeader">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LogInspectionDocument_TrxInspectionHeader">
+    <End Role="TrxInspectionHeader" Type="Self.TrxInspectionHeader" Multiplicity="1" />
+    <End Role="LogInspectionDocument" Type="Self.LogInspectionDocument" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxInspectionHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="LogInspectionDocument">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LogInspectionHeader_TrxInspectionHeader">
+    <End Role="TrxInspectionHeader" Type="Self.TrxInspectionHeader" Multiplicity="1" />
+    <End Role="LogInspectionHeader" Type="Self.LogInspectionHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxInspectionHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="LogInspectionHeader">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LogRecallDocument_TrxRecallHeader">
+    <End Role="TrxRecallHeader" Type="Self.TrxRecallHeader" Multiplicity="1" />
+    <End Role="LogRecallDocument" Type="Self.LogRecallDocument" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxRecallHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="LogRecallDocument">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LogRecallHeader_TrxRecallHeader">
+    <End Role="TrxRecallHeader" Type="Self.TrxRecallHeader" Multiplicity="1" />
+    <End Role="LogRecallHeader" Type="Self.LogRecallHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxRecallHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="LogRecallHeader">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LogRegistrationDocument_TrxRegistrationHeader">
+    <End Role="TrxRegistrationHeader" Type="Self.TrxRegistrationHeader" Multiplicity="1" />
+    <End Role="LogRegistrationDocument" Type="Self.LogRegistrationDocument" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxRegistrationHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="LogRegistrationDocument">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LogRegistrationHeader_TrxRegistrationHeader">
+    <End Role="TrxRegistrationHeader" Type="Self.TrxRegistrationHeader" Multiplicity="1" />
+    <End Role="LogRegistrationHeader" Type="Self.LogRegistrationHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxRegistrationHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="LogRegistrationHeader">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LogShipmentDocument_TrxShipmentHeader">
+    <End Role="TrxShipmentHeader" Type="Self.TrxShipmentHeader" Multiplicity="1" />
+    <End Role="LogShipmentDocument" Type="Self.LogShipmentDocument" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxShipmentHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="LogShipmentDocument">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LogShipmentHeader_TrxShipmentHeader">
+    <End Role="TrxShipmentHeader" Type="Self.TrxShipmentHeader" Multiplicity="1" />
+    <End Role="LogShipmentHeader" Type="Self.LogShipmentHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxShipmentHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="LogShipmentHeader">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MsDriver_MsTransporter">
+    <End Role="MsTransporter" Type="Self.MsTransporter" Multiplicity="1" />
+    <End Role="MsDriver" Type="Self.MsDriver" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsTransporter">
+        <PropertyRef Name="TransporterId" />
+      </Principal>
+      <Dependent Role="MsDriver">
+        <PropertyRef Name="TransporterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MsMenu_MsMainMenu">
+    <End Role="MsMainMenu" Type="Self.MsMainMenu" Multiplicity="1" />
+    <End Role="MsMenu" Type="Self.MsMenu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsMainMenu">
+        <PropertyRef Name="MenuId" />
+      </Principal>
+      <Dependent Role="MsMenu">
+        <PropertyRef Name="MenuParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MsPallet_MsCompany">
+    <End Role="MsCompany" Type="Self.MsCompany" Multiplicity="0..1" />
+    <End Role="MsPallet" Type="Self.MsPallet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsCompany">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="MsPallet">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MsPallet_MsPalletType">
+    <End Role="MsPalletType" Type="Self.MsPalletType" Multiplicity="1" />
+    <End Role="MsPallet" Type="Self.MsPallet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsPalletType">
+        <PropertyRef Name="PalletTypeId" />
+      </Principal>
+      <Dependent Role="MsPallet">
+        <PropertyRef Name="PalletTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MsPallet_MsProducer">
+    <End Role="MsProducer" Type="Self.MsProducer" Multiplicity="1" />
+    <End Role="MsPallet" Type="Self.MsPallet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsProducer">
+        <PropertyRef Name="ProducerName" />
+      </Principal>
+      <Dependent Role="MsPallet">
+        <PropertyRef Name="PalletProducer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MsPallet_MsWarehouse">
+    <End Role="MsWarehouse" Type="Self.MsWarehouse" Multiplicity="1" />
+    <End Role="MsPallet" Type="Self.MsPallet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsWarehouse">
+        <PropertyRef Name="WarehouseId" />
+      </Principal>
+      <Dependent Role="MsPallet">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MsTransporterPic_MsTransporter">
+    <End Role="MsTransporter" Type="Self.MsTransporter" Multiplicity="1" />
+    <End Role="MsTransporterAccess" Type="Self.MsTransporterAccess" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsTransporter">
+        <PropertyRef Name="TransporterId" />
+      </Principal>
+      <Dependent Role="MsTransporterAccess">
+        <PropertyRef Name="TransporterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MsTransporterPic_MsWarehouse">
+    <End Role="MsWarehouse" Type="Self.MsWarehouse" Multiplicity="1" />
+    <End Role="MsTransporterAccess" Type="Self.MsTransporterAccess" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsWarehouse">
+        <PropertyRef Name="WarehouseId" />
+      </Principal>
+      <Dependent Role="MsTransporterAccess">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MsTruck_MsTransporter">
+    <End Role="MsTransporter" Type="Self.MsTransporter" Multiplicity="1" />
+    <End Role="MsTruck" Type="Self.MsTruck" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsTransporter">
+        <PropertyRef Name="TransporterId" />
+      </Principal>
+      <Dependent Role="MsTruck">
+        <PropertyRef Name="TransporterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MsUser_MsRole">
+    <End Role="MsRole" Type="Self.MsRole" Multiplicity="0..1" />
+    <End Role="MsUser" Type="Self.MsUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsRole">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="MsUser">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MsUser_MsWarehouse">
+    <End Role="MsWarehouse" Type="Self.MsWarehouse" Multiplicity="0..1" />
+    <End Role="MsUser" Type="Self.MsUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsWarehouse">
+        <PropertyRef Name="WarehouseId" />
+      </Principal>
+      <Dependent Role="MsUser">
+        <PropertyRef Name="DefaultWarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MsWarehouse_MsWarehouse">
+    <End Role="MsWarehouseCategory" Type="Self.MsWarehouseCategory" Multiplicity="1" />
+    <End Role="MsWarehouse" Type="Self.MsWarehouse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsWarehouseCategory">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="MsWarehouse">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MsWarehouseAccess_MsUser">
+    <End Role="MsUser" Type="Self.MsUser" Multiplicity="1" />
+    <End Role="MsWarehouseAccess" Type="Self.MsWarehouseAccess" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsUser">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="MsWarehouseAccess">
+        <PropertyRef Name="Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MsWarehouseAccess_MsWarehouse">
+    <End Role="MsWarehouse" Type="Self.MsWarehouse" Multiplicity="1" />
+    <End Role="MsWarehouseAccess" Type="Self.MsWarehouseAccess" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsWarehouse">
+        <PropertyRef Name="WarehouseId" />
+      </Principal>
+      <Dependent Role="MsWarehouseAccess">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MsWarehouseCompany_MsCompany">
+    <End Role="MsCompany" Type="Self.MsCompany" Multiplicity="1" />
+    <End Role="MsWarehouseCompany" Type="Self.MsWarehouseCompany" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsCompany">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="MsWarehouseCompany">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MsWarehouseCompany_MsWarehouse">
+    <End Role="MsWarehouse" Type="Self.MsWarehouse" Multiplicity="1" />
+    <End Role="MsWarehouseCompany" Type="Self.MsWarehouseCompany" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsWarehouse">
+        <PropertyRef Name="WarehouseId" />
+      </Principal>
+      <Dependent Role="MsWarehouseCompany">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RolePermission_MsMenu">
+    <End Role="MsMenu" Type="Self.MsMenu" Multiplicity="1" />
+    <End Role="MsRolePermission" Type="Self.MsRolePermission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsMenu">
+        <PropertyRef Name="MenuId" />
+      </Principal>
+      <Dependent Role="MsRolePermission">
+        <PropertyRef Name="MenuId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RolePermission_MsRole">
+    <End Role="MsRole" Type="Self.MsRole" Multiplicity="1" />
+    <End Role="MsRolePermission" Type="Self.MsRolePermission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsRole">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="MsRolePermission">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxAccidentItem_TrxAccidentHeader">
+    <End Role="TrxAccidentHeader" Type="Self.TrxAccidentHeader" Multiplicity="1" />
+    <End Role="TrxAccidentItem" Type="Self.TrxAccidentItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxAccidentHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="TrxAccidentItem">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxCycleCountItem_TrxCycleCountHeader">
+    <End Role="TrxCycleCountHeader" Type="Self.TrxCycleCountHeader" Multiplicity="1" />
+    <End Role="TrxCycleCountItem" Type="Self.TrxCycleCountItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxCycleCountHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="TrxCycleCountItem">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxInspectionItem_TrxInspectionHeader">
+    <End Role="TrxInspectionHeader" Type="Self.TrxInspectionHeader" Multiplicity="1" />
+    <End Role="TrxInspectionItem" Type="Self.TrxInspectionItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxInspectionHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="TrxInspectionItem">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxInvoiceDeffectItem_TrxInvoiceDeffect">
+    <End Role="TrxInvoiceDeffect" Type="Self.TrxInvoiceDeffect" Multiplicity="1" />
+    <End Role="TrxInvoiceDeffectItem" Type="Self.TrxInvoiceDeffectItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxInvoiceDeffect">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="TrxInvoiceDeffectItem">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxInvoiceHeader_MsWarehouse">
+    <End Role="MsWarehouse" Type="Self.MsWarehouse" Multiplicity="1" />
+    <End Role="TrxBillingRentHistoryHeader" Type="Self.TrxBillingRentHistoryHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsWarehouse">
+        <PropertyRef Name="WarehouseId" />
+      </Principal>
+      <Dependent Role="TrxBillingRentHistoryHeader">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxInvoiceItem_MsBillingConfiguration">
+    <End Role="MsBillingConfiguration" Type="Self.MsBillingConfiguration" Multiplicity="1" />
+    <End Role="TrxBillingRentHistoryItem" Type="Self.TrxBillingRentHistoryItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsBillingConfiguration">
+        <PropertyRef Name="BillingId" />
+      </Principal>
+      <Dependent Role="TrxBillingRentHistoryItem">
+        <PropertyRef Name="BillingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxInvoiceItem_MsPallet">
+    <End Role="MsPallet" Type="Self.MsPallet" Multiplicity="1" />
+    <End Role="TrxBillingRentHistoryItem" Type="Self.TrxBillingRentHistoryItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsPallet">
+        <PropertyRef Name="TagId" />
+      </Principal>
+      <Dependent Role="TrxBillingRentHistoryItem">
+        <PropertyRef Name="PalletId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxInvoiceItem_MsPalletAging">
+    <End Role="MsPalletAging" Type="Self.MsPalletAging" Multiplicity="1" />
+    <End Role="TrxBillingRentHistoryItem" Type="Self.TrxBillingRentHistoryItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsPalletAging">
+        <PropertyRef Name="AgingId" />
+      </Principal>
+      <Dependent Role="TrxBillingRentHistoryItem">
+        <PropertyRef Name="AgingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxInvoiceItem_TrxInvoiceHeader">
+    <End Role="TrxBillingRentHistoryHeader" Type="Self.TrxBillingRentHistoryHeader" Multiplicity="1" />
+    <End Role="TrxBillingRentHistoryItem" Type="Self.TrxBillingRentHistoryItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxBillingRentHistoryHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="TrxBillingRentHistoryItem">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxPalletAging_MsPallet">
+    <End Role="MsPallet" Type="Self.MsPallet" Multiplicity="1" />
+    <End Role="MsPalletAging" Type="Self.MsPalletAging" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsPallet">
+        <PropertyRef Name="TagId" />
+      </Principal>
+      <Dependent Role="MsPalletAging">
+        <PropertyRef Name="PalletId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxPalletAging_MsWarehouse">
+    <End Role="MsWarehouse" Type="Self.MsWarehouse" Multiplicity="1" />
+    <End Role="MsPalletAging" Type="Self.MsPalletAging" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsWarehouse">
+        <PropertyRef Name="WarehouseId" />
+      </Principal>
+      <Dependent Role="MsPalletAging">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxRecallItem_TrxRecallHeader">
+    <End Role="TrxRecallHeader" Type="Self.TrxRecallHeader" Multiplicity="1" />
+    <End Role="TrxRecallItem" Type="Self.TrxRecallItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxRecallHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="TrxRecallItem">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxRegistrationHeader_MsCompany">
+    <End Role="MsCompany" Type="Self.MsCompany" Multiplicity="1" />
+    <End Role="TrxRegistrationHeader" Type="Self.TrxRegistrationHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsCompany">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="TrxRegistrationHeader">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxRegistrationHeader_MsPalletType">
+    <End Role="MsPalletType" Type="Self.MsPalletType" Multiplicity="1" />
+    <End Role="TrxRegistrationHeader" Type="Self.TrxRegistrationHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsPalletType">
+        <PropertyRef Name="PalletTypeId" />
+      </Principal>
+      <Dependent Role="TrxRegistrationHeader">
+        <PropertyRef Name="PalletTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxRegistrationHeader_MsProducer">
+    <End Role="MsProducer" Type="Self.MsProducer" Multiplicity="1" />
+    <End Role="TrxRegistrationHeader" Type="Self.TrxRegistrationHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsProducer">
+        <PropertyRef Name="ProducerName" />
+      </Principal>
+      <Dependent Role="TrxRegistrationHeader">
+        <PropertyRef Name="PalletProducer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxRegistrationHeader_MsWarehouse">
+    <End Role="MsWarehouse" Type="Self.MsWarehouse" Multiplicity="1" />
+    <End Role="TrxRegistrationHeader" Type="Self.TrxRegistrationHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsWarehouse">
+        <PropertyRef Name="WarehouseId" />
+      </Principal>
+      <Dependent Role="TrxRegistrationHeader">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxRegistrationItem_TrxRegistrationHeader">
+    <End Role="TrxRegistrationHeader" Type="Self.TrxRegistrationHeader" Multiplicity="1" />
+    <End Role="TrxRegistrationItem" Type="Self.TrxRegistrationItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxRegistrationHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="TrxRegistrationItem">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxShipmentHeader_MsDriver">
+    <End Role="MsDriver" Type="Self.MsDriver" Multiplicity="1" />
+    <End Role="TrxShipmentHeader" Type="Self.TrxShipmentHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsDriver">
+        <PropertyRef Name="DriverId" />
+      </Principal>
+      <Dependent Role="TrxShipmentHeader">
+        <PropertyRef Name="DriverId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxShipmentHeader_MsTransporter">
+    <End Role="MsTransporter" Type="Self.MsTransporter" Multiplicity="1" />
+    <End Role="TrxShipmentHeader" Type="Self.TrxShipmentHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsTransporter">
+        <PropertyRef Name="TransporterId" />
+      </Principal>
+      <Dependent Role="TrxShipmentHeader">
+        <PropertyRef Name="TransporterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxShipmentHeader_MsTruck">
+    <End Role="MsTruck" Type="Self.MsTruck" Multiplicity="1" />
+    <End Role="TrxShipmentHeader" Type="Self.TrxShipmentHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsTruck">
+        <PropertyRef Name="TruckId" />
+      </Principal>
+      <Dependent Role="TrxShipmentHeader">
+        <PropertyRef Name="TruckId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxShipmentHeader_MsWarehouse">
+    <End Role="MsWarehouse" Type="Self.MsWarehouse" Multiplicity="1" />
+    <End Role="TrxShipmentHeader" Type="Self.TrxShipmentHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsWarehouse">
+        <PropertyRef Name="WarehouseId" />
+      </Principal>
+      <Dependent Role="TrxShipmentHeader">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxShipmentHeader_MsWarehouse1">
+    <End Role="MsWarehouse" Type="Self.MsWarehouse" Multiplicity="1" />
+    <End Role="TrxShipmentHeader" Type="Self.TrxShipmentHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MsWarehouse">
+        <PropertyRef Name="WarehouseId" />
+      </Principal>
+      <Dependent Role="TrxShipmentHeader">
+        <PropertyRef Name="DestinationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrxShipmentItem_TrxShipmentHeader">
+    <End Role="TrxShipmentHeader" Type="Self.TrxShipmentHeader" Multiplicity="1" />
+    <End Role="TrxShipmentItem" Type="Self.TrxShipmentItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrxShipmentHeader">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="TrxShipmentItem">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="SP_PalletAging" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_Test" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="FaceliftModelsStoreContainer">
+    <EntitySet Name="InvoiceEmail" EntityType="Self.InvoiceEmail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogAccidentDocument" EntityType="Self.LogAccidentDocument" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogAccidentHeader" EntityType="Self.LogAccidentHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogCycleCountDocument" EntityType="Self.LogCycleCountDocument" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogCycleCountHeader" EntityType="Self.LogCycleCountHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogInspectionDocument" EntityType="Self.LogInspectionDocument" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogInspectionHeader" EntityType="Self.LogInspectionHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogRecallDocument" EntityType="Self.LogRecallDocument" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogRecallHeader" EntityType="Self.LogRecallHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogRegistrationDocument" EntityType="Self.LogRegistrationDocument" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogRegistrationHeader" EntityType="Self.LogRegistrationHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogScanTagIdNotRegister" EntityType="Self.LogScanTagIdNotRegister" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogShipmentDocument" EntityType="Self.LogShipmentDocument" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogShipmentHeader" EntityType="Self.LogShipmentHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogShipmentOfflineHeader" EntityType="Self.LogShipmentOfflineHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogShipmentOfflineItem" EntityType="Self.LogShipmentOfflineItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsBillingConfiguration" EntityType="Self.MsBillingConfiguration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsCompany" EntityType="Self.MsCompany" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsDriver" EntityType="Self.MsDriver" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsEquipment" EntityType="Self.MsEquipment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsMainMenu" EntityType="Self.MsMainMenu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsMenu" EntityType="Self.MsMenu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsPallet" EntityType="Self.MsPallet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsPalletAging" EntityType="Self.MsPalletAging" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsPalletType" EntityType="Self.MsPalletType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsProducer" EntityType="Self.MsProducer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsRole" EntityType="Self.MsRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsRolePermission" EntityType="Self.MsRolePermission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsStatusType" EntityType="Self.MsStatusType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsTransporter" EntityType="Self.MsTransporter" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsTransporterAccess" EntityType="Self.MsTransporterAccess" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsTruck" EntityType="Self.MsTruck" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsUser" EntityType="Self.MsUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsWarehouse" EntityType="Self.MsWarehouse" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsWarehouseAccess" EntityType="Self.MsWarehouseAccess" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsWarehouseCategory" EntityType="Self.MsWarehouseCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsWarehouseCompany" EntityType="Self.MsWarehouseCompany" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NLog" EntityType="Self.NLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PalletAgingDaily" EntityType="Self.PalletAgingDaily" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PalletAgingDetail" EntityType="Self.PalletAgingDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxAccidentHeader" EntityType="Self.TrxAccidentHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxAccidentItem" EntityType="Self.TrxAccidentItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxBillingRentHistoryHeader" EntityType="Self.TrxBillingRentHistoryHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxBillingRentHistoryItem" EntityType="Self.TrxBillingRentHistoryItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxCycleCountHeader" EntityType="Self.TrxCycleCountHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxCycleCountItem" EntityType="Self.TrxCycleCountItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxInspectionHeader" EntityType="Self.TrxInspectionHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxInspectionItem" EntityType="Self.TrxInspectionItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxInvoiceDeffect" EntityType="Self.TrxInvoiceDeffect" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxInvoiceDeffectItem" EntityType="Self.TrxInvoiceDeffectItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxInvoiceRentHeader" EntityType="Self.TrxInvoiceRentHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxRecallHeader" EntityType="Self.TrxRecallHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxRecallItem" EntityType="Self.TrxRecallItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxRegistrationHeader" EntityType="Self.TrxRegistrationHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxRegistrationItem" EntityType="Self.TrxRegistrationItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxShipmentHeader" EntityType="Self.TrxShipmentHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxShipmentItem" EntityType="Self.TrxShipmentItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxShipmentItemTemp" EntityType="Self.TrxShipmentItemTemp" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VwAccidentItem" EntityType="Self.VwAccidentItem" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwAccidentItem].[TransactionItemId] AS [TransactionItemId], 
+    [VwAccidentItem].[TransactionId] AS [TransactionId], 
+    [VwAccidentItem].[TagId] AS [TagId], 
+    [VwAccidentItem].[PalletName] AS [PalletName], 
+    [VwAccidentItem].[PalletOwner] AS [PalletOwner], 
+    [VwAccidentItem].[PalletProducer] AS [PalletProducer], 
+    [VwAccidentItem].[ReasonType] AS [ReasonType], 
+    [VwAccidentItem].[ReasonName] AS [ReasonName], 
+    [VwAccidentItem].[ScannedBy] AS [ScannedBy], 
+    [VwAccidentItem].[ScannedAt] AS [ScannedAt]
+    FROM [dbo].[VwAccidentItem] AS [VwAccidentItem]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwAgingShipment" EntityType="Self.VwAgingShipment" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwAgingShipment].[DeliveryNumber] AS [DeliveryNumber], 
+    [VwAgingShipment].[OriginId] AS [OriginId], 
+    [VwAgingShipment].[OriginCode] AS [OriginCode], 
+    [VwAgingShipment].[OriginName] AS [OriginName], 
+    [VwAgingShipment].[DestinationId] AS [DestinationId], 
+    [VwAgingShipment].[DestinationCode] AS [DestinationCode], 
+    [VwAgingShipment].[DestinationName] AS [DestinationName], 
+    [VwAgingShipment].[TransactionStatus] AS [TransactionStatus], 
+    [VwAgingShipment].[ShipmentStatus] AS [ShipmentStatus], 
+    [VwAgingShipment].[CreatedAt] AS [CreatedAt], 
+    [VwAgingShipment].[AgingDay] AS [AgingDay], 
+    [VwAgingShipment].[AgingMin] AS [AgingMin]
+    FROM [dbo].[VwAgingShipment] AS [VwAgingShipment]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwBillingRentDetail" EntityType="Self.VwBillingRentDetail" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwBillingRentDetail].[AgingId] AS [AgingId], 
+    [VwBillingRentDetail].[PalletId] AS [PalletId], 
+    [VwBillingRentDetail].[CurrentMonth] AS [CurrentMonth], 
+    [VwBillingRentDetail].[CurrentYear] AS [CurrentYear], 
+    [VwBillingRentDetail].[PalletName] AS [PalletName], 
+    [VwBillingRentDetail].[WarehouseCode] AS [WarehouseCode], 
+    [VwBillingRentDetail].[WarehouseName] AS [WarehouseName], 
+    [VwBillingRentDetail].[CompanyId] AS [CompanyId], 
+    [VwBillingRentDetail].[PalletOwner] AS [PalletOwner], 
+    [VwBillingRentDetail].[PalletProducer] AS [PalletProducer], 
+    [VwBillingRentDetail].[WarehouseId] AS [WarehouseId], 
+    [VwBillingRentDetail].[PalletAgeMonth] AS [PalletAgeMonth], 
+    [VwBillingRentDetail].[PalletAgeYear] AS [PalletAgeYear], 
+    [VwBillingRentDetail].[BillingId] AS [BillingId], 
+    [VwBillingRentDetail].[BillingYear] AS [BillingYear], 
+    [VwBillingRentDetail].[BillingPrice] AS [BillingPrice], 
+    [VwBillingRentDetail].[TotalDays] AS [TotalDays], 
+    [VwBillingRentDetail].[TotalBilling] AS [TotalBilling], 
+    [VwBillingRentDetail].[PalletCondition] AS [PalletCondition], 
+    [VwBillingRentDetail].[LastTransactionDate] AS [LastTransactionDate], 
+    [VwBillingRentDetail].[CutOffAt] AS [CutOffAt]
+    FROM [dbo].[VwBillingRentDetail] AS [VwBillingRentDetail]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwBillingRentHistoryItem" EntityType="Self.VwBillingRentHistoryItem" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwBillingRentHistoryItem].[TransactionItemId] AS [TransactionItemId], 
+    [VwBillingRentHistoryItem].[TransactionId] AS [TransactionId], 
+    [VwBillingRentHistoryItem].[AgingId] AS [AgingId], 
+    [VwBillingRentHistoryItem].[PalletId] AS [PalletId], 
+    [VwBillingRentHistoryItem].[CurrentMonth] AS [CurrentMonth], 
+    [VwBillingRentHistoryItem].[CurrentYear] AS [CurrentYear], 
+    [VwBillingRentHistoryItem].[PalletName] AS [PalletName], 
+    [VwBillingRentHistoryItem].[PalletOwner] AS [PalletOwner], 
+    [VwBillingRentHistoryItem].[PalletProducer] AS [PalletProducer], 
+    [VwBillingRentHistoryItem].[TotalMinutes] AS [TotalMinutes], 
+    [VwBillingRentHistoryItem].[TotalHours] AS [TotalHours], 
+    [VwBillingRentHistoryItem].[TotalDays] AS [TotalDays], 
+    [VwBillingRentHistoryItem].[BillingYear] AS [BillingYear], 
+    [VwBillingRentHistoryItem].[BillingPrice] AS [BillingPrice], 
+    [VwBillingRentHistoryItem].[TotalBilling] AS [TotalBilling]
+    FROM [dbo].[VwBillingRentHistoryItem] AS [VwBillingRentHistoryItem]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwCycleCountItem" EntityType="Self.VwCycleCountItem" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwCycleCountItem].[TransactionItemId] AS [TransactionItemId], 
+    [VwCycleCountItem].[TransactionId] AS [TransactionId], 
+    [VwCycleCountItem].[TagId] AS [TagId], 
+    [VwCycleCountItem].[PalletCondition] AS [PalletCondition], 
+    [VwCycleCountItem].[PalletName] AS [PalletName], 
+    [VwCycleCountItem].[PalletOwner] AS [PalletOwner], 
+    [VwCycleCountItem].[PalletProducer] AS [PalletProducer], 
+    [VwCycleCountItem].[ScannedBy] AS [ScannedBy], 
+    [VwCycleCountItem].[ScannedAt] AS [ScannedAt], 
+    [VwCycleCountItem].[PalletMovementStatus] AS [PalletMovementStatus]
+    FROM [dbo].[VwCycleCountItem] AS [VwCycleCountItem]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwInvoiceRent" EntityType="Self.VwInvoiceRent" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwInvoiceRent].[WarehouseCode] AS [WarehouseCode], 
+    [VwInvoiceRent].[WarehouseName] AS [WarehouseName], 
+    [VwInvoiceRent].[CategoryName] AS [CategoryName], 
+    [VwInvoiceRent].[CurrentMonth] AS [CurrentMonth], 
+    [VwInvoiceRent].[CurrentYear] AS [CurrentYear], 
+    [VwInvoiceRent].[TotalBillingRent] AS [TotalBillingRent], 
+    [VwInvoiceRent].[MGV] AS [MGV], 
+    [VwInvoiceRent].[TotalBillingMGV] AS [TotalBillingMGV]
+    FROM [dbo].[VwInvoiceRent] AS [VwInvoiceRent]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwPallet" EntityType="Self.VwPallet" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwPallet].[TagId] AS [TagId], 
+    [VwPallet].[PalletCode] AS [PalletCode], 
+    [VwPallet].[PalletTypeId] AS [PalletTypeId], 
+    [VwPallet].[PalletName] AS [PalletName], 
+    [VwPallet].[PalletCondition] AS [PalletCondition], 
+    [VwPallet].[WarehouseId] AS [WarehouseId], 
+    [VwPallet].[WarehouseCode] AS [WarehouseCode], 
+    [VwPallet].[WarehouseName] AS [WarehouseName], 
+    [VwPallet].[PalletOwner] AS [PalletOwner], 
+    [VwPallet].[PalletProducer] AS [PalletProducer], 
+    [VwPallet].[ProducedDate] AS [ProducedDate], 
+    [VwPallet].[Description] AS [Description], 
+    [VwPallet].[SapId] AS [SapId], 
+    [VwPallet].[RegisteredBy] AS [RegisteredBy], 
+    [VwPallet].[RegisteredAt] AS [RegisteredAt], 
+    [VwPallet].[ReceivedBy] AS [ReceivedBy], 
+    [VwPallet].[ReceivedAt] AS [ReceivedAt], 
+    [VwPallet].[PalletMovementStatus] AS [PalletMovementStatus], 
+    [VwPallet].[LastTransactionName] AS [LastTransactionName], 
+    [VwPallet].[LastTransactionCode] AS [LastTransactionCode], 
+    [VwPallet].[LastTransactionDate] AS [LastTransactionDate], 
+    [VwPallet].[OriginId] AS [OriginId], 
+    [VwPallet].[OriginCode] AS [OriginCode], 
+    [VwPallet].[OriginName] AS [OriginName]
+    FROM [dbo].[VwPallet] AS [VwPallet]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwPalletAge" EntityType="Self.VwPalletAge" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwPalletAge].[PalletTypeId] AS [PalletTypeId], 
+    [VwPalletAge].[PalletName] AS [PalletName], 
+    [VwPalletAge].[PalletCondition] AS [PalletCondition], 
+    [VwPalletAge].[WarehouseId] AS [WarehouseId], 
+    [VwPalletAge].[WarehouseName] AS [WarehouseName], 
+    [VwPalletAge].[PalletOwner] AS [PalletOwner], 
+    [VwPalletAge].[PalletProducer] AS [PalletProducer], 
+    [VwPalletAge].[RegDate] AS [RegDate], 
+    [VwPalletAge].[TotalPallet] AS [TotalPallet], 
+    [VwPalletAge].[PalletAgeDay] AS [PalletAgeDay], 
+    [VwPalletAge].[PalletAgeMonth] AS [PalletAgeMonth]
+    FROM [dbo].[VwPalletAge] AS [VwPalletAge]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwPalletAging" EntityType="Self.VwPalletAging" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwPalletAging].[AgingId] AS [AgingId], 
+    [VwPalletAging].[PalletId] AS [PalletId], 
+    [VwPalletAging].[AgingType] AS [AgingType], 
+    [VwPalletAging].[IsActive] AS [IsActive], 
+    [VwPalletAging].[WarehouseId] AS [WarehouseId], 
+    [VwPalletAging].[ReceivedAt] AS [ReceivedAt], 
+    [VwPalletAging].[CurrentMonth] AS [CurrentMonth], 
+    [VwPalletAging].[CurrentYear] AS [CurrentYear], 
+    [VwPalletAging].[TotalMinutes] AS [TotalMinutes], 
+    [VwPalletAging].[PalletStatus] AS [PalletStatus]
+    FROM [dbo].[VwPalletAging] AS [VwPalletAging]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwPalletBilling" EntityType="Self.VwPalletBilling" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwPalletBilling].[AgingId] AS [AgingId], 
+    [VwPalletBilling].[PalletId] AS [PalletId], 
+    [VwPalletBilling].[AgingType] AS [AgingType], 
+    [VwPalletBilling].[IsActive] AS [IsActive], 
+    [VwPalletBilling].[ReceivedAt] AS [ReceivedAt], 
+    [VwPalletBilling].[CurrentMonth] AS [CurrentMonth], 
+    [VwPalletBilling].[CurrentYear] AS [CurrentYear], 
+    [VwPalletBilling].[PalletName] AS [PalletName], 
+    [VwPalletBilling].[WarehouseCode] AS [WarehouseCode], 
+    [VwPalletBilling].[WarehouseName] AS [WarehouseName], 
+    [VwPalletBilling].[PalletOwner] AS [PalletOwner], 
+    [VwPalletBilling].[PalletProducer] AS [PalletProducer], 
+    [VwPalletBilling].[WarehouseId] AS [WarehouseId], 
+    [VwPalletBilling].[PalletStatus] AS [PalletStatus], 
+    [VwPalletBilling].[TotalMinutes] AS [TotalMinutes], 
+    [VwPalletBilling].[TotalHours] AS [TotalHours], 
+    [VwPalletBilling].[TotalDays] AS [TotalDays], 
+    [VwPalletBilling].[PalletAgeMonth] AS [PalletAgeMonth], 
+    [VwPalletBilling].[PalletAgeYear] AS [PalletAgeYear], 
+    [VwPalletBilling].[BillingId] AS [BillingId], 
+    [VwPalletBilling].[BillingYear] AS [BillingYear], 
+    [VwPalletBilling].[BillingPrice] AS [BillingPrice], 
+    [VwPalletBilling].[TotalBilling] AS [TotalBilling]
+    FROM [dbo].[VwPalletBilling] AS [VwPalletBilling]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwPalletDeffectHistory" EntityType="Self.VwPalletDeffectHistory" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwPalletDeffectHistory].[TagId] AS [TagId], 
+    [VwPalletDeffectHistory].[WarehouseCode] AS [WarehouseCode], 
+    [VwPalletDeffectHistory].[WarehouseName] AS [WarehouseName], 
+    [VwPalletDeffectHistory].[ScannedAt] AS [ScannedAt], 
+    [VwPalletDeffectHistory].[ScannedBy] AS [ScannedBy], 
+    [VwPalletDeffectHistory].[TransactionCode] AS [TransactionCode], 
+    [VwPalletDeffectHistory].[PalletCondition] AS [PalletCondition]
+    FROM [dbo].[VwPalletDeffectHistory] AS [VwPalletDeffectHistory]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwPalletGroup" EntityType="Self.VwPalletGroup" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwPalletGroup].[PalletTypeId] AS [PalletTypeId], 
+    [VwPalletGroup].[PalletName] AS [PalletName], 
+    [VwPalletGroup].[PalletCondition] AS [PalletCondition], 
+    [VwPalletGroup].[WarehouseId] AS [WarehouseId], 
+    [VwPalletGroup].[WarehouseName] AS [WarehouseName], 
+    [VwPalletGroup].[PalletOwner] AS [PalletOwner], 
+    [VwPalletGroup].[PalletProducer] AS [PalletProducer], 
+    [VwPalletGroup].[RegDate] AS [RegDate], 
+    [VwPalletGroup].[TotalPallet] AS [TotalPallet]
+    FROM [dbo].[VwPalletGroup] AS [VwPalletGroup]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwPalletGroup2" EntityType="Self.VwPalletGroup2" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwPalletGroup2].[PalletTypeId] AS [PalletTypeId], 
+    [VwPalletGroup2].[PalletName] AS [PalletName], 
+    [VwPalletGroup2].[PalletCondition] AS [PalletCondition], 
+    [VwPalletGroup2].[WarehouseId] AS [WarehouseId], 
+    [VwPalletGroup2].[WarehouseName] AS [WarehouseName], 
+    [VwPalletGroup2].[PalletOwner] AS [PalletOwner], 
+    [VwPalletGroup2].[PalletProducer] AS [PalletProducer], 
+    [VwPalletGroup2].[RegisteredDate] AS [RegisteredDate], 
+    [VwPalletGroup2].[ReceivedDate] AS [ReceivedDate], 
+    [VwPalletGroup2].[TotalPallet] AS [TotalPallet]
+    FROM [dbo].[VwPalletGroup2] AS [VwPalletGroup2]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwPalletHistory" EntityType="Self.VwPalletHistory" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwPalletHistory].[TagId] AS [TagId], 
+    [VwPalletHistory].[PalletCode] AS [PalletCode], 
+    [VwPalletHistory].[PalletTypeId] AS [PalletTypeId], 
+    [VwPalletHistory].[PalletName] AS [PalletName], 
+    [VwPalletHistory].[WarehouseId] AS [WarehouseId], 
+    [VwPalletHistory].[WarehouseCode] AS [WarehouseCode], 
+    [VwPalletHistory].[WarehouseName] AS [WarehouseName], 
+    [VwPalletHistory].[OriginId] AS [OriginId], 
+    [VwPalletHistory].[OriginCode] AS [OriginCode], 
+    [VwPalletHistory].[OriginName] AS [OriginName], 
+    [VwPalletHistory].[PalletOwner] AS [PalletOwner], 
+    [VwPalletHistory].[PalletProducer] AS [PalletProducer], 
+    [VwPalletHistory].[ProducedDate] AS [ProducedDate], 
+    [VwPalletHistory].[TransactionId] AS [TransactionId], 
+    [VwPalletHistory].[TransactionCode] AS [TransactionCode], 
+    [VwPalletHistory].[TransactionStatus] AS [TransactionStatus], 
+    [VwPalletHistory].[TransactionDate] AS [TransactionDate], 
+    [VwPalletHistory].[TransactionType] AS [TransactionType], 
+    [VwPalletHistory].[ScannedBy] AS [ScannedBy], 
+    [VwPalletHistory].[ScannedDate] AS [ScannedDate]
+    FROM [dbo].[VwPalletHistory] AS [VwPalletHistory]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwPalletMovement" EntityType="Self.VwPalletMovement" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwPalletMovement].[TransactionId] AS [TransactionId], 
+    [VwPalletMovement].[TransactionCode] AS [TransactionCode], 
+    [VwPalletMovement].[WarehouseId] AS [WarehouseId], 
+    [VwPalletMovement].[WarehouseName] AS [WarehouseName], 
+    [VwPalletMovement].[TagId] AS [TagId], 
+    [VwPalletMovement].[PalletName] AS [PalletName], 
+    [VwPalletMovement].[ScannedBy] AS [ScannedBy], 
+    [VwPalletMovement].[ScannedDate] AS [ScannedDate], 
+    [VwPalletMovement].[TransactionDate] AS [TransactionDate]
+    FROM [dbo].[VwPalletMovement] AS [VwPalletMovement]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwPalletShipment" EntityType="Self.VwPalletShipment" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwPalletShipment].[TagId] AS [TagId], 
+    [VwPalletShipment].[PalletCode] AS [PalletCode], 
+    [VwPalletShipment].[PalletName] AS [PalletName], 
+    [VwPalletShipment].[PalletCondition] AS [PalletCondition], 
+    [VwPalletShipment].[WarehouseName] AS [WarehouseName], 
+    [VwPalletShipment].[PalletOwner] AS [PalletOwner], 
+    [VwPalletShipment].[PalletProducer] AS [PalletProducer], 
+    [VwPalletShipment].[ProducedDate] AS [ProducedDate], 
+    [VwPalletShipment].[RegisteredBy] AS [RegisteredBy], 
+    [VwPalletShipment].[RegisteredAt] AS [RegisteredAt], 
+    [VwPalletShipment].[ReceivedBy] AS [ReceivedBy], 
+    [VwPalletShipment].[ReceivedAt] AS [ReceivedAt], 
+    [VwPalletShipment].[PalletMovementStatus] AS [PalletMovementStatus], 
+    [VwPalletShipment].[LastTransactionName] AS [LastTransactionName], 
+    [VwPalletShipment].[LastTransactionCode] AS [LastTransactionCode], 
+    [VwPalletShipment].[LastTransactionDate] AS [LastTransactionDate], 
+    [VwPalletShipment].[OriginId] AS [OriginId], 
+    [VwPalletShipment].[OriginName] AS [OriginName], 
+    [VwPalletShipment].[DestinationId] AS [DestinationId], 
+    [VwPalletShipment].[DestinationName] AS [DestinationName]
+    FROM [dbo].[VwPalletShipment] AS [VwPalletShipment]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwPalletWarehouse" EntityType="Self.VwPalletWarehouse" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwPalletWarehouse].[WarehouseId] AS [WarehouseId], 
+    [VwPalletWarehouse].[WarehouseCode] AS [WarehouseCode], 
+    [VwPalletWarehouse].[WarehouseName] AS [WarehouseName], 
+    [VwPalletWarehouse].[TotalPallet] AS [TotalPallet], 
+    [VwPalletWarehouse].[OriginId] AS [OriginId]
+    FROM [dbo].[VwPalletWarehouse] AS [VwPalletWarehouse]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwPalletWarehouseCondition" EntityType="Self.VwPalletWarehouseCondition" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwPalletWarehouseCondition].[WarehouseId] AS [WarehouseId], 
+    [VwPalletWarehouseCondition].[WarehouseCode] AS [WarehouseCode], 
+    [VwPalletWarehouseCondition].[WarehouseName] AS [WarehouseName], 
+    [VwPalletWarehouseCondition].[PalletCondition] AS [PalletCondition], 
+    [VwPalletWarehouseCondition].[TotalPallet] AS [TotalPallet], 
+    [VwPalletWarehouseCondition].[OriginId] AS [OriginId]
+    FROM [dbo].[VwPalletWarehouseCondition] AS [VwPalletWarehouseCondition]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwRegistrationItem" EntityType="Self.VwRegistrationItem" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwRegistrationItem].[TransactionItemId] AS [TransactionItemId], 
+    [VwRegistrationItem].[TransactionId] AS [TransactionId], 
+    [VwRegistrationItem].[WarehouseId] AS [WarehouseId], 
+    [VwRegistrationItem].[TagId] AS [TagId], 
+    [VwRegistrationItem].[InsertedBy] AS [InsertedBy], 
+    [VwRegistrationItem].[InsertedAt] AS [InsertedAt], 
+    [VwRegistrationItem].[InsertMethod] AS [InsertMethod], 
+    [VwRegistrationItem].[ItemStatus] AS [ItemStatus]
+    FROM [dbo].[VwRegistrationItem] AS [VwRegistrationItem]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwShipmentAccident" EntityType="Self.VwShipmentAccident" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwShipmentAccident].[AccidentTransactionId] AS [AccidentTransactionId], 
+    [VwShipmentAccident].[AccidentTransactionCode] AS [AccidentTransactionCode], 
+    [VwShipmentAccident].[AccidentRefNumber] AS [AccidentRefNumber], 
+    [VwShipmentAccident].[AccidentReasonType] AS [AccidentReasonType], 
+    [VwShipmentAccident].[AccidentRemarks] AS [AccidentRemarks], 
+    [VwShipmentAccident].[AccidentWarehouseId] AS [AccidentWarehouseId], 
+    [VwShipmentAccident].[AccidentWarehouseCode] AS [AccidentWarehouseCode], 
+    [VwShipmentAccident].[AccidentWarehouseName] AS [AccidentWarehouseName], 
+    [VwShipmentAccident].[AccidentTransactionStatus] AS [AccidentTransactionStatus], 
+    [VwShipmentAccident].[AccidentIsDeleted] AS [AccidentIsDeleted], 
+    [VwShipmentAccident].[AccidentCreatedBy] AS [AccidentCreatedBy], 
+    [VwShipmentAccident].[AccidentCreatedAt] AS [AccidentCreatedAt], 
+    [VwShipmentAccident].[AccidentModifiedBy] AS [AccidentModifiedBy], 
+    [VwShipmentAccident].[AccidentModifiedAt] AS [AccidentModifiedAt], 
+    [VwShipmentAccident].[AccidentApprovedBy] AS [AccidentApprovedBy], 
+    [VwShipmentAccident].[AccidentApprovedAt] AS [AccidentApprovedAt], 
+    [VwShipmentAccident].[ShipmentTransactionId] AS [ShipmentTransactionId], 
+    [VwShipmentAccident].[ShipmentTransactionCode] AS [ShipmentTransactionCode], 
+    [VwShipmentAccident].[ShipmentShipmentNumber] AS [ShipmentShipmentNumber], 
+    [VwShipmentAccident].[ShipmentRemarks] AS [ShipmentRemarks], 
+    [VwShipmentAccident].[ShipmentWarehouseId] AS [ShipmentWarehouseId], 
+    [VwShipmentAccident].[ShipmentWarehouseCode] AS [ShipmentWarehouseCode], 
+    [VwShipmentAccident].[ShipmentWarehouseName] AS [ShipmentWarehouseName], 
+    [VwShipmentAccident].[ShipmentDestinationId] AS [ShipmentDestinationId], 
+    [VwShipmentAccident].[ShipmentDestinationCode] AS [ShipmentDestinationCode], 
+    [VwShipmentAccident].[ShipmentDestinationName] AS [ShipmentDestinationName], 
+    [VwShipmentAccident].[ShipmentTransporterId] AS [ShipmentTransporterId], 
+    [VwShipmentAccident].[ShipmentTransporterName] AS [ShipmentTransporterName], 
+    [VwShipmentAccident].[ShipmentDriverId] AS [ShipmentDriverId], 
+    [VwShipmentAccident].[ShipmentDriverName] AS [ShipmentDriverName], 
+    [VwShipmentAccident].[ShipmentTruckId] AS [ShipmentTruckId], 
+    [VwShipmentAccident].[ShipmentPlateNumber] AS [ShipmentPlateNumber], 
+    [VwShipmentAccident].[ShipmentPalletQty] AS [ShipmentPalletQty], 
+    [VwShipmentAccident].[ShipmentTransactionStatus] AS [ShipmentTransactionStatus], 
+    [VwShipmentAccident].[ShipmentShipmentStatus] AS [ShipmentShipmentStatus], 
+    [VwShipmentAccident].[ShipmentIsDeleted] AS [ShipmentIsDeleted], 
+    [VwShipmentAccident].[ShipmentAccidentId] AS [ShipmentAccidentId], 
+    [VwShipmentAccident].[ShipmentCreatedBy] AS [ShipmentCreatedBy], 
+    [VwShipmentAccident].[ShipmentCreatedAt] AS [ShipmentCreatedAt], 
+    [VwShipmentAccident].[ShipmentModifiedBy] AS [ShipmentModifiedBy], 
+    [VwShipmentAccident].[ShipmentModifiedAt] AS [ShipmentModifiedAt], 
+    [VwShipmentAccident].[ShipmentApprovedBy] AS [ShipmentApprovedBy], 
+    [VwShipmentAccident].[ShipmentApprovedAt] AS [ShipmentApprovedAt]
+    FROM [dbo].[VwShipmentAccident] AS [VwShipmentAccident]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VwShipmentItem" EntityType="Self.VwShipmentItem" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VwShipmentItem].[TransactionItemId] AS [TransactionItemId], 
+    [VwShipmentItem].[TransactionId] AS [TransactionId], 
+    [VwShipmentItem].[TagId] AS [TagId], 
+    [VwShipmentItem].[PalletName] AS [PalletName], 
+    [VwShipmentItem].[PalletOwner] AS [PalletOwner], 
+    [VwShipmentItem].[PalletProducer] AS [PalletProducer], 
+    [VwShipmentItem].[ScannedBy] AS [ScannedBy], 
+    [VwShipmentItem].[ScannedAt] AS [ScannedAt], 
+    [VwShipmentItem].[DispatchedBy] AS [DispatchedBy], 
+    [VwShipmentItem].[DispatchedAt] AS [DispatchedAt], 
+    [VwShipmentItem].[ReceivedBy] AS [ReceivedBy], 
+    [VwShipmentItem].[ReceivedAt] AS [ReceivedAt], 
+    [VwShipmentItem].[PalletMovementStatus] AS [PalletMovementStatus]
+    FROM [dbo].[VwShipmentItem] AS [VwShipmentItem]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_LogAccidentDocument_TrxAccidentHeader" Association="Self.FK_LogAccidentDocument_TrxAccidentHeader">
+      <End Role="TrxAccidentHeader" EntitySet="TrxAccidentHeader" />
+      <End Role="LogAccidentDocument" EntitySet="LogAccidentDocument" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LogAccidentHeader_TrxAccidentHeader" Association="Self.FK_LogAccidentHeader_TrxAccidentHeader">
+      <End Role="TrxAccidentHeader" EntitySet="TrxAccidentHeader" />
+      <End Role="LogAccidentHeader" EntitySet="LogAccidentHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LogCycleCountDocument_TrxCycleCountHeader" Association="Self.FK_LogCycleCountDocument_TrxCycleCountHeader">
+      <End Role="TrxCycleCountHeader" EntitySet="TrxCycleCountHeader" />
+      <End Role="LogCycleCountDocument" EntitySet="LogCycleCountDocument" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LogCycleCountHeader_TrxCycleCountHeader" Association="Self.FK_LogCycleCountHeader_TrxCycleCountHeader">
+      <End Role="TrxCycleCountHeader" EntitySet="TrxCycleCountHeader" />
+      <End Role="LogCycleCountHeader" EntitySet="LogCycleCountHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LogInspectionDocument_TrxInspectionHeader" Association="Self.FK_LogInspectionDocument_TrxInspectionHeader">
+      <End Role="TrxInspectionHeader" EntitySet="TrxInspectionHeader" />
+      <End Role="LogInspectionDocument" EntitySet="LogInspectionDocument" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LogInspectionHeader_TrxInspectionHeader" Association="Self.FK_LogInspectionHeader_TrxInspectionHeader">
+      <End Role="TrxInspectionHeader" EntitySet="TrxInspectionHeader" />
+      <End Role="LogInspectionHeader" EntitySet="LogInspectionHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LogRecallDocument_TrxRecallHeader" Association="Self.FK_LogRecallDocument_TrxRecallHeader">
+      <End Role="TrxRecallHeader" EntitySet="TrxRecallHeader" />
+      <End Role="LogRecallDocument" EntitySet="LogRecallDocument" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LogRecallHeader_TrxRecallHeader" Association="Self.FK_LogRecallHeader_TrxRecallHeader">
+      <End Role="TrxRecallHeader" EntitySet="TrxRecallHeader" />
+      <End Role="LogRecallHeader" EntitySet="LogRecallHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LogRegistrationDocument_TrxRegistrationHeader" Association="Self.FK_LogRegistrationDocument_TrxRegistrationHeader">
+      <End Role="TrxRegistrationHeader" EntitySet="TrxRegistrationHeader" />
+      <End Role="LogRegistrationDocument" EntitySet="LogRegistrationDocument" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LogRegistrationHeader_TrxRegistrationHeader" Association="Self.FK_LogRegistrationHeader_TrxRegistrationHeader">
+      <End Role="TrxRegistrationHeader" EntitySet="TrxRegistrationHeader" />
+      <End Role="LogRegistrationHeader" EntitySet="LogRegistrationHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LogShipmentDocument_TrxShipmentHeader" Association="Self.FK_LogShipmentDocument_TrxShipmentHeader">
+      <End Role="TrxShipmentHeader" EntitySet="TrxShipmentHeader" />
+      <End Role="LogShipmentDocument" EntitySet="LogShipmentDocument" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LogShipmentHeader_TrxShipmentHeader" Association="Self.FK_LogShipmentHeader_TrxShipmentHeader">
+      <End Role="TrxShipmentHeader" EntitySet="TrxShipmentHeader" />
+      <End Role="LogShipmentHeader" EntitySet="LogShipmentHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MsDriver_MsTransporter" Association="Self.FK_MsDriver_MsTransporter">
+      <End Role="MsTransporter" EntitySet="MsTransporter" />
+      <End Role="MsDriver" EntitySet="MsDriver" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MsMenu_MsMainMenu" Association="Self.FK_MsMenu_MsMainMenu">
+      <End Role="MsMainMenu" EntitySet="MsMainMenu" />
+      <End Role="MsMenu" EntitySet="MsMenu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MsPallet_MsCompany" Association="Self.FK_MsPallet_MsCompany">
+      <End Role="MsCompany" EntitySet="MsCompany" />
+      <End Role="MsPallet" EntitySet="MsPallet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MsPallet_MsPalletType" Association="Self.FK_MsPallet_MsPalletType">
+      <End Role="MsPalletType" EntitySet="MsPalletType" />
+      <End Role="MsPallet" EntitySet="MsPallet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MsPallet_MsProducer" Association="Self.FK_MsPallet_MsProducer">
+      <End Role="MsProducer" EntitySet="MsProducer" />
+      <End Role="MsPallet" EntitySet="MsPallet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MsPallet_MsWarehouse" Association="Self.FK_MsPallet_MsWarehouse">
+      <End Role="MsWarehouse" EntitySet="MsWarehouse" />
+      <End Role="MsPallet" EntitySet="MsPallet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MsTransporterPic_MsTransporter" Association="Self.FK_MsTransporterPic_MsTransporter">
+      <End Role="MsTransporter" EntitySet="MsTransporter" />
+      <End Role="MsTransporterAccess" EntitySet="MsTransporterAccess" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MsTransporterPic_MsWarehouse" Association="Self.FK_MsTransporterPic_MsWarehouse">
+      <End Role="MsWarehouse" EntitySet="MsWarehouse" />
+      <End Role="MsTransporterAccess" EntitySet="MsTransporterAccess" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MsTruck_MsTransporter" Association="Self.FK_MsTruck_MsTransporter">
+      <End Role="MsTransporter" EntitySet="MsTransporter" />
+      <End Role="MsTruck" EntitySet="MsTruck" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MsUser_MsRole" Association="Self.FK_MsUser_MsRole">
+      <End Role="MsRole" EntitySet="MsRole" />
+      <End Role="MsUser" EntitySet="MsUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MsUser_MsWarehouse" Association="Self.FK_MsUser_MsWarehouse">
+      <End Role="MsWarehouse" EntitySet="MsWarehouse" />
+      <End Role="MsUser" EntitySet="MsUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MsWarehouse_MsWarehouse" Association="Self.FK_MsWarehouse_MsWarehouse">
+      <End Role="MsWarehouseCategory" EntitySet="MsWarehouseCategory" />
+      <End Role="MsWarehouse" EntitySet="MsWarehouse" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MsWarehouseAccess_MsUser" Association="Self.FK_MsWarehouseAccess_MsUser">
+      <End Role="MsUser" EntitySet="MsUser" />
+      <End Role="MsWarehouseAccess" EntitySet="MsWarehouseAccess" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MsWarehouseAccess_MsWarehouse" Association="Self.FK_MsWarehouseAccess_MsWarehouse">
+      <End Role="MsWarehouse" EntitySet="MsWarehouse" />
+      <End Role="MsWarehouseAccess" EntitySet="MsWarehouseAccess" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MsWarehouseCompany_MsCompany" Association="Self.FK_MsWarehouseCompany_MsCompany">
+      <End Role="MsCompany" EntitySet="MsCompany" />
+      <End Role="MsWarehouseCompany" EntitySet="MsWarehouseCompany" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MsWarehouseCompany_MsWarehouse" Association="Self.FK_MsWarehouseCompany_MsWarehouse">
+      <End Role="MsWarehouse" EntitySet="MsWarehouse" />
+      <End Role="MsWarehouseCompany" EntitySet="MsWarehouseCompany" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RolePermission_MsMenu" Association="Self.FK_RolePermission_MsMenu">
+      <End Role="MsMenu" EntitySet="MsMenu" />
+      <End Role="MsRolePermission" EntitySet="MsRolePermission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RolePermission_MsRole" Association="Self.FK_RolePermission_MsRole">
+      <End Role="MsRole" EntitySet="MsRole" />
+      <End Role="MsRolePermission" EntitySet="MsRolePermission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxAccidentItem_TrxAccidentHeader" Association="Self.FK_TrxAccidentItem_TrxAccidentHeader">
+      <End Role="TrxAccidentHeader" EntitySet="TrxAccidentHeader" />
+      <End Role="TrxAccidentItem" EntitySet="TrxAccidentItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxCycleCountItem_TrxCycleCountHeader" Association="Self.FK_TrxCycleCountItem_TrxCycleCountHeader">
+      <End Role="TrxCycleCountHeader" EntitySet="TrxCycleCountHeader" />
+      <End Role="TrxCycleCountItem" EntitySet="TrxCycleCountItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxInspectionItem_TrxInspectionHeader" Association="Self.FK_TrxInspectionItem_TrxInspectionHeader">
+      <End Role="TrxInspectionHeader" EntitySet="TrxInspectionHeader" />
+      <End Role="TrxInspectionItem" EntitySet="TrxInspectionItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxInvoiceDeffectItem_TrxInvoiceDeffect" Association="Self.FK_TrxInvoiceDeffectItem_TrxInvoiceDeffect">
+      <End Role="TrxInvoiceDeffect" EntitySet="TrxInvoiceDeffect" />
+      <End Role="TrxInvoiceDeffectItem" EntitySet="TrxInvoiceDeffectItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxInvoiceHeader_MsWarehouse" Association="Self.FK_TrxInvoiceHeader_MsWarehouse">
+      <End Role="MsWarehouse" EntitySet="MsWarehouse" />
+      <End Role="TrxBillingRentHistoryHeader" EntitySet="TrxBillingRentHistoryHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxInvoiceItem_MsBillingConfiguration" Association="Self.FK_TrxInvoiceItem_MsBillingConfiguration">
+      <End Role="MsBillingConfiguration" EntitySet="MsBillingConfiguration" />
+      <End Role="TrxBillingRentHistoryItem" EntitySet="TrxBillingRentHistoryItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxInvoiceItem_MsPallet" Association="Self.FK_TrxInvoiceItem_MsPallet">
+      <End Role="MsPallet" EntitySet="MsPallet" />
+      <End Role="TrxBillingRentHistoryItem" EntitySet="TrxBillingRentHistoryItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxInvoiceItem_MsPalletAging" Association="Self.FK_TrxInvoiceItem_MsPalletAging">
+      <End Role="MsPalletAging" EntitySet="MsPalletAging" />
+      <End Role="TrxBillingRentHistoryItem" EntitySet="TrxBillingRentHistoryItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxInvoiceItem_TrxInvoiceHeader" Association="Self.FK_TrxInvoiceItem_TrxInvoiceHeader">
+      <End Role="TrxBillingRentHistoryHeader" EntitySet="TrxBillingRentHistoryHeader" />
+      <End Role="TrxBillingRentHistoryItem" EntitySet="TrxBillingRentHistoryItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxPalletAging_MsPallet" Association="Self.FK_TrxPalletAging_MsPallet">
+      <End Role="MsPallet" EntitySet="MsPallet" />
+      <End Role="MsPalletAging" EntitySet="MsPalletAging" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxPalletAging_MsWarehouse" Association="Self.FK_TrxPalletAging_MsWarehouse">
+      <End Role="MsWarehouse" EntitySet="MsWarehouse" />
+      <End Role="MsPalletAging" EntitySet="MsPalletAging" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxRecallItem_TrxRecallHeader" Association="Self.FK_TrxRecallItem_TrxRecallHeader">
+      <End Role="TrxRecallHeader" EntitySet="TrxRecallHeader" />
+      <End Role="TrxRecallItem" EntitySet="TrxRecallItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxRegistrationHeader_MsCompany" Association="Self.FK_TrxRegistrationHeader_MsCompany">
+      <End Role="MsCompany" EntitySet="MsCompany" />
+      <End Role="TrxRegistrationHeader" EntitySet="TrxRegistrationHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxRegistrationHeader_MsPalletType" Association="Self.FK_TrxRegistrationHeader_MsPalletType">
+      <End Role="MsPalletType" EntitySet="MsPalletType" />
+      <End Role="TrxRegistrationHeader" EntitySet="TrxRegistrationHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxRegistrationHeader_MsProducer" Association="Self.FK_TrxRegistrationHeader_MsProducer">
+      <End Role="MsProducer" EntitySet="MsProducer" />
+      <End Role="TrxRegistrationHeader" EntitySet="TrxRegistrationHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxRegistrationHeader_MsWarehouse" Association="Self.FK_TrxRegistrationHeader_MsWarehouse">
+      <End Role="MsWarehouse" EntitySet="MsWarehouse" />
+      <End Role="TrxRegistrationHeader" EntitySet="TrxRegistrationHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxRegistrationItem_TrxRegistrationHeader" Association="Self.FK_TrxRegistrationItem_TrxRegistrationHeader">
+      <End Role="TrxRegistrationHeader" EntitySet="TrxRegistrationHeader" />
+      <End Role="TrxRegistrationItem" EntitySet="TrxRegistrationItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxShipmentHeader_MsDriver" Association="Self.FK_TrxShipmentHeader_MsDriver">
+      <End Role="MsDriver" EntitySet="MsDriver" />
+      <End Role="TrxShipmentHeader" EntitySet="TrxShipmentHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxShipmentHeader_MsTransporter" Association="Self.FK_TrxShipmentHeader_MsTransporter">
+      <End Role="MsTransporter" EntitySet="MsTransporter" />
+      <End Role="TrxShipmentHeader" EntitySet="TrxShipmentHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxShipmentHeader_MsTruck" Association="Self.FK_TrxShipmentHeader_MsTruck">
+      <End Role="MsTruck" EntitySet="MsTruck" />
+      <End Role="TrxShipmentHeader" EntitySet="TrxShipmentHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxShipmentHeader_MsWarehouse" Association="Self.FK_TrxShipmentHeader_MsWarehouse">
+      <End Role="MsWarehouse" EntitySet="MsWarehouse" />
+      <End Role="TrxShipmentHeader" EntitySet="TrxShipmentHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxShipmentHeader_MsWarehouse1" Association="Self.FK_TrxShipmentHeader_MsWarehouse1">
+      <End Role="MsWarehouse" EntitySet="MsWarehouse" />
+      <End Role="TrxShipmentHeader" EntitySet="TrxShipmentHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrxShipmentItem_TrxShipmentHeader" Association="Self.FK_TrxShipmentItem_TrxShipmentHeader">
+      <End Role="TrxShipmentHeader" EntitySet="TrxShipmentHeader" />
+      <End Role="TrxShipmentItem" EntitySet="TrxShipmentItem" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

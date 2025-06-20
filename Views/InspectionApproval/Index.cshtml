@@ -1,0 +1,246 @@
+﻿
+@{
+    ViewBag.Title += " - List";
+
+    ViewBag.baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+       Request.ApplicationPath.TrimEnd('/') + "/";
+}
+
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@ViewBag.Title</h1>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-lg-12">
+            <button type="button" class="btn btn-secondary btn-icon-split" onclick="Refresh()">
+                <span class="icon text-white-50">
+                    <i class="fas fa-sync"></i>
+                </span>
+                <span class="text">Refresh</span>
+            </button>
+            @*<button type="button" class="btn btn-primary btn-icon-split" onclick="ExportExcel()">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-file-excel"></i>
+                    </span>
+                    <span class="text">Export Excel</span>
+                </button>
+                <button type="button" class="btn btn-primary btn-icon-split" onclick="ExportDetail()">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-file-excel"></i>
+                    </span>
+                    <span class="text">Export Detail</span>
+                </button>*@
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow mb-4 border-left-primary">
+                @*<div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Table</h6>
+                    </div>*@
+                <div class="card-body">
+                    <table class="table table-bordered table-striped" id="iTable" width="100%" cellspacing="0">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Action</th>
+                                <th>Transaction Code</th>
+                                <th>Warehouse Origin</th>
+                                <th>Tag Id/ Pallet Id</th>
+                                <th>Classification</th>
+                                <th>By Whom</th>
+                                <th>Scanned At</th>
+                                <th>Scanned By</th>
+                                <th>Verified At</th>
+                                <th>Verified By</th>
+                                <th>Approved At</th>
+                                <th>Approved By</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@Html.Partial("ConfirmationModal")
+
+@section custom_css
+{
+    @*@Styles.Render("~/Content/vendor/datatables/jquery.dataTables.min.css")*@
+    @Styles.Render("~/Content/vendor/datatables/dataTables.bootstrap4.min.css")
+    @Styles.Render("~/Content/vendor/datatables/fixedColumns.bootstrap4.min.css")
+    @Styles.Render("~/Content/vendor/toastr/toastr.css")
+
+    <style>
+        th, td {
+            white-space: nowrap;
+        }
+
+        div.dataTables_wrapper {
+            /*width: 800px;*/
+            margin: 0 auto;
+        }
+    </style>
+}
+
+@section custom_js
+{
+    @Scripts.Render("~/Content/vendor/datatables/jquery.dataTables.min.js")
+    @Scripts.Render("~/Content/vendor/datatables/dataTables.bootstrap4.min.js")
+    @Scripts.Render("~/Content/vendor/datatables/dataTables.fixedColumns.min.js")
+    @Scripts.Render("~/Content/vendor/toastr/toastr.min.js")
+    @Scripts.Render("~/Content/custom/js/notification.js")
+
+<script>
+
+        $(document).ready(function () {
+
+            let tempMessage = '@ViewBag.TempMessage';
+            if (tempMessage) {
+                notify("Success", "success", tempMessage);
+            }
+
+        });
+
+        function Refresh() {
+            table.ajax.reload();
+        }
+
+       var table = $('#iTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '@Url.Action("Datatable")',
+                    type: "POST",
+                    datatype: "json",
+                    data: function (d) {
+                        //d.stats = stats;
+                    }
+                },
+                scrollY: "500px",
+                scrollX: true,
+                scrollCollapse: true,
+                paging: true,
+                //fixedColumns: true
+                fixedColumns: {
+                    leftColumns: [2]
+                },
+               columnDefs: [
+                   { "orderable": false, "targets": 0 },
+               ],
+                order : [[1, "desc"]],
+           columns: [
+                   {
+                       data: null,
+                       render: function (data, type, row) {
+                           let button = "<div class=\"btn-group btn-group-sm\">";
+                           button += "<button type=\"button\" class=\"btn btn-space btn-sm btn-success\" onclick=\"Approve('" + row.TransactionItemId + "')\">";
+                           button += '<span class="icon text-white-50"><i class="fa fa-fw fa-check"></i></span></button>';
+                           button += "<button type=\"button\" class=\"btn btn-space btn-sm btn-danger\" onclick=\"Reject('" + row.TransactionItemId + "')\">";
+                           button += '<span class="icon text-white-50"><i class="fa fa-fw fa-times"></i></span></button>';
+                           button += '</div>';
+
+
+
+                           return button;
+                       }
+                   },
+                    { "data": "TransactionCode", "name": "TransactionCode", "autoWidth": true },
+                    { "data": "OriginName", "name": "Origin", "autoWidth": true },
+                    { "data": "TagId", "name": "TagId", "autoWidth": true },
+                    { "data": "Classification", "name": "Classification", "autoWidth": true },
+                    { "data": "PIC", "name": "PIC", "autoWidth": true },
+                    { "data": "ScannedAt", "name": "ScannedAt", "autoWidth": true },
+                    { "data": "ScannedBy", "name": "ScannedBy", "autoWidth": true },
+                    { "data": "VerifiedAt", "name": "VerifiedAt", "autoWidth": true },
+                    { "data": "VerifiedBy", "name": "VerifiedBy", "autoWidth": true },
+                    { "data": "ApprovedBy", "name": "ApprovedBy", "autoWidth": true },
+                    { "data": "ApprovedAt", "name": "ApprovedAt", "autoWidth": true }
+
+                ]
+       });
+
+    let status = "";
+    let TransactionItemId = "";
+
+    function Approve(id) {
+
+        $('#confirmationModalTitle').html("<b>APPROVE</b> Inspection");
+        $('#confirmationModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        status = "APPROVED";
+        TransactionItemId = id;
+    }
+
+
+    function Reject(id) {
+        $('#confirmationModalTitle').html("<b>REJECT</b> Inspection");
+        $('#confirmationModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        status = "REJECTED";
+        TransactionItemId = id;
+    }
+
+    $('#btnModalSave').click(function (ev) {
+        submitApproval();
+    });
+
+      let token = '@Session["token"]';
+        let warehouseAccess = '@Session["warehouseAccess"]';
+
+   
+
+    function submitApproval() {
+            $('#btnModalSave').prop('disabled', true);
+            $("#preloader").show();
+             $.ajax({
+                type: 'PUT',
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader('facelift_token', token);
+                    request.setRequestHeader('warehouseId', warehouseAccess);
+                },
+                 url: '@ViewBag.baseUrl' + 'Api/InspectionApproval',
+                data: {
+                    Status: status,
+                    TransactionItemId: TransactionItemId
+                },
+                success: function (response) {
+                    if (!response.status) {
+                        notify("Warning", "warning", response.message);
+                    } else {
+                        notify("Success", "success", response.message);
+                        Refresh();
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    notify("Error", "error", "Oops! Something went wrong.");
+                    $("#preloader").hide();
+                },
+                complete: function () {
+                    $('#confirmationModal').modal('hide');
+                    $('#btnModalSave').prop('disabled', false);
+                    $("#preloader").hide();
+                }
+
+            });
+        }
+
+
+
+</script>
+}

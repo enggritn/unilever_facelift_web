@@ -1,0 +1,266 @@
+﻿@model Facelift_App.Models.TransporterVM
+
+@{
+    ViewBag.Title += " - Create";
+}
+
+
+
+    <div class="container-fluid">
+
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">@ViewBag.Title</h1>
+        </div>
+
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "mainFrm" }))
+        {
+            @Html.AntiForgeryToken()
+            @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+            <div class="row mb-2">
+                <div class="col-xs-6 col-lg-6">
+                    <div class="card shadow border-left-primary">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-form-label col-sm-4">Transporter Name</label>
+                                <div class="col-sm-8">
+                                    @Html.EditorFor(model => model.TransporterName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                    @Html.ValidationMessageFor(model => model.TransporterName, "", new { @class = "help-block text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-sm-4">Address <span class="text-info">(Optional)</span></label>
+                                <div class="col-sm-8">
+                                    @Html.TextAreaFor(model => model.Address, new { @class = "form-control", @autocomplete = "off", @rows = 5 })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-sm-4">Phone</label>
+                                <div class="col-sm-8">
+                                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control number", @autocomplete = "off" } })
+                                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "help-block text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-sm-4">Email</label>
+                                <div class="col-sm-8">
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "help-block text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-sm-4">PIC</label>
+                                <div class="col-sm-8">
+                                    @Html.EditorFor(model => model.PIC, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                    @Html.ValidationMessageFor(model => model.PIC, "", new { @class = "help-block text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-xs-6 col-lg-6">
+                    <div class="card shadow border-left-warning">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <span class="text-muted">Not Selected</span>
+                                    <select id="sbOne" class="form-control" multiple="multiple" size="10">
+                                        @if (ViewBag.WarehouseList != null)
+                                        {
+                                            foreach (var item in ViewBag.WarehouseList)
+                                            {
+                                                <option value="@item.WarehouseId">@(item.WarehouseCode) - @(item.WarehouseName)</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="text-muted">Selected</span>
+                                    <select id="sbTwo" class="form-control" name="WarehouseIds" multiple="multiple" size="10">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row text-center mt-2">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-outline-dark" id="left"><</button>
+                                    <button type="button" class="btn btn-outline-dark" id="right">></button>
+                                </div>
+                            </div>
+                            <div class="row text-center mt-2">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-outline-dark" id="leftAll"><<</button>
+                                    <button type="button" class="btn btn-outline-dark" id="rightAll">>></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-xs-6 col-lg-6">
+                    <button type="button" onclick="goBack()" class="btn btn-info btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-arrow-left"></i>
+                        </span>
+                        <span class="text">Back</span>
+                    </button>
+                    <div class="fa-pull-right">
+                        <button type="button" onclick="resetForm()" class="btn btn-warning btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-backspace"></i>
+                            </span>
+                            <span class="text">Cancel</span>
+                        </button>
+                        <button type="button" onclick="submitForm()" class="btn btn-primary btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-save"></i>
+                            </span>
+                            <span class="text">Save</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+@Html.Partial("ConfirmationModal")
+
+
+
+@section custom_css
+{
+    @Styles.Render("~/Content/vendor/toastr/toastr.css")
+}
+
+@section custom_js
+{
+    @Scripts.Render("~/Content/vendor/inputmask/js/jquery.inputmask.bundle.js")
+    @Scripts.Render("~/Scripts/jquery.validate.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.js")
+    @Scripts.Render("~/Content/vendor/toastr/toastr.min.js")
+    @Scripts.Render("~/Content/custom/js/notification.js")
+    <script>
+
+    $(document).ready(function () {
+
+        $('.number').inputmask("9{*}", { "placeholder": "" });
+
+        //add bootstrap 4 validation css
+        $('#mainFrm').validate().settings.errorClass += ' is-invalid';
+        //$('#mainFrm').validate().settings.validClass += ' is-valid';
+
+        $('#mainFrm').keypress(function (e) {
+            var key = e.charCode || e.keyCode || 0;
+            if (key == 13) {
+                e.preventDefault();
+            }
+        });
+    });
+
+
+        function goBack() {
+            location.href = '@Url.Action("Index")';
+        }
+
+        function resetForm() {
+            $('#mainFrm')[0].reset();
+            $('#mainFrm .form-group input').removeClass('is-invalid');
+            $('#mainFrm .help-block').html('');
+            moveAllItems('#sbTwo', '#sbOne');
+        }
+
+        function submitForm() {
+            let form = $('#mainFrm');
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                $('#confirmationModal').modal('show');
+            } else {
+                notify("Info", "info", "Please complete form below.");
+            }
+        }
+
+        $('#btnModalSave').click(function () {
+            let form = $('#mainFrm');
+            //double validation, prevent duplication
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                saveData(form);
+            } else {
+                notify("Info", "info", "Please complete form below.");
+            }
+        });
+
+        function saveData(form) {
+            $("#preloader").show();
+            $.ajax({
+                type: 'POST',
+                url: form.action,
+                data: $(form).serialize(),
+                success: function (response) {
+
+                    if (response.stat) {
+                        $("#preloader").fadeOut("slow");
+                        notify("Success", "success", response.msg);
+                        $('#confirmationModal').modal('hide');
+                        resetForm();
+                    } else {
+                        notify("Warning", "warning", response.msg);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    notify("Error", "error", "Oops! Something went wrong.");
+                },
+                complete: function () {
+                    $("#preloader").fadeOut("slow");
+                }
+            });
+        }
+
+        function moveItems(origin, dest) {
+            $(origin).find(':selected').appendTo(dest);
+        }
+
+        function moveAllItems(origin, dest) {
+            $(origin).children().appendTo(dest);
+        }
+
+        $('#left').click(function () {
+            let opts = $('#sbTwo').find('option:selected');
+            if (opts.length == 0) {
+                notify("Info", "info", "Please select at least 1 warehouse to moved.");
+            } else {
+                moveItems('#sbTwo', '#sbOne');
+                resetDefault();
+            }
+
+        });
+
+        $('#right').on('click', function () {
+            let opts = $('#sbOne').find('option:selected');
+            if (opts.length == 0) {
+                notify("Info", "info", "Please select at least 1 warehouse to moved.");
+            } else {
+                moveItems('#sbOne', '#sbTwo');
+                resetDefault();
+            }
+
+        });
+
+        $('#leftAll').on('click', function () {
+            moveAllItems('#sbTwo', '#sbOne');
+            resetDefault();
+        });
+
+        $('#rightAll').on('click', function () {
+            moveAllItems('#sbOne', '#sbTwo');
+            resetDefault();
+        });
+
+
+
+    </script>
+}

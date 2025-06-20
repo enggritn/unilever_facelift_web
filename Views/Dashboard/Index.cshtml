@@ -1,0 +1,1066 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+@model Facelift_App.Models.Dashboard
+    <div class="container-fluid">
+
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+        </div>
+
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <button type="button" class="d-none d-sm-inline-block shadow btn btn-secondary btn-icon-split btn-sm" onclick="Refresh()">
+                <span class="icon text-white-50">
+                    <i class="fas fa-sync"></i>
+                </span>
+                <span class="text">Refresh</span>
+            </button>
+            <span>Generated At : @DateTime.Now.ToString("dd MMM yyyy HH:mm:ss")</span>
+        </div>
+
+        @if (ViewBag.IsApprover && ViewBag.TotalAccidentPending > 0)
+        {
+            <div class="row mb-1">
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <div class="alert alert-warning" role="alert">
+                        <b>@Model.TotalAccidentPending </b> BA Waiting for your approval. <a href="javascript:void(0)" onclick="listBA()">Click here.</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+
+        @if (ViewBag.totalRegistered > 0)
+        {
+            <div class="d-sm-flex align-items-center justify-content-between mb-1">
+                <h6 class="h6 mb-0 text-gray-900 font-weight-bold text-uppercase">Pallet (All)</h6>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-sm-3 col-md-3 col-lg-3 mb-4">
+                    <div class="card bg-primary shadow">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-white text-uppercase mb-1">Total</div>
+                                    <div class="h5 mb-0 font-weight-bold text-white">@Model.TotalPallet</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-pallet fa-2x text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3 mb-4">
+                    <div class="card bg-gradient-success shadow">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-white text-uppercase mb-1">Good</div>
+                                    <div class="h5 mb-0 font-weight-bold text-white">@Model.TotalPalletGood</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-pallet fa-2x text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3 mb-4">
+                    <div class="card bg-gradient-danger shadow">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-white text-uppercase mb-1">Damage</div>
+                                    <div class="h5 mb-0 font-weight-bold text-white">@Model.TotalPalletDamage</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-pallet fa-2x text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3 mb-4">
+                    <div class="card bg-gradient-dark shadow">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-white text-uppercase mb-1">Loss</div>
+                                    <div class="h5 mb-0 font-weight-bold text-white">@Model.TotalPalletLoss</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-pallet fa-2x text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mb-2">
+                <div class="col-sm-6 col-md-6 mb-2">
+                    <div class="card">
+                        <div class="card-body shadow border-bottom-primary">
+                            <div class="chart-pie">
+                                <canvas id="pieStock"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 mb-2">
+                    <div class="card">
+                        <div class="card-body shadow border-bottom-primary">
+                            <div class="chart-pie">
+                                <canvas id="pieStock2"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-sm-6 col-md-6 mb-2">
+                    <div class="card">
+                        <div class="card-body shadow border-bottom-success">
+                            <div class="chart-pie">
+                                <canvas id="pieStock3"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 mb-2">
+                    <div class="card">
+                        <div class="card-body shadow border-bottom-danger">
+                            <div class="chart-pie">
+                                <canvas id="pieStock4"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 offset-md-3 mb-2">
+                    <div class="card">
+                        <div class="card-body shadow border-bottom-dark">
+                            <div class="chart-pie">
+                                <canvas id="pieStock5"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        <div class="d-sm-flex align-items-center justify-content-between mb-1">
+            <h6 class="h6 mb-0 text-gray-900 font-weight-bold text-uppercase">Pallet (On Hand)</h6>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-sm-3 col-md-3 col-lg-3 mb-4">
+                <div class="card bg-primary shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-white text-uppercase mb-1">Total</div>
+                                <div class="h5 mb-0 font-weight-bold text-white">@Model.TotalActualPallet</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-pallet fa-2x text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-md-3 col-lg-3 mb-4">
+                <div class="card bg-gradient-success shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-white text-uppercase mb-1">Good</div>
+                                <div class="h5 mb-0 font-weight-bold text-white">@Model.TotalActualGood</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-pallet fa-2x text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-md-3 col-lg-3 mb-4">
+                <div class="card bg-gradient-danger shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-white text-uppercase mb-1">Damage</div>
+                                <div class="h5 mb-0 font-weight-bold text-white">@Model.TotalActualDamage</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-pallet fa-2x text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-md-3 col-lg-3 mb-4">
+                <div class="card bg-gradient-dark shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-white text-uppercase mb-1">Loss</div>
+                                <div class="h5 mb-0 font-weight-bold text-white">@Model.TotalActualLoss</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-pallet fa-2x text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-sm-flex align-items-center justify-content-between mb-1">
+            <h6 class="h6 mb-0 text-gray-900 font-weight-bold text-uppercase">Inbound</h6>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 col-md-6 mb-4">
+                <div class="card border-left-secondary shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">In-Transit</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalInboundTransit</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-file fa-2x text-gray-500"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6 mb-4">
+                <div class="card border-left-secondary shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Finished</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalInboundFinished</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-file fa-2x text-gray-500"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-sm-flex align-items-center justify-content-between mb-1">
+            <h6 class="h6 mb-0 text-gray-900 font-weight-bold text-uppercase">Outbound</h6>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4 col-md-4 mb-4">
+                <div class="card border-left-secondary shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Loading</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalOutboundLoading</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-file fa-2x text-gray-500"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4 mb-4">
+                <div class="card border-left-secondary shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">In-transit</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalOutboundTransit</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-file fa-2x text-gray-500"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4 mb-4">
+                <div class="card border-left-secondary shadow">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Finished</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalOutboundFinished</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-file fa-2x text-gray-500"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-sm-flex align-items-center justify-content-between mb-1">
+            <h6 class="h6 mb-0 text-gray-900 font-weight-bold text-uppercase">Pallet (Shipment on Progress)</h6>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-sm-6 col-md-6 col-lg-6 mb-4">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 mb-2">
+                        <div class="card bg-gradient-primary shadow">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-white text-uppercase mb-1">Delivery</div>
+                                        <div class="h5 mb-0 font-weight-bold text-white">@Model.TotalPalletInShipment</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-pallet fa-2x text-white"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 mb-2">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Destination</th>
+                                                <th class="text-right" style="width:  30%">Total Pallet</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.PalletDelivery != null && Model.PalletDelivery.Count() > 0)
+                                            {
+                                                foreach (var item in Model.PalletDelivery)
+                                                {
+                                                    <tr>
+                                                        <td>@item.WarehouseName</td>
+                                                        <td class="text-right" colspan="2">@item.TotalPallet</td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td class="text-center" colspan="2">Empty</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6 mb-4">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 mb-2">
+                        <div class="card bg-gradient-info shadow">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-white text-uppercase mb-1">Incoming</div>
+                                        <div class="h5 mb-0 font-weight-bold text-white">@Model.TotalPalletIncoming</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-pallet fa-2x text-white"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 mb-2">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Origin</th>
+                                                <th class="text-right" style="width:  30%">Total Pallet</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.PalletIncoming != null && Model.PalletIncoming.Count() > 0)
+                                            {
+                                                foreach (var item in Model.PalletIncoming)
+                                                {
+                                                    <tr>
+                                                        <td>@item.WarehouseName</td>
+                                                        <td class="text-right" colspan="2">@item.TotalPallet</td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td class="text-center" colspan="2">Empty</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="d-sm-flex align-items-center justify-content-between mb-1">
+            <h6 class="h6 mb-0 text-gray-900 font-weight-bold text-uppercase">All Shipment in transit</h6>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-sm-12 col-md-12 col-lg-12 mb-4">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 mb-2">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>DELIVERY NUMBER</th>
+                                                <th>ORIGIN</th>
+                                                <th>DESTINATION</th>
+                                                <th>STATUS</th>
+                                                <th>CREATED AT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>SHP-CRMS/SKIN/21/VII/012</td>
+                                                <td>WHC001 - CRMS</td>
+                                                <td>WHC002 - SKIN</td>
+                                                <td>DISPATCH</td>
+                                                <th>13 Jul 2021 09:06:35</th>
+                                            </tr>
+                                            <tr>
+                                                <td>SHP-SKIN/DP6I/21/VII/013</td>
+                                                <td>WHC002 - SKIN</td>
+                                                <td>WHC005 - DP6 INHOUSE</td>
+                                                <td>DISPATCH</td>
+                                                <th>13 Jul 2021 11:15:45</th>
+                                            </tr>
+                                            <tr>
+                                                <td>SHP-DP6I/DP6D/21/VII/014</td>
+                                                <td>WHC005 - DP6 INHOUSE</td>
+                                                <td>WHC007 - DP6 DELTASILICONE 6</td>
+                                                <td>DISPATCH</td>
+                                                <th>13 Jul 2021 13:10:21</th>
+                                            </tr>
+                                        </tbody>
+                                        @*<tbody>
+                                            @if (Model.ShipmentAging != null && Model.ShipmentAging.Count() > 0)
+                                            {
+                                                foreach (var item in Model.ShipmentAging)
+                                                {
+                                                    <tr>
+                                                        <td>@item.DeliveryNumber</td>
+                                                        <td>@item.OriginCode - @item.OriginName</td>
+                                                        <td>@item.DestinationCode - @item.DestinationName</td>
+                                                        <td>@item.ShipmentStatus</td>
+                                                        <th>@item.CreatedAt</th>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td class="text-center" colspan="5">Empty</td>
+                                                </tr>
+                                            }
+                                        </tbody>*@
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-sm-flex align-items-center justify-content-between mb-1">
+            <h6 class="h6 mb-0 text-gray-900 font-weight-bold text-uppercase">Pallet (Shipment Aging)</h6>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-sm-12 col-md-12 col-lg-12 mb-4">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 mb-2">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>DELIVERY NUMBER</th>
+                                                <th>ORIGIN</th>
+                                                <th>DESTINATION</th>
+                                                <th>STATUS</th>
+                                                <th>CREATED AT</th>
+                                                <th>AGING DAY</th>
+                                                <th>AGING MIN</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.ShipmentAging != null && Model.ShipmentAging.Count() > 0)
+                                            {
+                                                foreach (var item in Model.ShipmentAging)
+                                                {
+                                                    <tr>
+                                                        <td>@item.DeliveryNumber</td>
+                                                        <td>@item.OriginCode - @item.OriginName</td>
+                                                        <td>@item.DestinationCode - @item.DestinationName</td>
+                                                        <td>@item.ShipmentStatus</td>
+                                                        <th>@item.CreatedAt</th>
+                                                        <th>@item.AgingDay</th>
+                                                        <th>@item.AgingMin</th>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td class="text-center" colspan="7">Empty</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (ViewBag.IsApprover && ViewBag.TotalAccidentPending > 0)
+        {
+            <div class="d-sm-flex align-items-center justify-content-between mb-1">
+                <h6 class="h6 mb-0 text-gray-900 font-weight-bold text-uppercase">BA Waiting for Approval</h6>
+            </div>
+            <div class="row mb-4" id="approvalSection">
+                <div class="col-sm-12 col-md-12 col-lg-12 mb-2">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Transaction Code</th>
+                                            <th>Created At</th>
+                                            <th>Aging</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.AgingTransaction != null && Model.AgingTransaction.Count() > 0)
+                                        {
+                                            foreach (var item in Model.AgingTransaction)
+                                            {
+                                                <tr>
+                                                    <td>@item.TransactionCode</td>
+                                                    <td>@item.CreatedAt</td>
+                                                    <td>@item.Aging day(s)</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm btn-info btn-icon-split" onclick="GoToBA('@item.TransactionId')">
+                                                            <span class="icon text-white-50"><i class="fas fa-edit"></i></span>
+                                                            <span class="text">Detail</span>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td class="text-center" colspan="4">Empty</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+    </div>
+
+
+@section custom_js
+{
+    @Scripts.Render("~/Content/vendor/chart.js/Chart.min.js")
+
+
+<script>
+
+        function listBA(){
+            var elmnt = document.getElementById("approvalSection");
+            elmnt.scrollIntoView();
+        }
+        function Refresh() {
+            location.reload();
+        }
+        // Set new default font family and font color to mimic Bootstrap's default styling
+        Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#858796';
+
+        Chart.plugins.register({
+            afterDraw: function (chart) {
+                if (chart.data.datasets.length === 0) {
+                    // No data is present
+                    var ctx = chart.chart.ctx;
+                    var width = chart.chart.width;
+                    var height = chart.chart.height
+                    //chart.clear();
+                    ctx.save();
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('Empty', width / 2, height / 2);
+                    ctx.restore();
+                } else if (chart.data.datasets.length > 0) {
+                    if (chart.data.datasets[0].data.length == 0) {
+                        var ctx = chart.chart.ctx;
+                        var width = chart.chart.width;
+                        var height = chart.chart.height
+                        //chart.clear();
+                        ctx.save();
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText('Empty', width / 2, height / 2);
+                        ctx.restore();
+                    }
+                }
+            }
+        });
+
+        window.chartColors = {
+            red: 'rgb(255, 99, 132)',
+            orange: 'rgb(255, 159, 64)',
+            yellow: 'rgb(255, 205, 86)',
+            green: 'rgb(75, 192, 192)',
+            blue: 'rgb(54, 162, 235)',
+            purple: 'rgb(153, 102, 255)',
+            grey: 'rgb(201, 203, 207)'
+        };
+
+
+        let colors = [
+            'rgba(2, 117, 216, 1)',
+            'rgba(118,96,138 ,1)',
+            'rgba(162,0,37 ,1)',
+            'rgba(240, 173, 78, 1)',
+            'rgba(217, 83, 79,1)',
+            'rgba(91, 192, 222, 1)',
+            'rgba(92, 184, 92)',
+            'rgba(106,0,255 ,1)',
+            'rgba(109,135,100 ,1)',
+            'rgba(96,169,23 ,1)',
+            'rgba(41, 43, 44, 1)',
+            'rgba(164,196,0 ,1)',
+            'rgba(240,163,10 ,1)',
+            'rgba(170,0,255 ,1)',
+            'rgba(0,80,239 ,1)',
+            'rgba(0,171,169 ,1)',
+            'rgba(0,138,0 ,1)',
+            'rgba(227,200,0 ,1)',
+            'rgb(255, 159, 64, 1)',
+            'rgba(132,117,69 ,1)'
+        ];
+
+
+        let pieArray = JSON.parse('@Html.Raw(Json.Encode(@Model.PalletWarehouses))')
+        let pieData = [];
+        let pieLabel = [];
+        let pieColor = [];
+        if (pieArray) {
+            pieArray.forEach(function (item, index) {
+                pieData.push(item.TotalPallet.replace(',', ''));
+                pieLabel.push(item.WarehouseName);
+                pieColor.push(item.ChartColor);
+            });
+        }
+        // Pie Chart Example
+        var ctx = document.getElementById("pieStock");
+        var config = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: pieData,
+                    backgroundColor: pieColor,
+                    label: ''
+                }],
+                labels: pieLabel,
+                borderColor: "#fff"
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Total Pallet on Sites'
+                },
+                legend: { display: true, position: 'left' },
+                responsive: true,
+                tooltips: {
+                    enabled: false
+                },
+                maintainAspectRatio: false,
+                hover: {
+                    animationDuration: 1
+                },
+                animation: {
+                    duration: 1,
+                    onComplete: function () {
+                        var ctx = this.chart.ctx;
+                        var textSize = ctx.canvas.width / 80;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+                        ctx.fillStyle = '#fff';
+
+                        this.data.datasets.forEach(function (dataset) {
+
+                            for (var i = 0; i < dataset.data.length; i++) {
+                                let curr_data = dataset.data[i];
+                                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                                    total = dataset._meta[Object.keys(dataset._meta)[0]].total,
+                                    mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius) / 2,
+                                    start_angle = model.startAngle,
+                                    end_angle = model.endAngle,
+                                    mid_angle = start_angle + (end_angle - start_angle) / 2;
+
+                                var x = mid_radius * Math.cos(mid_angle);
+                                var y = mid_radius * Math.sin(mid_angle);
+
+                                if (curr_data && model.circumference) {
+                                    curr_data = curr_data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    ctx.fillText(curr_data, model.x + x, model.y + y + 8);
+                                }
+                            }
+                        });
+                    }
+                },
+                //cutoutPercentage: 60
+            }
+        };
+        var pieStock = new Chart(ctx, config);
+
+        var ctx2 = document.getElementById("pieStock2");
+        var config2 = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: pieData,
+                    backgroundColor: pieColor,
+                    label: ''
+                }],
+                labels: pieLabel,
+                borderColor: "#fff"
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Total Pallet on Sites (%)'
+                },
+                legend: { display: true, position: 'left' },
+                responsive: true,
+                tooltips: {
+                    enabled: false
+                },
+                maintainAspectRatio: false,
+                hover: {
+                    animationDuration: 1
+                },
+                animation: {
+                    duration: 1,
+                    onComplete: function () {
+                        var ctx = this.chart.ctx;
+                        var textSize = ctx.canvas.width / 80;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+                        ctx.fillStyle = '#fff';
+
+                        this.data.datasets.forEach(function (dataset) {
+
+                            for (var i = 0; i < dataset.data.length; i++) {
+                                let curr_data = dataset.data[i];
+                                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                                    total = dataset._meta[Object.keys(dataset._meta)[0]].total,
+                                    mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius) / 2,
+                                    start_angle = model.startAngle,
+                                    end_angle = model.endAngle,
+                                    mid_angle = start_angle + (end_angle - start_angle) / 2;
+
+                                var x = mid_radius * Math.cos(mid_angle);
+                                var y = mid_radius * Math.sin(mid_angle);
+
+                                if (curr_data && model.circumference) {
+                                    var percentage = curr_data / total;
+                                    var n = percentage.toFixed(3) * 100;
+                                    n = n.toFixed(2);
+                                    //var percent = String(Math.round(curr_data / total * 100)) + "%";
+                                    var percent = String(n) + "%";
+                                    ctx.fillText(percent, model.x + x, model.y + y + 8);
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        };
+        var pieStock2 = new Chart(ctx2, config2);
+
+
+
+        let goodArray = JSON.parse('@Html.Raw(Json.Encode(@Model.PalletGood))')
+        let goodData = [];
+        let goodLabel = [];
+        let goodColor = [];
+        if (goodArray) {
+            goodArray.forEach(function (item, index) {
+                goodData.push(item.TotalPallet.replace(',', ''));
+                goodLabel.push(item.WarehouseName);
+                goodColor.push(item.ChartColor);
+            });
+        }
+
+        var ctx3 = document.getElementById("pieStock3");
+        var config3 = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: goodData,
+                    backgroundColor: goodColor,
+                    label: ''
+                }],
+                labels: goodLabel,
+                borderColor: "#fff"
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Total Pallet (Good) on Sites'
+                },
+                legend: { display: true, position: 'left' },
+                responsive: true,
+                tooltips: {
+                    enabled: false
+                },
+                maintainAspectRatio: false,
+                hover: {
+                    animationDuration: 1
+                },
+                animation: {
+                    duration: 1,
+                    onComplete: function () {
+                        var ctx = this.chart.ctx;
+                        var textSize = ctx.canvas.width / 80;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+                        ctx.fillStyle = '#fff';
+
+                        this.data.datasets.forEach(function (dataset) {
+
+                            for (var i = 0; i < dataset.data.length; i++) {
+                                let curr_data = dataset.data[i];
+                                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                                    total = dataset._meta[Object.keys(dataset._meta)[0]].total,
+                                    mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius) / 2,
+                                    start_angle = model.startAngle,
+                                    end_angle = model.endAngle,
+                                    mid_angle = start_angle + (end_angle - start_angle) / 2;
+
+                                var x = mid_radius * Math.cos(mid_angle);
+                                var y = mid_radius * Math.sin(mid_angle);
+
+                                if (curr_data && model.circumference) {
+                                    curr_data = curr_data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    ctx.fillText(curr_data, model.x + x, model.y + y + 8);
+                                }
+                            }
+                        });
+                    }
+                },
+                //cutoutPercentage: 60
+            }
+        };
+        var pieStock3 = new Chart(ctx3, config3);
+
+        let damageArray = JSON.parse('@Html.Raw(Json.Encode(@Model.PalletDamage))')
+        let damageData = [];
+        let damageLabel = [];
+        let damageColor = [];
+        if (damageArray) {
+            damageArray.forEach(function (item, index) {
+                damageData.push(item.TotalPallet.replace(',', ''));
+                damageLabel.push(item.WarehouseName);
+                damageColor.push(item.ChartColor);
+            });
+        }
+
+        var ctx4 = document.getElementById("pieStock4");
+        var config4 = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: damageData,
+                    backgroundColor: damageColor,
+                    label: ''
+                }],
+                labels: damageLabel,
+                borderColor: "#fff"
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Total Pallet (Damage) on Sites'
+                },
+                legend: { display: true, position: 'left' },
+                responsive: true,
+                tooltips: {
+                    enabled: false
+                },
+                maintainAspectRatio: false,
+                hover: {
+                    animationDuration: 1
+                },
+                animation: {
+                    duration: 1,
+                    onComplete: function () {
+                        var ctx = this.chart.ctx;
+                        var textSize = ctx.canvas.width / 80;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+                        ctx.fillStyle = '#fff';
+
+                        this.data.datasets.forEach(function (dataset) {
+
+                            for (var i = 0; i < dataset.data.length; i++) {
+                                let curr_data = dataset.data[i];
+                                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                                    total = dataset._meta[Object.keys(dataset._meta)[0]].total,
+                                    mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius) / 2,
+                                    start_angle = model.startAngle,
+                                    end_angle = model.endAngle,
+                                    mid_angle = start_angle + (end_angle - start_angle) / 2;
+
+                                var x = mid_radius * Math.cos(mid_angle);
+                                var y = mid_radius * Math.sin(mid_angle);
+
+                                if (curr_data && model.circumference) {
+                                    curr_data = curr_data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    ctx.fillText(curr_data, model.x + x, model.y + y + 8);
+                                }
+                            }
+                        });
+                    }
+                },
+                //cutoutPercentage: 60
+            }
+        };
+        var pieStock4 = new Chart(ctx4, config4);
+
+        let lossArray = JSON.parse('@Html.Raw(Json.Encode(@Model.PalletLoss))')
+        let lossData = [];
+        let lossLabel = [];
+        let lossColor = [];
+        if (lossArray) {
+            lossArray.forEach(function (item, index) {
+                lossData.push(item.TotalPallet.replace(',', ''));
+                lossLabel.push(item.WarehouseName);
+                lossColor.push(item.ChartColor);
+            });
+        }
+
+        var ctx5 = document.getElementById("pieStock5");
+        var config5 = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: lossData,
+                    backgroundColor: lossColor,
+                    label: ''
+                }],
+                labels: lossLabel,
+                borderColor: "#fff"
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Total Pallet (Loss) on Sites'
+                },
+                legend: { display: true, position: 'left' },
+                responsive: true,
+                tooltips: {
+                    enabled: false
+                },
+                maintainAspectRatio: false,
+                hover: {
+                    animationDuration: 1
+                },
+                animation: {
+                    duration: 1,
+                    onComplete: function () {
+                        var ctx = this.chart.ctx;
+                        var textSize = ctx.canvas.width / 80;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+                        ctx.fillStyle = '#fff';
+
+                        this.data.datasets.forEach(function (dataset) {
+
+                            for (var i = 0; i < dataset.data.length; i++) {
+                                let curr_data = dataset.data[i];
+                                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
+                                    total = dataset._meta[Object.keys(dataset._meta)[0]].total,
+                                    mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius) / 2,
+                                    start_angle = model.startAngle,
+                                    end_angle = model.endAngle,
+                                    mid_angle = start_angle + (end_angle - start_angle) / 2;
+
+                                var x = mid_radius * Math.cos(mid_angle);
+                                var y = mid_radius * Math.sin(mid_angle);
+
+                                if (curr_data && model.circumference) {
+                                    curr_data = curr_data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    ctx.fillText(curr_data, model.x + x, model.y + y + 8);
+                                }
+                            }
+                        });
+                    }
+                },
+                //cutoutPercentage: 60
+            }
+        };
+
+
+        var pieStock5 = new Chart(ctx5, config5);
+
+        function GoToBA(id) {
+            location.href = '@Url.Action("Detail", "Outbound")?x=' + id;
+        }
+
+
+
+</script>
+}

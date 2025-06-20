@@ -1,0 +1,200 @@
+﻿using Facelift_App.Helper;
+using Facelift_App.Models.Api;
+using Facelift_App.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
+
+namespace Facelift_App.Controllers.Api
+{
+    public class InspectionController : ApiController
+    {
+        private readonly IUsers IUsers;
+        private readonly IMenus IMenus;
+        private readonly IAccidents IAccidents;
+        private readonly IWarehouses IWarehouses;
+        private readonly IPallets IPallets;
+
+        public InspectionController(IUsers Users, IMenus Menus, IAccidents Accidents, IWarehouses Warehouses, IPallets Pallets)
+        {
+            IUsers = Users;
+            IMenus = Menus;
+            IAccidents = Accidents;
+            IWarehouses = Warehouses;
+            IPallets = Pallets;
+        }
+
+        public async Task<IHttpActionResult> GetById(string palletId)
+        {
+            Dictionary<string, object> obj = new Dictionary<string, object>();
+            string message = "";
+            bool status = false;
+            var re = Request;
+            var headers = re.Headers;
+
+            try
+            {
+                //get user access
+                if (headers.Contains(Constant.facelift_token_name) && headers.Contains("warehouseId"))
+                {
+                    string token = headers.GetValues(Constant.facelift_token_name).First();
+                    string warehouseId = headers.GetValues("warehouseId").First();
+                    string username = Encryptor.Decrypt(Utilities.DecodeFrom64(token), Constant.facelift_token_key);
+                    MsUser user = await IUsers.GetDataByIdAsync(username);
+                    MsWarehouse warehouse = await IWarehouses.GetDataByIdAsync(warehouseId);
+                    if (user != null && warehouse != null)
+                    {
+                        MsPallet pallet = await IPallets.GetDataByPalletCodeAsync(palletId);
+                        if(pallet != null)
+                        {
+                            obj.Add("pallet", pallet);
+                            status = true;
+                            message = "Retrieve pallet succeeded.";
+                        }
+                        
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
+
+                }
+                else
+                {
+                    return Unauthorized();
+                }
+            }
+            catch (HttpRequestException reqpEx)
+            {
+                message = reqpEx.Message;
+                return BadRequest();
+            }
+            catch (HttpResponseException respEx)
+            {
+                message = respEx.Message;
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                //return InternalServerError();
+
+            }
+
+
+            obj.Add("status", status);
+            obj.Add("message", message);
+
+
+            return Ok(obj);
+        }
+
+        public async Task<IHttpActionResult> Put(Inspection inspection)
+        {
+            Dictionary<string, object> obj = new Dictionary<string, object>();
+            string message = "Invalid form submission.";
+            bool status = false;
+            var re = Request;
+            var headers = re.Headers;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    //get user access
+                    if (headers.Contains(Constant.facelift_token_name))
+                    {
+                        string token = headers.GetValues(Constant.facelift_token_name).First();
+                        string username = Encryptor.Decrypt(Utilities.DecodeFrom64(token), Constant.facelift_token_key);
+                        MsUser user = await IUsers.GetDataByIdAsync(username);
+                        if (user != null)
+                        {
+                            TrxAccidentHeader header = await IAccidents.GetDataByIdAsync(inspection.TransactionId);
+                            if(header == null)
+                            {
+                                throw new Exception("Transaction not recognized.");
+                            }
+
+                            if (header.IsDeleted)
+                            {
+                                throw new Exception("Transaction already deleted.");
+                            }
+
+                            if (header.TransactionStatus.Equals(Constant.TransactionStatus.CLOSED.ToString()))
+                            {
+                                throw new Exception("Transaction already closed.");
+                            }
+
+                            TrxAccidentItem item = await IAccidents.GetDataByTransactionTagIdAsync(inspection.TransactionId, inspection.TagId);
+
+                            if(item == null)
+                            {
+                                throw new Exception("Transaction & Tag Id not recognized.");
+                            }
+
+                            string reasonName = inspection.ReasonName;
+                           
+                            List<string> reasons = Constant.GetReasonByAccidentType(header.AccidentType);
+
+                            if (!reasons.Contains(reasonName))
+                            {
+                                throw new Exception("Reason not recognized.");
+                            }
+
+                            string reasonType = Constant.ReasonList[reasonName].ToString();
+
+                            item.ReasonType = reasonType;
+                            item.ReasonName = reasonName;
+                            item.ScannedBy = user.Username;
+                            item.ScannedAt = DateTime.Now;
+
+                            status = await IAccidents.UpdateItemAsync(item);
+                            if (status)
+                            {
+                                message = "Update item successfuly.";
+                            }
+                            else
+                            {
+                                message = "Update item failed. Please contact system administrator.";
+                            }
+                        }
+                        else
+                        {
+                            return Unauthorized();
+                        }
+                    }
+                    else
+                    {
+                        return Unauthorized();
+                    }
+                }
+            }
+            catch (HttpRequestException reqpEx)
+            {
+                message = reqpEx.Message;
+                return BadRequest();
+            }
+            catch (HttpResponseException respEx)
+            {
+                message = respEx.Message;
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                //return InternalServerError();
+            }
+
+
+            obj.Add("status", status);
+            obj.Add("message", message);
+
+
+
+            return Ok(obj);
+        }
+    }
+}

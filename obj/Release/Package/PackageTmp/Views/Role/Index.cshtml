@@ -1,0 +1,144 @@
+﻿
+
+@{
+    ViewBag.Title += " - List";
+}
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@ViewBag.Title</h1>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-lg-12">
+            <button type="button" class="btn btn-success btn-icon-split" onclick="Create()">
+                <span class="icon text-white-50">
+                    <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">New</span>
+            </button>
+            <button type="button" class="btn btn-secondary btn-icon-split" onclick="Refresh()">
+                <span class="icon text-white-50">
+                    <i class="fas fa-sync"></i>
+                </span>
+                <span class="text">Refresh</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow mb-4 border-left-primary">
+                @*<div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Table</h6>
+                    </div>*@
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped" id="iTable" width="100%" cellspacing="0">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Role Name</th>
+                                    <th>Role Description</th>
+                                    <th>Status</th>
+                                    <th>Created By</th>
+                                    <th>Created At</th>
+                                    <th>Modified By</th>
+                                    <th>Modified At</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+@section custom_css
+{
+    @*@Styles.Render("~/Content/vendor/datatables/jquery.dataTables.min.css")*@
+    @Styles.Render("~/Content/vendor/datatables/dataTables.bootstrap4.min.css")
+    @Styles.Render("~/Content/vendor/datatables/fixedColumns.bootstrap4.min.css")
+
+    <style>
+        th, td {
+            white-space: nowrap;
+        }
+
+        div.dataTables_wrapper {
+            /*width: 800px;*/
+            margin: 0 auto;
+        }
+    </style>
+}
+
+@section custom_js
+{
+    @Scripts.Render("~/Content/vendor/datatables/jquery.dataTables.min.js")
+    @Scripts.Render("~/Content/vendor/datatables/dataTables.bootstrap4.min.js")
+    @Scripts.Render("~/Content/vendor/datatables/dataTables.fixedColumns.min.js")
+
+    <script>
+
+        function Create() {
+            location.href = '@Url.Action("Create")';
+    }
+
+    function Detail(id) {
+        location.href = '@Url.Action("Detail")?x=' + id;
+        }
+
+        function Refresh() {
+            table.ajax.reload();
+        }
+
+       var table = $('#iTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '@Url.Action("Datatable")',
+                    type: "POST",
+                    datatype: "json"
+                },
+                scrollY: "500px",
+                scrollX: true,
+                scrollCollapse: true,
+                paging: true,
+                //fixedColumns: true
+                fixedColumns: {
+                    leftColumns: 1,
+                    rightColumns: 1
+                },
+               columnDefs: [
+                   { "orderable": false, "targets": -1 },
+               ],
+                columns: [
+                    { "data": "RoleName", "name": "RoleName", "autoWidth": true },
+                    { "data": "RoleDescription", "name": "RoleDescription", "autoWidth": true },
+                    { "data": "IsActive", "name": "IsActive", "autoWidth": true },
+                    { "data": "CreatedBy", "name": "CreatedBy", "autoWidth": true },
+                    { "data": "CreatedAt", "name": "CreatedAt", "autoWidth": true },
+                    { "data": "ModifiedBy", "name": "ModifiedBy", "autoWidth": true },
+                    { "data": "ModifiedAt", "name": "ModifiedAt", "autoWidth": true },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            let button = "<button type=\"button\" class=\"btn btn-sm btn-info btn-icon-split\" onclick=\"Detail('"+ row.Id +"')\">";
+                            button += '<span class="icon text-white-50"><i class="fas fa-edit"></i></span >';
+                            button += '<span class="text">Detail</span></button >';
+                            return button;
+                            //return "<a href='#' class='btn btn-danger' onclick=DeleteData('" + row.Username + "'); >Delete</a>";
+                        }
+                    },
+
+                ]
+       });
+
+    </script>
+}

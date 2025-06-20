@@ -1,0 +1,529 @@
+﻿@model Facelift_App.Models.ShipmentVM
+
+@{
+    ViewBag.Title += " - Detail";
+}
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@ViewBag.Title</h1>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-xs-12 col-lg-12">
+            <button type="button" onclick="goBack()" class="btn btn-info btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-arrow-left"></i>
+                </span>
+                <span class="text">Back</span>
+            </button>
+            <button type="button" class="btn btn-secondary btn-icon-split" onclick="Refresh()">
+                <span class="icon text-white-50">
+                    <i class="fas fa-sync"></i>
+                </span>
+                <span class="text">Refresh</span>
+            </button>
+            <div class="fa-pull-right">
+                @if (ViewBag.ShipmentStatus.Equals("DISPATCH"))
+                {
+                    <button type="button" onclick="openBA()" class="btn btn-success btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                        <span class="text">Create BA Document</span>
+                    </button>
+                }
+                @if (ViewBag.ShipmentStatus.Equals("DISPATCH") && ViewBag.Role.Equals("R-34193a80fe3e49daa02880c7ed4a5497"))
+                {
+                    <button type="button" onclick="ClosedShipment()" class="btn btn-success btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-save"></i>
+                        </span>
+                        <span class="text">Closed Shipment</span>
+                    </button>
+                    @*<button type="button" onclick="AutoClosedShipment()" class="btn btn-success btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-save"></i>
+                        </span>
+                        <span class="text">Auto Closed Shipment</span>
+                    </button>*@
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-xs-12 col-lg-12">
+            <div class="card shadow border-left-primary">
+                <div class="card-body">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="tab-1" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Document Information</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab-2" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">Item Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab-3" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false">Document Logs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab-4" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4" aria-selected="false">Document Versions</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab-1">
+                            <div class="row mt-3">
+                                <div class="col-xs-6 col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Document Number</label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.TransactionCode, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Origin</label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.WarehouseName, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Destination</label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.DestinationName, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Transaction Status</label>
+                                        <div class="col-sm-8">
+                                            <div class="form-control-plaintext">
+                                                @Html.Raw(Model.TransactionStatus)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Shipment Status</label>
+                                        <div class="col-sm-8">
+                                            <div class="form-control-plaintext">
+                                                @Html.Raw(Model.ShipmentStatus)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Approved By</label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.ApprovedBy, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "", @Value = !string.IsNullOrEmpty(Model.ApprovedBy) ? Model.ApprovedBy : "-" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Approved At</label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.ApprovedAt, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "", @Value = @Model.ApprovedAt.HasValue ? Model.ApprovedAt.Value.ToString("d MMM yyyy HH:mm:ss") : "-" } })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-xs-6 col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Shipment Number <span class="text-info">(Optional)</span></label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.ShipmentNumber, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "", @Value = string.IsNullOrEmpty(Model.ShipmentNumber) ? "-" : Model.ShipmentNumber } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Transporter</label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.TransporterName, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Driver</label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.DriverName, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Truck</label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.PlateNumber, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Pallet Qty</label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.PalletQty, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Remarks <span class="text-info">(Optional)</span></label>
+                                        <div class="col-sm-8">
+                                            @Html.TextArea("Remarks", string.IsNullOrEmpty(Model.Remarks) ? "-" : Model.Remarks, new { @class = "form-control-plaintext", @readonly = "", @autocomplete = "off", @rows = 3 })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab-2">
+                            <div class="row mt-3 mb-3">
+                                <div class="col-xs-12 col-lg-12">
+                                    <div class="d-sm-flex align-items-center justify-content-between mb-1">
+                                        <h5 class="h3 mb-0 text-gray-800">Pallet List</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3 mb-3">
+                                <div class="col-lg-12">
+                                    <button type="button" class="btn btn-secondary btn-icon-split" onclick="RefreshItem()">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-sync"></i>
+                                        </span>
+                                        <span class="text">Refresh</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3 col-md-3 col-lg-3 mb-4">
+                                    <div class="card border-left-dark shadow">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-gray-600 text-uppercase mb-1">Total Pallet</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-600"><span id="totalAllPallet">0</span></div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-pallet fa-2x text-gray-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-md-3 col-lg-3 mb-4">
+                                    <div class="card border-left-dark shadow">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-gray-600 text-uppercase mb-1">Total Scanned Pallet</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-600"><span id="totalScannedPallet">0</span></div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-pallet fa-2x text-gray-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-md-3 col-lg-3 mb-4">
+                                    <div class="card border-left-dark shadow">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-gray-600 text-uppercase mb-1">Total Unscanned Pallet</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-600"><span id="totalUnscannedPallet">0</span></div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-pallet fa-2x text-gray-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <span class="text-muted">Pallet : <b id="totalScanned">0</b> / <b id="totalPallet"></b></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped text-nowrap" id="itemTable" width="100%" cellspacing="0">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Tag Id</th>
+                                                    <th>Pallet Type</th>
+                                                    <th>Pallet Owner</th>
+                                                    <th>Pallet Producer</th>
+                                                    <th>Received By</th>
+                                                    <th>Received At</th>
+                                                    <th>Movement Status</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab-3">
+                            <div class="row mt-3 mb-3">
+                                <div class="col-xs-12 col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Action Name</th>
+                                                    <th>Executed By</th>
+                                                    <th>Executed At</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.logs.Any())
+                                                {
+                                                    int num = 1;
+                                                    foreach (var log in Model.logs)
+                                                    {
+                                                        <tr>
+                                                            <td>@(num++)</td>
+                                                            <td>@log.ActionName</td>
+                                                            <td>@log.ExecutedBy</td>
+                                                            <td>@log.ExecutedAt.ToString("dd MMM yyyy HH:mm:ss")</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="4" class="text-center">No Data</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab-4">
+                            <div class="row mt-3 mb-3">
+                                <div class="col-xs-12 col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Version</th>
+                                                    <th>Transaction Code</th>
+                                                    <th>Shipment Number</th>
+                                                    <th>Remarks</th>
+                                                    <th>Warehouse</th>
+                                                    <th>Origin Warehouse</th>
+                                                    <th>Transporter Name</th>
+                                                    <th>Driver Name</th>
+                                                    <th>Plate Number</th>
+                                                    <th>Pallet Qty</th>
+                                                    <th>Transaction Status</th>
+                                                    <th>Shipment Status</th>
+                                                    <th>Executed By</th>
+                                                    <th>Executed At</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.versions.Any())
+                                                {
+                                                    int num = 1;
+                                                    foreach (var version in Model.versions)
+                                                    {
+                                                <tr>
+                                                    <td>@version.Version</td>
+                                                    <td>@Model.TransactionCode</td>
+                                                    <td>@version.ShipmentNumber</td>
+                                                    <td>@version.Remarks</td>
+                                                    <td>@version.DestinationName</td>
+                                                    <td>@version.WarehouseName</td>
+                                                    <td>@version.TransporterName</td>
+                                                    <td>@version.DriverName</td>
+                                                    <td>@version.PlateNumber</td>
+                                                    <td>@version.PalletQty</td>
+                                                    <td>@version.TransactionStatus</td>
+                                                    <td>@version.ShipmentStatus</td>
+                                                    <td>
+                                                        @if (!string.IsNullOrEmpty(version.ApprovedBy))
+                                                        {
+                                                            @version.ApprovedBy;
+                                                        }
+                                                        else if (!string.IsNullOrEmpty(version.ModifiedBy))
+                                                        {
+                                                            @version.ModifiedBy;
+                                                        }
+                                                        else
+                                                        {
+                                                            @version.CreatedBy;
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @if (version.ApprovedAt.HasValue)
+                                                        {
+                                                            @version.ApprovedAt.Value.ToString("dd MMM yyyy HH:mm:ss");
+                                                        }
+                                                        @if (version.ModifiedAt.HasValue)
+                                                        {
+                                                            @version.ModifiedAt.Value.ToString("dd MMM yyyy HH:mm:ss");
+                                                        }
+                                                        else
+                                                        {
+                                                            @version.CreatedAt.ToString("dd MMM yyyy HH:mm:ss");
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="4" class="text-center">No Data</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@Html.Partial("ConfirmationModal")
+
+@section custom_css
+{
+    @Styles.Render("~/Content/vendor/toastr/toastr.css")
+    @Styles.Render("~/Content/vendor/datatables/dataTables.bootstrap4.min.css")
+    @Styles.Render("~/Content/vendor/datatables/fixedColumns.bootstrap4.min.css")
+}
+@section custom_js
+{
+    @Scripts.Render("~/Scripts/jquery.validate.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.js")
+    @Scripts.Render("~/Content/vendor/toastr/toastr.min.js")
+    @Scripts.Render("~/Content/custom/js/notification.js")
+    @Scripts.Render("~/Content/vendor/datatables/jquery.dataTables.min.js")
+    @Scripts.Render("~/Content/vendor/datatables/dataTables.bootstrap4.min.js")
+    @Scripts.Render("~/Content/vendor/datatables/dataTables.fixedColumns.min.js")
+<script>
+
+        let id = '@ViewBag.Id';
+
+
+        $(document).ready(function () {
+
+            let tempMessage = '@ViewBag.TempMessage';
+            if (tempMessage) {
+                notify("Success", "success", tempMessage);
+            }
+        });
+
+        function Refresh() {
+            location.reload();
+        }
+
+        function goBack() {
+            location.href = '@Url.Action("Index")';
+        }
+
+        $('#tab-2').on('shown.bs.tab', function (e) {
+            RefreshItem();
+        });
+
+        function RefreshItem() {
+            itemTable.ajax.reload();
+        }
+
+        function openBA() {
+            location.href = '@Url.Action("CreateBA")?x=' + id;
+        }
+
+        var itemTable = $('#itemTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '@Url.Action("DatatableItem")?id=' + id,
+                    type: "POST",
+                    datatype: "json"
+                },
+                scrollY: "500px",
+                scrollX: true,
+                scrollCollapse: true,
+            paging: true,
+            fixedColumns: {
+                leftColumns: 1
+            },
+            order: [[0, "asc"]],
+            columns: [
+                    { "data": "TagId", "name": "TagId", "autoWidth": true },
+                    { "data": "PalletTypeName", "name": "PalletName", "autoWidth": true },
+                    { "data": "PalletOwner", "name": "PalletOwner", "autoWidth": true },
+                    { "data": "PalletProducer", "name": "PalletProducer", "autoWidth": true },
+                    { "data": "ReceivedBy", "name": "ReceivedBy", "autoWidth": true },
+                    { "data": "ReceivedAt", "name": "ReceivedAt", "autoWidth": true },
+                    { "data": "PalletMovementStatus", "name": "PalletMovementStatus", "autoWidth": true },
+
+            ]
+        });
+
+        itemTable.on('xhr', function () {
+            let response = itemTable.ajax.json();
+            //recordsTotal = response.recordsTotal;
+            let totalPallet = response.recordsTotal;
+            let totalScanned = response.totalScanned;
+            $('#totalScanned').html(totalScanned);
+            $('#totalPallet').html(totalPallet);
+            $('#totalAllPallet').html(totalPallet);
+            let totalUnscanned = totalPallet - totalScanned;
+            $('#totalScannedPallet').html(totalScanned);
+            $('#totalUnscannedPallet').html(totalUnscanned);
+
+        });
+
+        function ClosedShipment() {
+            $("#preloader").show();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ClosedShipment")',
+                data: { x : id},
+                success: function (response) {
+                    if (response.stat) {
+                        goBack();
+                    } else {
+                        notify("Success", "success", response.msg);
+                        $("#preloader").fadeOut("slow");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    notify("Error", "error", "Oops! Something went wrong.");
+                    $("#preloader").fadeOut("slow");
+                },
+                complete: function () {
+                }
+            });
+        }
+
+         function AutoClosedShipment() {
+            $("#preloader").show();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("AutoClosedShipment")',
+                success: function (response) {
+                    if (response.stat) {
+                        goBack();
+                    } else {
+                        notify("Success", "success", response.msg);
+                        $("#preloader").fadeOut("slow");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    notify("Error", "error", "Oops! Something went wrong.");
+                    $("#preloader").fadeOut("slow");
+                },
+                complete: function () {
+                }
+            });
+        }
+
+</script>
+}

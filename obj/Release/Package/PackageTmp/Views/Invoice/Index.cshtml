@@ -1,0 +1,1003 @@
+﻿@model Facelift_App.Models.InvoiceRentVM
+@{
+    ViewBag.Title += " - List";
+}
+
+
+@{string[] months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" };}
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@ViewBag.Title</h1>
+    </div>
+
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="tab-1" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Rent</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tab-2" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">Damage / Loss</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tab-3" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false">List Email</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab-1">
+            <div class="row mt-3 mb-3">
+                <div class="col-xs-12 col-lg-12">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-1">
+                        <h6 class="h6 mb-0 text-gray-800">Rent</h6>
+                    </div>
+                </div>
+            </div>
+            @using (Html.BeginForm("CreateRent", null, FormMethod.Post, new { id = "mainFrm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row mt-3 mb-2">
+                    <div class="col-lg-4">
+                        <div class="card shadow border-left-warning h-100">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Create Invoice</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-sm-4">Year</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" name="currentYear">
+                                                    @for (int i = 2020; i <= DateTime.Now.Year; i++)
+                                                    {
+                                                        if (DateTime.Now.Year.Equals(i))
+                                                        {
+                                                            <option value="@i" selected>@i</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@i">@i</option>
+                                                        }
+                                                    }
+                                                </select>
+                                                @Html.ValidationMessageFor(model => model.CurrentYear, "", new { @class = "help-block text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-sm-4">Month</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" name="currentMonth">
+                                                    @for (int i = 1; i <= 12; i++)
+                                                    {
+                                                        if (DateTime.Now.Month.Equals(i))
+                                                        {
+                                                            <option value="@i" selected>@months[i - 1]</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@i">@months[i - 1]</option>
+                                                        }
+                                                    }
+                                                </select>
+                                                @Html.ValidationMessageFor(model => model.CurrentMonth, "", new { @class = "help-block text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-sm-4">Tax (%)</label>
+                                            <div class="col-sm-8">
+                                                @Html.EditorFor(model => model.Tax, new { htmlAttributes = new { @class = "form-control number", @autocomplete = "off" } })
+                                                @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "help-block text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-sm-4">Remarks</label>
+                                            <div class="col-sm-8">
+                                                @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                                @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "help-block text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="fa-pull-right">
+                                            <button type="button" onclick="resetForm()" class="btn btn-warning btn-icon-split">
+                                                <span class="icon text-white-50">
+                                                    <i class="fas fa-backspace"></i>
+                                                </span>
+                                                <span class="text">Cancel</span>
+                                            </button>
+                                            <button type="button" onclick="submitForm()" class="btn btn-primary btn-icon-split">
+                                                <span class="icon text-white-50">
+                                                    <i class="fas fa-save"></i>
+                                                </span>
+                                                <span class="text">Save</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card shadow mb-4 border-left-primary">
+                        <div class="card-body">
+                            <table class="table table-bordered table-striped" id="tableRent" width="100%" cellspacing="0">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Transaction Code</th>
+                                        <th>Month</th>
+                                        <th>Year</th>
+                                        <th>Tax</th>
+                                        <th>Remarks</th>
+                                        <th>Created By</th>
+                                        <th>Created At</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab-2">
+            <div class="row mt-3 mb-3">
+                <div class="col-xs-12 col-lg-12">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-1">
+                        <h6 class="h6 mb-0 text-gray-800">Damage / Loss</h6>
+                    </div>
+                </div>
+            </div>
+
+            @using (Html.BeginForm("CreateDeffect", null, FormMethod.Post, new { id = "mainFrm2" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row mt-3 mb-2">
+                    <div class="col-lg-4">
+                        <div class="card shadow border-left-warning h-100">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Create Invoice</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-sm-4">Year</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" type="text" name="CurrentYear" value="@DateTime.Now.Year" readonly>
+                                                @*<select class="form-control" name="CurrentYear">
+                                                    @for (int i = 2020; i <= DateTime.Now.Year; i++)
+                                                    {
+                                                        if (DateTime.Now.Year.Equals(i))
+                                                        {
+                                                            <option value="@i" selected>@i</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@i">@i</option>
+                                                        }
+                                                    }
+                                                </select>*@
+                                                @Html.ValidationMessageFor(model => model.CurrentYear, "", new { @class = "help-block text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-sm-4">Month</label>
+                                            <div class="col-sm-8">
+                                                 <input class="form-control" type="text" name="CurrentMonth" value="@DateTime.Now.Month" readonly>
+                                                @*<select class="form-control" name="CurrentMonth">
+                                                    @for (int i = 1; i <= 12; i++)
+                                                    {
+                                                        if (DateTime.Now.Month.Equals(i))
+                                                        {
+                                                            <option value="@i" selected>@months[i - 1]</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@i">@months[i - 1]</option>
+                                                        }
+                                                    }
+                                                </select>*@
+                                                @Html.ValidationMessageFor(model => model.CurrentMonth, "", new { @class = "help-block text-danger" })
+                                            </div>
+                                        </div>
+                                        @*<div class="form-group row">
+                                            <label class="col-form-label col-sm-4">Type</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" name="Type">
+                                                    <option value="DAMAGE" selected>DAMAGE</option>
+                                                    <option value="LOSS" selected>LOSS</option>
+                                                </select>
+                                                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "help-block text-danger" })
+                                            </div>
+                                        </div>*@
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-sm-4">Allowance</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" type="text" value=" @ViewBag.AllowanceDL" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-sm-4">Price per Pallet</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" type="text" value=" @ViewBag.PriceDL" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-sm-4">Tax (%)</label>
+                                            <div class="col-sm-8">
+                                                @Html.EditorFor(model => model.Tax, new { htmlAttributes = new { @class = "form-control number", @autocomplete = "off" } })
+                                                @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "help-block text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-sm-4">Remarks</label>
+                                            <div class="col-sm-8">
+                                                @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                                @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "help-block text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="fa-pull-right">
+                                            <button type="button" onclick="resetForm2()" class="btn btn-warning btn-icon-split">
+                                                <span class="icon text-white-50">
+                                                    <i class="fas fa-backspace"></i>
+                                                </span>
+                                                <span class="text">Cancel</span>
+                                            </button>
+                                            <button type="button" onclick="submitForm2()" class="btn btn-primary btn-icon-split">
+                                                <span class="icon text-white-50">
+                                                    <i class="fas fa-save"></i>
+                                                </span>
+                                                <span class="text">Save</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card shadow mb-4 border-left-primary">
+                        <div class="card-body">
+                            <table class="table table-bordered table-striped" id="tableDeffect" width="100%" cellspacing="0">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Transaction Code</th>
+                                        <th>Month</th>
+                                        <th>Year</th>
+                                        <th>Allowance</th>
+                                        <th>Total Pallet</th>
+                                        <th>Current Deffect</th>
+                                        <th>Previous Deffect</th>
+                                        <th>Total Deffect</th>
+                                        <th>Allowance Qty</th>
+                                        <th>Total Exceed</th>
+                                        <th>Last Exceed</th>
+                                        <th>Exceeded</th>
+                                        <th>Price per Pallet</th>
+                                        <th>Total Billing</th>
+                                        <th>Tax</th>
+                                        <th>Grand Total</th>
+                                        <th>Remarks</th>
+                                        <th>Created By</th>
+                                        <th>Created At</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab-3">
+            <div class="row mt-3 mb-3">
+                <div class="col-xs-12 col-lg-12">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-1">
+                        <h6 class="h6 mb-0 text-gray-800">List Email</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+
+                <div class="col-lg-12">
+                    <div class="card shadow border-left-success h-100">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">List Email Notification</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <button type="button" onclick="addEmail()" class="btn btn-primary btn-icon-split btn-sm mb-2">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-plus"></i>
+                                        </span>
+                                        <span class="text">Add</span>
+                                    </button>
+
+                                    <table class="table table-bordered table-striped" id="tableEmail" width="100%" cellspacing="0">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>Email</th>
+                                                <th>Warehouse</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="rentEmailModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-4">Email</label>
+                    <div class="col-sm-8">
+                        <input autocomplete="off" class="form-control" id="Email" type="email" value="">
+                        <span class="help-block text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <span class="text-muted">Not Selected</span>
+                        <select id="sbOne" class="form-control" multiple="multiple" size="10">
+                            @if (ViewBag.WarehouseList != null)
+                            {
+                                foreach (var item in ViewBag.WarehouseList)
+                                {
+                                    <option value="@item.WarehouseId">@(item.WarehouseCode) - @(item.WarehouseName)</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-muted">Selected</span>
+                        <select id="sbTwo" class="form-control" multiple="multiple" size="10">
+                        </select>
+                    </div>
+                </div>
+                <div class="row text-center mt-2">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-outline-dark" id="left"><</button>
+                        <button type="button" class="btn btn-outline-dark" id="right">></button>
+                    </div>
+                </div>
+                <div class="row text-center mt-2">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-outline-dark" id="leftAll"><<</button>
+                        <button type="button" class="btn btn-outline-dark" id="rightAll">>></button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-icon-split" data-dismiss="modal">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-times-circle"></i>
+                    </span>
+                    <span class="text">Cancel</span>
+                </button>
+                <button type="button" class="btn btn-success btn-icon-split" id="btnSaveEmail">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check-circle"></i>
+                    </span>
+                    <span class="text">Save</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+@Html.Partial("ConfirmationModal")
+
+@section custom_css
+{
+    @Styles.Render("~/Content/vendor/datatables/dataTables.bootstrap4.min.css")
+    @Styles.Render("~/Content/vendor/datatables/fixedColumns.bootstrap4.min.css")
+    @Styles.Render("~/Content/vendor/select2/css/select2.css")
+    @Styles.Render("~/Content/vendor/select2/css/select2-bootstrap.css")
+    @Styles.Render("~/Content/vendor/toastr/toastr.css")
+
+    <style>
+        th, td {
+            white-space: nowrap;
+        }
+
+        div.dataTables_wrapper {
+            /*width: 800px;*/
+            margin: 0 auto;
+        }
+    </style>
+}
+
+@section custom_js
+{
+    @Scripts.Render("~/Content/vendor/datatables/jquery.dataTables.min.js")
+    @Scripts.Render("~/Content/vendor/datatables/dataTables.bootstrap4.min.js")
+    @Scripts.Render("~/Content/vendor/datatables/dataTables.fixedColumns.min.js")
+    @Scripts.Render("~/Content/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js")
+    @Scripts.Render("~/Content/vendor/select2/js/select2.js")
+    @Scripts.Render("~/Content/vendor/inputmask/js/jquery.inputmask.bundle.js")
+    @Scripts.Render("~/Scripts/jquery.validate.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.js")
+    @Scripts.Render("~/Content/vendor/toastr/toastr.min.js")
+    @Scripts.Render("~/Content/custom/js/notification.js")
+<script>
+
+
+        $(document).ready(function () {
+
+            $('.number').inputmask("9{*}", { "placeholder": "" });
+            //add bootstrap 4 validation css
+            $('#mainFrm').validate().settings.errorClass += ' is-invalid';
+
+
+            //$('#mainFrm').validate().settings.validClass += ' is-valid';
+
+            $('#mainFrm').keypress(function (e) {
+                var key = e.charCode || e.keyCode || 0;
+                if (key == 13) {
+                    e.preventDefault();
+                }
+            });
+
+
+            //add bootstrap 4 validation css
+            $('#mainFrm2').validate().settings.errorClass += ' is-invalid';
+
+
+            //$('#mainFrm').validate().settings.validClass += ' is-valid';
+
+            $('#mainFrm2').keypress(function (e) {
+                var key = e.charCode || e.keyCode || 0;
+                if (key == 13) {
+                    e.preventDefault();
+                }
+            });
+
+
+        });
+
+
+         function Detail(id) {
+            location.href = '@Url.Action("Detail")?x=' + id;
+        }
+
+        function resetForm() {
+            $('#mainFrm')[0].reset();
+            $('#mainFrm .form-group input').removeClass('is-invalid');
+            $('#mainFrm .help-block').html('');
+
+    }
+
+    let form;
+
+    function resetForm2() {
+        $('#mainFrm2')[0].reset();
+        $('#mainFrm2 .form-group input').removeClass('is-invalid');
+        $('#mainFrm2 .help-block').html('');
+
+    }
+
+
+        function submitForm() {
+            form = $('#mainFrm');
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                $('#confirmationModal #confirmationModalMsg').text("Are you sure ? Create invoice cannot be undone, invoice only can be created once per month.");
+                $('#confirmationModal').modal('show');
+            } else {
+                notify("Info", "info", "Please complete form below.");
+            }
+    }
+
+
+    function submitForm2() {
+        form = $('#mainFrm2');
+        $.validator.unobtrusive.parse(form);
+        if ($(form).valid()) {
+            $('#confirmationModal #confirmationModalMsg').text("Are you sure ? Create invoice cannot be undone, invoice only can be created once per month.");
+            $('#confirmationModal').modal('show');
+        } else {
+            notify("Info", "info", "Please complete form below.");
+        }
+    }
+
+    let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+
+    $('#tab-1').on('shown.bs.tab', function (e) {
+        LoadDataRent();
+    });
+
+    $('#tab-2').on('shown.bs.tab', function (e) {
+        LoadDataDeffect();
+    });
+
+    $('#tab-3').on('shown.bs.tab', function (e) {
+        tableEmail.draw();
+    });
+
+
+    function LoadDataRent() {
+        tableRent.draw();
+    }
+
+    function LoadDataDeffect() {
+        tableDeffect.draw();
+    }
+
+
+
+
+
+
+        var tableRent = $('#tableRent').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '@Url.Action("DatatableRent")',
+                        type: "POST",
+                        datatype: "json"
+                    },
+                    scrollY: "500px",
+                    scrollX: true,
+                    scrollCollapse: true,
+                    paging: true,
+                    //fixedColumns: true
+                    order : [[0, "desc"]],
+                    columns: [
+                        { "data": "TransactionCode", "name": "TransactionCode", "autoWidth": true },
+                        { "data": "CurrentMonth", "name": "CurrentMonth", "autoWidth": true },
+                        { "data": "CurrentYear", "name": "CurrentYear", "autoWidth": true },
+                        { "data": "Tax", "name": "Tax", "autoWidth": true },
+                        { "data": "Remarks", "name": "Remarks", "autoWidth": true },
+                        { "data": "CreatedBy", "name": "CreatedBy", "autoWidth": true },
+                        { "data": "CreatedAt", "name": "CreatedAt", "autoWidth": true },
+                        {
+                            data: null,
+                            render: function (data, type, row) {
+                                let button = "";
+                                button += "<button type=\"button\" class=\"btn btn-sm btn-danger btn-icon-split\" onclick=\"PDFRent('" + row.TransactionId + "')\">";
+                                button += '<span class="icon text-white-50"><i class="fas fa-file"></i></span >';
+                                button += '<span class="text">PDF (MGV 100%)</span></button >';
+                                button += "  <button type=\"button\" class=\"btn btn-sm btn-danger btn-icon-split\" onclick=\"PDFRentMGV('" + row.TransactionId + "')\">";
+                                button += '<span class="icon text-white-50"><i class="fas fa-file"></i></span >';
+                                button += '<span class="text">PDF (MGV 98%)</span></button >';
+                                button += "  <button type=\"button\" class=\"btn btn-sm btn-primary btn-icon-split\" onclick=\"EmailRent('" + row.TransactionId + "')\">";
+                                button += '<span class="icon text-white-50"><i class="fas fa-paper-plane"></i></span >';
+                                button += '<span class="text">Email Invoice (MGV 100%)</span></button >';
+                                return button;
+                            }
+                        }
+                    ]
+        });
+
+
+    function PDFRent(id) {
+             window.open('@Url.Action("PDFRent")?x=' + id, '_blank');
+    }
+
+    function PDFRentMGV(id) {
+             window.open('@Url.Action("PDFRentMGV")?x=' + id, '_blank');
+        }
+
+
+     function PDFDeffect(id) {
+             window.open('@Url.Action("PDFDeffect")?x=' + id, '_blank');
+    }
+
+      function ExcelDeffect(id) {
+             window.open('@Url.Action("ExcelDeffect")?x=' + id, '_blank');
+    }
+
+        var tableDeffect = $('#tableDeffect').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '@Url.Action("DatatableDeffect")',
+                        type: "POST",
+                        datatype: "json"
+                    },
+                    scrollY: "500px",
+                    scrollX: true,
+                    scrollCollapse: true,
+                    paging: true,
+                    //fixedColumns: true
+                    order : [[0, "desc"]],
+                    columns: [
+                        { "data": "TransactionCode", "name": "TransactionCode", "autoWidth": true },
+                        { "data": "CurrentMonth", "name": "CurrentMonth", "autoWidth": true },
+                        { "data": "CurrentYear", "name": "CurrentYear", "autoWidth": true },
+                        { "data": "Allowance", "name": "Allowance", "autoWidth": true },
+                        { "data": "TotalPallet", "name": "TotalPallet", "autoWidth": true },
+                        { "data": "CurrentDeffect", "name": "CurrentDeffect", "autoWidth": true },
+                        { "data": "PreviousDeffect", "name": "PreviousDeffect", "autoWidth": true },
+                        { "data": "TotalDeffect", "name": "TotalDeffect", "autoWidth": true },
+                        { "data": "AllowanceQty", "name": "AllowanceQty", "autoWidth": true },
+                        { "data": "TotalExceed", "name": "TotalExceed", "autoWidth": true },
+                        { "data": "LastExceed", "name": "LastExceed", "autoWidth": true },
+                        { "data": "ExceedQty", "name": "ExceedQty", "autoWidth": true },
+                        { "data": "PricePerPallet", "name": "PricePerPallet", "autoWidth": true },
+                        { "data": "TotalBilling", "name": "TotalBilling", "autoWidth": true },
+                        { "data": "Tax", "name": "Tax", "autoWidth": true },
+                        { "data": "GrandTotal", "name": "GrandTotal", "autoWidth": true },
+                        { "data": "Remarks", "name": "Remarks", "autoWidth": true },
+                        { "data": "CreatedBy", "name": "CreatedBy", "autoWidth": true },
+                        { "data": "CreatedAt", "name": "CreatedAt", "autoWidth": true },
+                        {
+                            data: null,
+                            render: function (data, type, row) {
+                                let button = "";
+
+                                if (data.pdfButton) {
+                                    button += "<button type=\"button\" class=\"btn btn-sm btn-danger btn-icon-split\" onclick=\"PDFDeffect('" + row.TransactionId + "')\">";
+                                    button += '<span class="icon text-white-50"><i class="fas fa-file"></i></span >';
+                                    button += '<span class="text">PDF</span></button >';
+                                }
+
+                                if (data.excelButton) {
+                                    button += "<button type=\"button\" class=\"btn btn-sm btn-success btn-icon-split\" onclick=\"ExcelDeffect('" + row.TransactionId + "')\">";
+                                    button += '<span class="icon text-white-50"><i class="fas fa-file-excel"></i></span >';
+                                    button += '<span class="text">Export Pallet Detail</span></button >';
+                                }
+
+                                return button;
+                            }
+                        }
+                    ]
+        });
+
+         $('#btnModalSave').click(function () {
+            let frm = $(form)[0];
+            //double validation, prevent duplication
+             $.validator.unobtrusive.parse(frm);
+             if ($(frm).valid()) {
+                 saveData(frm);
+            } else {
+                notify("Info", "info", "Please complete form below.");
+            }
+        });
+
+        function saveData(form) {
+            $("#preloader").show();
+            $.ajax({
+                type: 'POST',
+                url: form.action,
+                data: $(form).serialize(),
+                success: function (response) {
+
+                    if (response.stat) {
+                       // location.href = '@Url.Action("Detail")?type=used&x=' + response.transactionId;
+
+                        resetForm();
+                        LoadDataRent();
+
+                        resetForm2();
+                        LoadDataDeffect();
+                        notify("Success", "success", response.msg);
+                    } else {
+                        notify("Warning", "warning", response.msg);
+                        $("#preloader").fadeOut("slow");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    notify("Error", "error", "Oops! Something went wrong.");
+                    $("#preloader").fadeOut("slow");
+                },
+                complete: function () {
+                    $("#preloader").fadeOut("slow");
+                    $('#confirmationModal').modal('hide');
+                }
+            });
+        }
+
+    function EmailRent(id) {
+        $("#preloader").show();
+        $.ajax({
+                type: 'POST',
+                url: '@Url.Action("EmailRent", "Invoice")' + '?x=' + id,
+                success: function (response) {
+
+                    if (response.stat) {
+                        notify("Success", "success", response.msg);
+                    } else {
+                        notify("Warning", "warning", response.msg);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    notify("Error", "error", "Oops! Something went wrong.");
+                    $("#preloader").fadeOut("slow");
+                },
+                complete: function () {
+                    $("#preloader").fadeOut("slow");
+                }
+            });
+    }
+
+
+    function LoadDataEmail() {
+        tableEmail.draw();
+    }
+
+
+
+    var tableEmail = $('#tableEmail').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '@Url.Action("DatatableEmail")',
+                        type: "POST",
+                        datatype: "json"
+                    },
+                    scrollY: "500px",
+                    scrollX: true,
+                    scrollCollapse: true,
+                    paging: true,
+                    //fixedColumns: true
+                    order : [[0, "asc"]],
+                    lengthMenu: [[3, 5], [3, 5]],
+                    columns: [
+                        { "data": "Email", "name": "Email", "autoWidth": true },
+                        { "data": "Warehouses", "name": "Warehouses", "autoWidth": true },
+                        {
+                            data: null,
+                            render: function (data, type, row) {
+                                let button = "<button type=\"button\" class=\"btn btn-sm btn-info btn-icon-split\" onclick=\"EditEmail('" + row.Email + "')\">";
+                                button += '<span class="icon text-white-50"><i class="fas fa-edit"></i></span >';
+                                button += '<span class="text">Edit</span></button >';
+                                button += "<button type=\"button\" class=\"btn btn-sm btn-warning btn-icon-split\" onclick=\"DeleteEmail('" + row.Email + "')\">";
+                                button += '<span class="icon text-white-50"><i class="fas fa-trash"></i></span >';
+                                button += '<span class="text">Delete</span></button >';
+                                return button;
+                            }
+                        }
+                    ]
+        });
+
+
+    let state = 'add';
+
+    function addEmail() {
+        state = 'add';
+        $('#rentEmailModal').modal('show');
+        resetFormEmail();
+    }
+
+
+    function moveItems(origin, dest) {
+        $(origin).find(':selected').appendTo(dest);
+    }
+
+    function moveAllItems(origin, dest) {
+        $(origin).children().appendTo(dest);
+    }
+
+    $('#left').click(function () {
+        let opts = $('#sbTwo').find('option:selected');
+        if (opts.length == 0) {
+            notify("Info", "info", "Please select at least 1 warehouse to moved.");
+        } else {
+            moveItems('#sbTwo', '#sbOne');
+        }
+
+    });
+
+    $('#right').on('click', function () {
+        let opts = $('#sbOne').find('option:selected');
+        if (opts.length == 0) {
+            notify("Info", "info", "Please select at least 1 warehouse to moved.");
+        } else {
+            moveItems('#sbOne', '#sbTwo');
+        }
+
+    });
+
+    $('#leftAll').on('click', function () {
+        moveAllItems('#sbTwo', '#sbOne');
+    });
+
+    $('#rightAll').on('click', function () {
+        moveAllItems('#sbOne', '#sbTwo');
+    });
+
+    $('#btnSaveEmail').click(function () {
+        if (state == 'add') {
+            $("#sbTwo").find("option").prop("selected", true);
+            SaveEmail();
+        } else if (state == 'edit') {
+            $("#sbTwo").find("option").prop("selected", true);
+            UpdateEmail();
+        }
+    });
+
+    function SaveEmail() {
+        $("#preloader").show();
+        $.ajax({
+                type: 'POST',
+            url: '@Url.Action("AddEmail", "Invoice")',
+            data: {
+                UserEmail: $('#Email').val(),
+                WarehouseIds: $('#sbTwo').val()
+            },
+                success: function (response) {
+
+                    if (response.stat) {
+                        notify("Success", "success", response.msg);
+                        $('#rentEmailModal').modal('hide');
+                        resetFormEmail();
+
+                    } else {
+                        notify("Warning", "warning", response.msg);
+                    }
+
+                    tableEmail.draw();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    notify("Error", "error", "Oops! Something went wrong.");
+                    $("#preloader").fadeOut("slow");
+                },
+                complete: function () {
+                    $("#preloader").fadeOut("slow");
+                }
+            });
+    }
+
+    function UpdateEmail() {
+        $("#preloader").show();
+        $.ajax({
+                type: 'POST',
+            url: '@Url.Action("UpdateEmail", "Invoice")',
+            data: {
+                UserEmail: $('#Email').val(),
+                WarehouseIds: $('#sbTwo').val()
+            },
+                success: function (response) {
+
+                    if (response.stat) {
+                        notify("Success", "success", response.msg);
+                        $('#rentEmailModal').modal('hide');
+                        resetFormEmail();
+
+                    } else {
+                        notify("Warning", "warning", response.msg);
+                    }
+
+                    tableEmail.draw();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    notify("Error", "error", "Oops! Something went wrong.");
+                    $("#preloader").fadeOut("slow");
+                },
+                complete: function () {
+                    $("#preloader").fadeOut("slow");
+                }
+            });
+    }
+
+    function DeleteEmail(email) {
+        $("#preloader").show();
+        $.ajax({
+                type: 'POST',
+            url: '@Url.Action("DeleteEmail", "Invoice")',
+            data: {
+                UserEmail : email
+            },
+                success: function (response) {
+
+                    if (response.stat) {
+                        notify("Success", "success", response.msg);
+                        $('#rentEmailModal').modal('hide');
+                    } else {
+                        notify("Warning", "warning", response.msg);
+                    }
+
+                    tableEmail.draw();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    notify("Error", "error", "Oops! Something went wrong.");
+                    $("#preloader").fadeOut("slow");
+                },
+                complete: function () {
+                    $("#preloader").fadeOut("slow");
+                }
+            });
+    }
+
+
+    function resetFormEmail() {
+        $('#Email').prop('readonly', false);
+        $('#Email').val('');
+        moveAllItems('#sbTwo', '#sbOne');
+        $("#sbOne").find("option").prop("selected", false);
+        $("#sbTwo").find("option").prop("selected", false);
+    }
+
+
+    function EditEmail(email) {
+        $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetEmailById", "Invoice")?Id=' + email,
+                success: function (response) {
+
+                    if (response.stat) {
+                        state = 'edit';
+                        let data = response.data;
+                        let unSelectedWarehouse = response.unSelectedWarehouse;
+                        let selectedWarehouse = response.selectedWarehouse;
+                        $('#rentEmailModal').modal('show');
+                        $('#Email').val(data.Email);
+                        $('#Email').prop('readonly', true);
+
+                        $('#sbOne').empty();
+                        $('#sbTwo').empty();
+
+                        $.each(unSelectedWarehouse, function (index, value) {
+                            $('#sbOne').append('<option value="'+ value.WarehouseId +'">' + value.WarehouseCode + ' -  ' + value.WarehouseName + '</option>');
+                        });
+
+                        $.each(selectedWarehouse, function (index, value) {
+                            $('#sbTwo').append('<option selected="selected" value="'+ value.WarehouseId +'">' + value.WarehouseCode + ' -  ' + value.WarehouseName + '</option>');
+                        });
+
+                    } else {
+                        notify("Warning", "warning", response.msg);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    notify("Error", "error", "Oops! Something went wrong.");
+                    $("#preloader").fadeOut("slow");
+                },
+                complete: function () {
+                    $("#preloader").fadeOut("slow");
+                }
+            });
+    }
+</script>
+}

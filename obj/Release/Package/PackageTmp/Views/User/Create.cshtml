@@ -1,0 +1,338 @@
+﻿@model Facelift_App.Models.UserVM
+
+
+@{
+    ViewBag.Title += " - Create";
+}
+
+
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@ViewBag.Title</h1>
+    </div>
+
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "mainFrm" }))
+    {
+        @Html.AntiForgeryToken()
+        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+        <div class="row mb-3">
+            <div class="col-xs-6 col-lg-6">
+                <div class="card shadow border-left-primary">
+                    <div class="card-body">
+                        @*<div class="form-group row">
+                            <label class="col-form-label col-sm-4">Company</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.CompanyId, (SelectList)ViewBag.CompanyList, "Please select", htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CompanyId, "", new { @class = "help-block text-danger" })
+                            </div>
+                        </div>*@
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-4">Username</label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "help-block text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-4">Email</label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.UserEmail, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.UserEmail, "", new { @class = "help-block text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-4">Full Name</label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "help-block text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-4">Password</label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "help-block text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-4">Password Confirmation</label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.PasswordConfirmation, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.PasswordConfirmation, "", new { @class = "help-block text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-4">Role <span class="text-info">(Optional)</span></label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.RoleId, (SelectList)ViewBag.RoleList, "Please select", htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "help-block text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+         <div class="row">
+            <div class="col-xs-6 col-lg-6">
+                <div class="d-sm-flex align-items-center justify-content-between mb-1">
+                    <h5 class="h6 mb-0 text-gray-800">Warehouse Access <span class="text-info">(Optional)</span></h5>
+                    <h5 class="h6 mb-0 text-gray-800 fa-pull-right">Default Access : <span class="text-warning" id="defaultAccess">-</span></h5>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-xs-6 col-lg-6">
+                <div class="card shadow border-left-warning">
+                    <div class="card-body">
+                        @Html.HiddenFor(model => model.DefaultWarehouseId, new { @id = "DefaultWarehouseId" })
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <span class="text-muted">Not Selected</span>
+                                <select id="sbOne" class="form-control" multiple="multiple" size="10">
+                                    @if (ViewBag.WarehouseList != null)
+                                    {
+                                        foreach (var item in ViewBag.WarehouseList)
+                                        {
+                                            <option value="@item.WarehouseId">@(item.WarehouseCode) - @(item.WarehouseName)</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <span class="text-muted">Selected</span>
+                                <select id="sbTwo" class="form-control" name="WarehouseIds" multiple="multiple" size="10">
+                                </select>
+                                <button type="button" id="btnDefault" class="btn btn-sm btn-outline-dark fa-pull-right mt-2">Set as Default</button>
+                            </div>
+                        </div>
+                        <div class="row text-center mt-2">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-outline-dark" id="left"><</button>
+                                <button type="button" class="btn btn-outline-dark" id="right">></button>
+                            </div>
+                        </div>
+                        <div class="row text-center mt-2">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-outline-dark" id="leftAll"><<</button>
+                                <button type="button" class="btn btn-outline-dark" id="rightAll">>></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-xs-6 col-lg-6">
+                <button type="button" onclick="goBack()" class="btn btn-info btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-arrow-left"></i>
+                    </span>
+                    <span class="text">Back</span>
+                </button>
+                <div class="fa-pull-right">
+                    <button type="button" onclick="resetForm()" class="btn btn-warning btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-backspace"></i>
+                        </span>
+                        <span class="text">Cancel</span>
+                    </button>
+                    <button type="button" onclick="submitForm()" class="btn btn-primary btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-save"></i>
+                        </span>
+                        <span class="text">Save</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+@Html.Partial("ConfirmationModal")
+
+@section custom_css
+{
+    @Styles.Render("~/Content/vendor/toastr/toastr.css")
+}
+
+@section custom_js
+{
+    @Scripts.Render("~/Scripts/jquery.validate.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.js")
+    @Scripts.Render("~/Content/vendor/toastr/toastr.min.js")
+    @Scripts.Render("~/Content/custom/js/notification.js")
+<script>
+
+        $(document).ready(function () {
+
+            //add bootstrap 4 validation css
+            $('#mainFrm').validate().settings.errorClass += ' is-invalid';
+            //$('#mainFrm').validate().settings.validClass += ' is-valid';
+
+            $('#mainFrm').keypress(function (e) {
+                var key = e.charCode || e.keyCode || 0;
+                if (key == 13) {
+                    e.preventDefault();
+                }
+            });
+        });
+
+        function moveItems(origin, dest) {
+            $(origin).find(':selected').appendTo(dest);
+        }
+
+        function moveAllItems(origin, dest) {
+            $(origin).children().appendTo(dest);
+        }
+
+        $('#left').click(function () {
+            let opts = $('#sbTwo').find('option:selected');
+            if (opts.length == 0) {
+                notify("Info", "info", "Please select at least 1 warehouse to moved.");
+            } else {
+                moveItems('#sbTwo', '#sbOne');
+                resetDefault();
+            }
+
+        });
+
+        $('#right').on('click', function () {
+            let opts = $('#sbOne').find('option:selected');
+            if (opts.length == 0) {
+                notify("Info", "info", "Please select at least 1 warehouse to moved.");
+            } else {
+                moveItems('#sbOne', '#sbTwo');
+                resetDefault();
+            }
+
+        });
+
+        $('#leftAll').on('click', function () {
+            moveAllItems('#sbTwo', '#sbOne');
+            resetDefault();
+        });
+
+        $('#rightAll').on('click', function () {
+            moveAllItems('#sbOne', '#sbTwo');
+            resetDefault();
+        });
+
+
+        function resetDefault() {
+            $('#btnDefault').hide();
+            let options = $('#sbTwo option');
+
+            if (options.length == 1) {
+                $('#defaultAccess').text($(options)[0].text);
+                $('#DefaultWarehouseId').val($(options)[0].value);
+                defaultWarehouse = $(options)[0].value;
+            } else if (options.length == 0) {
+                $('#defaultAccess').text("-");
+                $('#DefaultWarehouseId').val("");
+                defaultWarehouse = "";
+            } else {
+                //check if defaultWarehouse inside sbOne
+                let defaultAccess = $('#sbOne').find('option[value="' + defaultWarehouse + '"]').val();
+                if (defaultAccess) {
+                    $('#defaultAccess').text("-");
+                    $('#DefaultWarehouseId').val("");
+                    defaultWarehouse = "";
+                }
+            }
+        }
+
+        let defaultWarehouse = "";
+        let defaultAccessTxt = "-";
+        $('#defaultAccess').text(defaultAccessTxt);
+        $('#btnDefault').hide();
+
+        $("#sbTwo").click(function () {
+            let opts = $(this).find(':selected');
+            if (opts != null && opts.length == 1) {
+                $('#btnDefault').show();
+            } else {
+                $('#btnDefault').hide();
+            }
+        });
+
+        $('#btnDefault').click(function () {
+            let opts = $('#sbTwo').find('option:selected');
+            if (opts != null && opts.length == 1) {
+                $('#defaultAccess').text(opts.text());
+                $('#DefaultWarehouseId').val(opts.val());
+                defaultWarehouse = opts.val();
+            } else {
+                notify("Info", "info", "Please select 1 warehouse to set as default.");
+            }
+        });
+
+        function goBack() {
+            location.href = '@Url.Action("Index")';
+        }
+
+        function resetForm() {
+            $('#mainFrm')[0].reset();
+            moveAllItems('#sbTwo', '#sbOne');
+            $('#mainFrm .form-group input').removeClass('is-invalid');
+            $('#mainFrm .help-block').html('');
+            $('#defaultAccess').text("");
+            $('#btnDefault').hide();
+        }
+
+
+        function submitForm() {
+            let form = $('#mainFrm');
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                $('#confirmationModal').modal('show');
+            } else {
+                notify("Info", "info", "Please complete form below.");
+            }
+        }
+
+        $('#btnModalSave').click(function () {
+            let form = $('#mainFrm');
+            //double validation, prevent duplication
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                saveData(form);
+            } else {
+                notify("Info", "info", "Please complete form below.");
+            }
+        });
+
+        function saveData(form) {
+            $("#sbOne").find("option").prop("selected", true);
+            $("#sbTwo").find("option").prop("selected", true);
+            $("#preloader").show();
+            $.ajax({
+                type: 'POST',
+                url: form.action,
+                data: $(form).serialize(),
+                success: function (response) {
+
+                    if (response.stat) {
+                        $("#preloader").fadeOut("slow");
+                        notify("Success", "success", response.msg);
+                        $('#confirmationModal').modal('hide');
+                        resetForm();
+                    } else {
+                        notify("Warning", "warning", response.msg);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    notify("Error", "error", "Oops! Something went wrong.");
+                },
+                complete: function () {
+                    $("#preloader").fadeOut("slow");
+                }
+            });
+        }
+
+
+</script>
+}

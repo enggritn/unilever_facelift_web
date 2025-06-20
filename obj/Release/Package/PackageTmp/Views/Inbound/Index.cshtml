@@ -1,0 +1,228 @@
+﻿
+@{
+    ViewBag.Title += " - List";
+}
+
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@ViewBag.Title</h1>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-lg-12">
+            <button type="button" class="btn btn-secondary btn-icon-split" onclick="Refresh()">
+                <span class="icon text-white-50">
+                    <i class="fas fa-sync"></i>
+                </span>
+                <span class="text">Refresh</span>
+            </button>
+            <button type="button" class="btn btn-primary btn-icon-split" onclick="ExportExcel()">
+                <span class="icon text-white-50">
+                    <i class="fas fa-file-excel"></i>
+                </span>
+                <span class="text">Export Excel</span>
+            </button>
+            <button type="button" class="btn btn-primary btn-icon-split" onclick="ExportDetail()">
+                <span class="icon text-white-50">
+                    <i class="fas fa-file-excel"></i>
+                </span>
+                <span class="text">Export Detail</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow mb-4 border-left-primary">
+                @*<div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Table</h6>
+                    </div>*@
+                <div class="card-body">
+                    <div class="btn-group-sm mb-3" role="group" aria-label="Transaction Status">
+                        <button type="button" onclick="find('0')" class="btn btn-sm btn-outline-primary">OPEN / PROGRESS</button>
+                        <button type="button" onclick="find('1')" class="btn btn-sm btn-outline-success">CLOSED</button>
+                        <button type="button" onclick="find('')" class="btn btn-sm btn-outline-dark">ALL</button>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-12">
+                            Filtered : <span id="filter" class="badge badge-primary">OPEN / PROGRESS</span>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped" id="iTable" width="100%" cellspacing="0">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Transaction Code</th>
+                                <th>Shipment Number</th>
+                                <th>Origin</th>
+                                <th>Destination</th>
+                                <th>Transporter</th>
+                                <th>Driver</th>
+                                <th>Plate Number</th>
+                                <th>Pallet Qty</th>
+                                <th>Transaction Status</th>
+                                <th>Shipment Status</th>
+                                <th>Created By</th>
+                                <th>Created At</th>
+                                <th>Modified By</th>
+                                <th>Modified At</th>
+                                <th>Approved By</th>
+                                <th>Approved At</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+@section custom_css
+{
+    @*@Styles.Render("~/Content/vendor/datatables/jquery.dataTables.min.css")*@
+    @Styles.Render("~/Content/vendor/datatables/dataTables.bootstrap4.min.css")
+    @Styles.Render("~/Content/vendor/datatables/fixedColumns.bootstrap4.min.css")
+    @Styles.Render("~/Content/vendor/toastr/toastr.css")
+
+    <style>
+        th, td {
+            white-space: nowrap;
+        }
+
+        div.dataTables_wrapper {
+            /*width: 800px;*/
+            margin: 0 auto;
+        }
+    </style>
+}
+
+@section custom_js
+{
+    @Scripts.Render("~/Content/vendor/datatables/jquery.dataTables.min.js")
+    @Scripts.Render("~/Content/vendor/datatables/dataTables.bootstrap4.min.js")
+    @Scripts.Render("~/Content/vendor/datatables/dataTables.fixedColumns.min.js")
+    @Scripts.Render("~/Content/vendor/toastr/toastr.min.js")
+    @Scripts.Render("~/Content/custom/js/notification.js")
+
+<script>
+
+        $(document).ready(function () {
+
+            let tempMessage = '@ViewBag.TempMessage';
+            if (tempMessage) {
+                notify("Success", "success", tempMessage);
+            }
+
+        });
+
+        function Create() {
+            location.href = '@Url.Action("Create")';
+        }
+
+        function Detail(id) {
+            location.href = '@Url.Action("Detail")?x=' + id;
+        }
+
+        function Refresh() {
+            table.ajax.reload();
+        }
+
+
+        let stats = '0';
+
+        function find(val) {
+            if (val != stats) {
+                stats = val;
+                table.draw();
+                let badge = "";
+                let text = "";
+                switch (stats) {
+                    case '0':
+                        text = "OPEN / PROGRESS";
+                        badge = "badge badge-primary";
+                        break;
+                    case '1':
+                        text = "CLOSED";
+                        badge = "badge badge-success";
+                        break;
+                    case '':
+                        text = "ALL";
+                        badge = "badge badge-dark";
+                        break;
+                }
+
+                $('#filter').removeClass().addClass(badge);
+                $('#filter').text(text);
+            }
+        }
+
+       var table = $('#iTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '@Url.Action("Datatable")',
+                    type: "POST",
+                    datatype: "json",
+                    data: function (d) {
+                        d.stats = stats;
+                    }
+                },
+                scrollY: "500px",
+                scrollX: true,
+                scrollCollapse: true,
+                paging: true,
+                //fixedColumns: true
+                fixedColumns: {
+                    leftColumns: 1,
+                    rightColumns: 1
+                },
+               columnDefs: [
+                   { "orderable": false, "targets": -1 },
+               ],
+                order : [[11, "asc"]],
+                columns: [
+                    { "data": "TransactionCode", "name": "TransactionCode", "autoWidth": true },
+                    { "data": "ShipmentNumber", "name": "ShipmentNumber", "autoWidth": true },
+                    { "data": "WarehouseName", "name": "WarehouseName", "autoWidth": true },
+                    { "data": "DestinationName", "name": "DestinationName", "autoWidth": true },
+                    { "data": "TransporterName", "name": "TransporterName", "autoWidth": true },
+                    { "data": "DriverName", "name": "DriverName", "autoWidth": true },
+                    { "data": "PlateNumber", "name": "PlateNumber", "autoWidth": true },
+                    { "data": "PalletQty", "name": "PalletQty", "autoWidth": true },
+                    { "data": "TransactionStatus", "name": "TransactionStatus", "autoWidth": true },
+                    { "data": "ShipmentStatus", "name": "TransactionStatus", "autoWidth": true },
+                    { "data": "CreatedBy", "name": "CreatedBy", "autoWidth": true },
+                    { "data": "CreatedAt", "name": "CreatedAt", "autoWidth": true },
+                    { "data": "ModifiedBy", "name": "ModifiedBy", "autoWidth": true },
+                    { "data": "ModifiedAt", "name": "ModifiedAt", "autoWidth": true },
+                    { "data": "ApprovedBy", "name": "ApprovedBy", "autoWidth": true },
+                    { "data": "ApprovedAt", "name": "ApprovedAt", "autoWidth": true },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            let button = "<button type=\"button\" class=\"btn btn-sm btn-info btn-icon-split\" onclick=\"Detail('"+ row.TransactionId +"')\">";
+                            button += '<span class="icon text-white-50"><i class="fas fa-edit"></i></span >';
+                            button += '<span class="text">Detail</span></button >';
+                            return button;
+                            //return "<a href='#' class='btn btn-danger' onclick=DeleteData('" + row.Username + "'); >Delete</a>";
+                        }
+                    },
+
+                ]
+       });
+
+        function ExportExcel() {
+            window.location.href = '@Url.Action("ExportListToExcel", "Inbound")';
+        }
+
+        function ExportDetail() {
+            window.location.href = '@Url.Action("ExportDetailListToExcel", "Inbound")';
+        }
+</script>
+}

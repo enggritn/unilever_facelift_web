@@ -1,0 +1,19 @@
+time,level,logger,message,callsite,exception
+2020-06-12 08:55:20.6329,Error,Facelift_App.Repositories.BillingHistoryRepository,Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.,Facelift_App.Repositories.BillingHistoryRepository.CreateRentAsync,"System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   at System.Data.Entity.Internal.InternalContext.SaveChangesAsync(CancellationToken cancellationToken)
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChangesAsync(CancellationToken cancellationToken)
+   at System.Data.Entity.DbContext.SaveChangesAsync(CancellationToken cancellationToken)
+   at System.Data.Entity.DbContext.SaveChangesAsync()
+   at Facelift_App.Repositories.BillingHistoryRepository.<CreateRentAsync>d__2.MoveNext() in D:\Duta Kalingga Pratama\Projects\Unilever\Facelift\Application\UNILEVER_Facelift\Facelift_App\Repositories\BillingHistoryRepository.cs:line 123"
+2020-06-12 08:57:14.0806,Error,Facelift_App.Repositories.BillingHistoryRepository,Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.,Facelift_App.Repositories.BillingHistoryRepository.CreateRentAsync,"System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   at System.Data.Entity.Internal.InternalContext.SaveChangesAsync(CancellationToken cancellationToken)
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChangesAsync(CancellationToken cancellationToken)
+   at System.Data.Entity.DbContext.SaveChangesAsync(CancellationToken cancellationToken)
+   at System.Data.Entity.DbContext.SaveChangesAsync()
+   at Facelift_App.Repositories.BillingHistoryRepository.<CreateRentAsync>d__2.MoveNext() in D:\Duta Kalingga Pratama\Projects\Unilever\Facelift\Application\UNILEVER_Facelift\Facelift_App\Repositories\BillingHistoryRepository.cs:line 123"
+2020-06-12 08:58:33.7923,Error,Facelift_App.Repositories.BillingHistoryRepository,Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.,Facelift_App.Repositories.BillingHistoryRepository.CreateRentAsync,"System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   at System.Data.Entity.Internal.InternalContext.SaveChangesAsync(CancellationToken cancellationToken)
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChangesAsync(CancellationToken cancellationToken)
+   at System.Data.Entity.DbContext.SaveChangesAsync(CancellationToken cancellationToken)
+   at System.Data.Entity.DbContext.SaveChangesAsync()
+   at Facelift_App.Repositories.BillingHistoryRepository.<CreateRentAsync>d__2.MoveNext() in D:\Duta Kalingga Pratama\Projects\Unilever\Facelift\Application\UNILEVER_Facelift\Facelift_App\Repositories\BillingHistoryRepository.cs:line 123"

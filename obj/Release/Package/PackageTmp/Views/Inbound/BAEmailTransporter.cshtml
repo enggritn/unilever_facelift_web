@@ -1,0 +1,251 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <style type="text/css">
+        /* CLIENT-SPECIFIC STYLES */
+        body,
+        table,
+        td,
+        a {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table,
+        td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+
+        /* RESET STYLES */
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        table {
+            border-collapse: collapse !important;
+        }
+
+        body {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        /* iOS BLUE LINKS */
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+
+        /* MOBILE STYLES */
+        @@media screen and (max-width:600px) {
+            h1 {
+                font-size: 32px !important;
+                line-height: 32px !important;
+            }
+        }
+
+        /* ANDROID CENTER FIX */
+        div[style*="margin: 16px 0;"] {
+            margin: 0 !important;
+        }
+
+        .btn_div {
+            display: block;
+            text-align: center;
+        }
+
+        .button {
+            background-color: #0D0469;
+            border: none;
+            color: white !important;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: auto;
+            font-size: 16px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <!-- LOGO -->
+        <tr>
+            <td bgcolor="#0D0469" align="center" style="padding: 10px 10px 0px 10px;">
+                <!--[if (gte mso 9)|(IE)]>
+                        <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+                        <tr>
+                        <td align="center" valign="top" width="600">
+                        <![endif]-->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                    <tr>
+                        <td bgcolor="#ffffff" align="center" valign="top"
+                            style="padding: 40px 20px 20px 20px; border-radius: 20px 20px 0px 0px;">
+                        </td>
+                    </tr>
+                </table>
+                <!--[if (gte mso 9)|(IE)]>
+                        </td>
+                        </tr>
+                        </table>
+                        <![endif]-->
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#0D0469" align="center" style="padding: 0px 10px 0px 10px;">
+                <!--[if (gte mso 9)|(IE)]>
+                <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+                <tr>
+                <td align="center" valign="top" width="600">
+                <![endif]-->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                    <tr>
+                        <td bgcolor="#ffffff" align="center" valign="top"
+                            style="color: #111111; font-size: 36px; font-weight: 400; letter-spacing: 1px; line-height: 48px;">
+                            <h5 style="font-weight: 400; margin: 0;">Facelift - Informasi Berita Acara</h5>
+                        </td>
+                    </tr>
+                </table>
+                <!--[if (gte mso 9)|(IE)]>
+                </td>
+                </tr>
+                </table>
+                <![endif]-->
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
+                <!--[if (gte mso 9)|(IE)]>
+                <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+                <tr>
+                <td align="center" valign="top" width="600">
+                <![endif]-->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                    <!-- COPY -->
+                    <tr>
+                        <td bgcolor="#ffffff" align="left"
+                            style="padding: 20px 30px 10px 30px; color: #666666; font-size: 16px; font-weight: 400; line-height: 25px;">
+                            <div>
+                                Transaksi Shipment dengan No. <b>@(ViewBag.ShipmentTransactionCode)</b> yang dikirim dari @(ViewBag.Origin) menuju @(ViewBag.Destination) mengalami masalah dengan rincian sebagai berikut :
+                                <br />
+                                <table width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td width="39%">Dokumen Berita Acara</td>
+                                            <td width="1%">:</td>
+                                            <td width="60%">@ViewBag.AccidentTransactionCode</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="39%">Tanggal Pengiriman</td>
+                                            <td width="1%">:</td>
+                                            <td width="60%">@ViewBag.ShipmentDate</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="39%">Transporter</td>
+                                            <td width="1%">:</td>
+                                            <td width="60%">@ViewBag.Transporter</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="39%">Driver</td>
+                                            <td width="1%">:</td>
+                                            <td width="60%">@ViewBag.Driver</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="39%">Truck</td>
+                                            <td width="1%">:</td>
+                                            <td width="60%">@ViewBag.Truck</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="39%">Jumlah Pallet Bermasalah</td>
+                                            <td width="1%">:</td>
+                                            <td width="60%">@ViewBag.Quantity</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div style="margin-top:10px;"><b>Mohon koordinasi dengan site pengirim (@(ViewBag.Origin)) untuk permasalahan ini.</b></div>
+                            <div style="margin-top:30px;font-size:14px">
+                                Bila Anda tidak ada keterkaitan dengan aplikasi ini, dimohon untuk mengabaikan email ini.
+                            </div>
+                            <div style="margin-top:25px;font-size:12px">
+                                Email ini dikirim secara otomatis oleh sistem, mohon untuk tidak membalas email ini.
+                            </div>
+
+                            <hr>
+                        </td>
+
+                    </tr>
+                </table>
+                <!--[if (gte mso 9)|(IE)]>
+                </td>
+                </tr>
+                </table>
+                <![endif]-->
+            </td>
+        </tr>
+        <!-- FOOTER -->
+        <tr>
+            <td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
+                <!--[if (gte mso 9)|(IE)]>
+                <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+                <tr>
+                <td align="center" valign="top" width="600">
+                <![endif]-->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                    <tr>
+                        <td bgcolor="#f4f4f4" align="left"
+                            style="padding: 30px 30px 30px 30px; color: #666666; font-size: 14px; font-weight: 400; line-height: 18px;">
+                            <p style="margin: 0;">
+                                Copyright © @DateTime.Now.Year <b>PT. Unilever Indonesia</b>. All Rights Reserved.
+                            </p>
+                        </td>
+                        <td>
+                            <img alt="" src="@(Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/img/logo.png"))" width="30" height="30"
+                                 style="display: block; color: #ffffff;" border="0">
+                        </td>
+                    </tr>
+                </table>
+                <!--[if (gte mso 9)|(IE)]>
+                </td>
+                </tr>
+                </table>
+                <![endif]-->
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
+

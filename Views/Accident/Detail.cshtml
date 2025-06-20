@@ -1,0 +1,992 @@
+﻿@model Facelift_App.Models.AccidentVM
+
+
+@{
+    ViewBag.Title += " - Detail";
+}
+
+
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@ViewBag.Title</h1>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-xs-12 col-lg-12">
+            <button type="button" onclick="goBack()" class="btn btn-info btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-arrow-left"></i>
+                </span>
+                <span class="text">Back</span>
+            </button>
+            <button type="button" class="btn btn-secondary btn-icon-split" onclick="Refresh()">
+                <span class="icon text-white-50">
+                    <i class="fas fa-sync"></i>
+                </span>
+                <span class="text">Refresh</span>
+            </button>
+            @if (ViewBag.TransactionStatus.Equals(Facelift_App.Helper.Constant.TransactionStatus.CLOSED))
+            {
+                <button type="button" class="btn btn-secondary btn-icon-split" onclick="Refresh()">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-sync"></i>
+                    </span>
+                    <span class="text">Export</span>
+                </button>
+            }
+            @if (!ViewBag.TransactionStatus.Equals(Facelift_App.Helper.Constant.TransactionStatus.CLOSED))
+            {
+                <button type="button" onclick="generatePDF()" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-file"></i>
+                    </span>
+                    <span class="text">Generate PDF</span>
+                </button>
+            }
+            <div class="fa-pull-right">
+                @if (ViewBag.TransactionStatus.Equals("OPEN"))
+                {
+                    <button type="button" onclick="deleteForm()" class="btn btn-danger btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-trash"></i>
+                        </span>
+                        <span class="text">Delete Document</span>
+                    </button>
+                }
+                @if (ViewBag.TransactionStatus.Equals("PROGRESS") && !Model.AccidentType.Equals("INBOUND"))
+                {
+                    <button type="button" onclick="postForm()" class="btn btn-success btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-paper-plane"></i>
+                        </span>
+                        <span class="text">Approve Document</span>
+                    </button>
+                }
+
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-xs-12 col-lg-12">
+            <div class="card shadow border-left-primary">
+                <div class="card-body">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="tab-1" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Document Information</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab-2" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">Item Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab-3" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false">Document Logs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab-4" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4" aria-selected="false">Attachments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab-5" data-toggle="tab" href="#tab5" role="tab" aria-controls="tab5" aria-selected="false">Document Version</a>
+                        </li>
+                        @if (Model.AccidentType.Equals("INBOUND"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-6" data-toggle="tab" href="#tab6" role="tab" aria-controls="tab6" aria-selected="false">Shipment Details</a>
+                            </li>
+                        }
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab-1">
+                            <div class="row mt-3">
+                                <div class="col-xs-6 col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Document Number</label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.TransactionCode, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Warehouse</label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.WarehouseName, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Transaction Status</label>
+                                        <div class="col-sm-8">
+                                            <div class="form-control-plaintext">
+                                                @Html.Raw(Model.TransactionStatus)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Created By</label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Created At</label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.CreatedAt, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "", @Value = Model.CreatedAt.ToString("dd MMM yyyy HH:mm:ss") } })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Modified By</label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.ModifiedBy, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "", @Value = !string.IsNullOrEmpty(Model.ModifiedBy) ? Model.ModifiedBy : "-" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Modified At</label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.ModifiedAt, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "", @Value = @Model.ModifiedAt.HasValue ? Model.ModifiedAt.Value.ToString("d MMM yyyy HH:mm:ss") : "-" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Approved By</label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.ApprovedBy, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "", @Value = !string.IsNullOrEmpty(Model.ApprovedBy) ? Model.ApprovedBy : "-" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-4">Approved At</label>
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.ApprovedAt, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "", @Value = @Model.ApprovedAt.HasValue ? Model.ApprovedAt.Value.ToString("d MMM yyyy HH:mm:ss") : "-" } })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-xs-6 col-lg-6">
+                                    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "mainFrm" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-sm-4">Reason </label>
+                                            <div class="col-sm-8">
+                                                @Html.EditorFor(model => model.AccidentType, new { htmlAttributes = new { @class = "form-control-plaintext", @readonly = "" } })
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-sm-4">Remarks <span class="text-info">(Optional)</span></label>
+                                            <div class="col-sm-8">
+                                                @if (!ViewBag.TransactionStatus.Equals("CLOSED"))
+                                                {
+                                                    @Html.TextAreaFor(model => model.Remarks, new { @class = "form-control", @autocomplete = "off", @rows = 3 })
+                                                }
+                                                else
+                                                {
+                                                    @Html.TextArea("Remarks", string.IsNullOrEmpty(Model.Remarks) ? "-" : Model.Remarks, new { @class = "form-control-plaintext", @readonly = "", @autocomplete = "off", @rows = 3 })
+                                                }
+
+                                            </div>
+                                        </div>
+                                        if (!ViewBag.TransactionStatus.Equals("CLOSED"))
+                                        {
+                                            <div class="row mt-4">
+                                                <div class="col-md-12">
+                                                    <div class="fa-pull-right">
+                                                        <button type="button" onclick="resetForm()" class="btn btn-warning btn-icon-split">
+                                                            <span class="icon text-white-50">
+                                                                <i class="fas fa-backspace"></i>
+                                                            </span>
+                                                            <span class="text">Cancel</span>
+                                                        </button>
+                                                        <button type="button" onclick="submitForm()" class="btn btn-primary btn-icon-split">
+                                                            <span class="icon text-white-50">
+                                                                <i class="fas fa-save"></i>
+                                                            </span>
+                                                            <span class="text">Save</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab-2">
+                            @if (!ViewBag.TransactionStatus.Equals("CLOSED"))
+                            {
+                                <div class="row mt-3 mb-3">
+                                    <div class="col-xs-12 col-lg-12">
+                                        <div class="d-sm-flex align-items-center justify-content-between mb-1">
+                                            <h5 class="h3 mb-0 text-gray-800">Pallet List</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="row mt-3 mb-3">
+                                <div class="col-lg-12">
+                                    @if (!ViewBag.TransactionStatus.Equals("CLOSED") && Model.AccidentType.Equals("INSPECTION"))
+                                    {
+                                        <button type="button" class="btn btn-danger btn-icon-split" onclick="DeleteItem()">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </span>
+                                            <span class="text">Delete</span>
+                                        </button>
+                                    }
+                                    <button type="button" class="btn btn-secondary btn-icon-split" onclick="RefreshItem()">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-sync"></i>
+                                        </span>
+                                        <span class="text">Refresh</span>
+                                    </button>
+                                </div>
+                            </div>
+                            @if (!ViewBag.TransactionStatus.Equals("CLOSED") && Model.AccidentType.Equals("INSPECTION"))
+                            {
+                                <div class="row mt-3 mb-3">
+                                    <div class="col-lg-12">
+                                        <button type="button" class="btn btn-outline-info btn-sm btn-icon-split" id="btnSelectAll">
+                                            <span class="icon text-white">
+                                                <i class="fas fa-check-circle"></i>
+                                            </span>
+                                            <span class="text">Select All</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 mb-3">
+                                    <div class="col-lg-12">
+                                        <span class="text-muted">Pallet selected : <b id="rowSelected">0</b> / <b id="totalRecords"></b></span>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="row mt-3 mb-3">
+                                    <div class="col-lg-12">
+                                        <span class="text-muted">Pallet : <b id="totalRecords"></b></span>
+                                    </div>
+                                </div>
+                            }
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped text-nowrap" id="itemTable" width="100%" cellspacing="0">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Tag Id</th>
+                                                    <th>Pallet Type</th>
+                                                    <th>Reason Type</th>
+                                                    <th>Reason Name</th>
+                                                    <th>Scanned By</th>
+                                                    <th>Scanned At</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab-3">
+                            <div class="row mt-3 mb-3">
+                                <div class="col-xs-12 col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Action Name</th>
+                                                    <th>Executed By</th>
+                                                    <th>Executed At</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.logs.Any())
+                                                {
+                                                    int num = 1;
+                                                    foreach (var log in Model.logs)
+                                                    {
+                                                        <tr>
+                                                            <td>@(num++)</td>
+                                                            <td>@log.ActionName</td>
+                                                            <td>@log.ExecutedBy</td>
+                                                            <td>@log.ExecutedAt.ToString("dd MMM yyyy HH:mm:ss")</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="4" class="text-center">No Data</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab4" class="tab-pane fade">
+                            @if (!ViewBag.TransactionStatus.Equals("CLOSED"))
+                            {
+                                <div class="row mt-3">
+                                    <div class="col-xs-12 col-lg-12">
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-sm-3">Attachments</label>
+                                            <div class="col-sm-5">
+                                                <div class="custom-file">
+                                                    @Html.TextBox("PalletFile", "", new { @type = "file", @class = "custom-file-input", @id = "palletFile", @accept = "image/jpeg, image/png", @multiple = "multiple" })
+                                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                                </div>
+                                                <span class="text-muted text-sm"><i>Maximum file size : 4MB (.jpg|.jpeg|.png)</i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 col-lg-6">
+                                        <div class="fa-pull-right">
+                                            <button type="button" onclick="resetUpload()" class="btn btn-warning btn-icon-split">
+                                                <span class="icon text-white-50">
+                                                    <i class="fas fa-backspace"></i>
+                                                </span>
+                                                <span class="text">Cancel</span>
+                                            </button>
+                                            <button type="button" onclick="uploadAttachment()" class="btn btn-primary btn-icon-split">
+                                                <span class="icon text-white-50">
+                                                    <i class="fas fa-upload"></i>
+                                                </span>
+                                                <span class="text">Upload</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @*THUMBNAILS*@
+                            <div class="row mt-3 mb-3">
+                                <div class="col-xs-12 col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Image</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.attachments.Any())
+                                                {
+                                                    foreach (var attachment in Model.attachments)
+                                                    {
+                                                        <tr>
+                                                            <td><img src="@Url.Content(attachment.FilePath)" style="height:100px;width:100px;" /></td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-sm btn-outline-secondary btn-icon-split" onclick="ViewAttachment(this, '@Url.Content(attachment.FilePath)')">
+                                                                    <span class="icon text-white-50"><i class="fas fa-eye"></i></span>
+                                                                    <span class="text">View</span>
+                                                                </button>
+                                                                <button type="button" class="btn btn-sm btn-outline-primary btn-icon-split" onclick="DownloadAttachment('@Url.Content(attachment.FileName)')">
+                                                                    <span class="icon text-white-50"><i class="fas fa-download"></i></span>
+                                                                    <span class="text">Download</span>
+                                                                </button>
+                                                                @if (!ViewBag.TransactionStatus.Equals("CLOSED"))
+                                                                {
+                                                                    <button type="button" class="btn btn-sm btn-outline-danger btn-icon-split" onclick="DeleteAttachment(this, '@Url.Content(attachment.FileName)')">
+                                                                        <span class="icon text-white-50"><i class="fas fa-trash"></i></span>
+                                                                        <span class="text">Delete</span>
+                                                                    </button>
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="3" class="text-center">No Data</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tab5" role="tabpanel" aria-labelledby="tab-5">
+                            <div class="row mt-3 mb-3">
+                                <div class="col-xs-12 col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Version</th>
+                                                    <th>Ref Number</th>
+                                                    <th>Reason</th>
+                                                    <th>Remarks</th>
+                                                    <th>Warehouse</th>
+                                                    <th>Transaction Status</th>
+                                                    <th>Executed By</th>
+                                                    <th>Executed At</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.versions.Any())
+                                                {
+                                                    foreach (var version in Model.versions)
+                                                    {
+                                                <tr>
+                                                    <td>@version.Version</td>
+                                                    <td>@version.RefNumber</td>
+                                                    <td>@version.AccidentType</td>
+                                                    <td>@version.Remarks</td>
+                                                    <td>@version.WarehouseName</td>
+                                                    <td>@version.TransactionStatus</td>
+                                                    <td>
+                                                        @if (!string.IsNullOrEmpty(version.ApprovedBy))
+                                                        {
+                                                            @version.ApprovedBy;
+                                                        }
+                                                        else if (!string.IsNullOrEmpty(version.ModifiedBy))
+                                                        {
+                                                            @version.ModifiedBy;
+                                                        }
+                                                        else
+                                                        {
+                                                            @version.CreatedBy;
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @if (version.ApprovedAt.HasValue)
+                                                        {
+                                                            @version.ApprovedAt.Value.ToString("dd MMM yyyy HH:mm:ss");
+                                                        }
+                                                        @if (version.ModifiedAt.HasValue)
+                                                        {
+                                                            @version.ModifiedAt.Value.ToString("dd MMM yyyy HH:mm:ss");
+                                                        }
+                                                        else
+                                                        {
+                                                            @version.CreatedAt.ToString("dd MMM yyyy HH:mm:ss");
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="4" class="text-center">No Data</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @if (Model.AccidentType.Equals("INBOUND"))
+                        {
+                            <div id="tab6" class="tab-pane fade" role="tabpanel" aria-labelledby="tab-6">
+
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@Html.Partial("ConfirmationModal")
+
+@section custom_css
+{
+    @Styles.Render("~/Content/vendor/toastr/toastr.css")
+    @Styles.Render("~/Content/vendor/datatables/dataTables.bootstrap4.min.css")
+    @Styles.Render("~/Content/vendor/datatables/fixedColumns.bootstrap4.min.css")
+}
+@section custom_js
+{
+    @Scripts.Render("~/Scripts/jquery.validate.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.js")
+    @Scripts.Render("~/Content/vendor/toastr/toastr.min.js")
+    @Scripts.Render("~/Content/custom/js/notification.js")
+    @Scripts.Render("~/Content/vendor/datatables/jquery.dataTables.min.js")
+    @Scripts.Render("~/Content/vendor/datatables/dataTables.bootstrap4.min.js")
+    @Scripts.Render("~/Content/vendor/datatables/dataTables.fixedColumns.min.js")
+<script>
+
+        let id = '@ViewBag.Id';
+
+
+        $(document).ready(function () {
+
+            let tempMessage = '@ViewBag.TempMessage';
+            if (tempMessage) {
+                notify("Success", "success", tempMessage);
+            }
+
+            $('#itemTable').on('change', '.chkItem', function () {
+                let itemId = this.value;
+                if (this.checked) {
+                    deleteRemoved(itemId);
+                    checkedIds.push(itemId);
+                    selectedRow += 1;
+                } else {
+                    deleteChecked(itemId);
+                    removedIds.push(itemId);
+                    selectedRow -= 1;
+                }
+
+                $('#rowSelected').text(selectedRow);
+
+                let txt = $('#btnSelectAll').find('.text');
+                let icon = $('#btnSelectAll').find('.icon');
+
+                if (selectedRow == recordsTotal) {
+                    selectAll = true;
+                    $(txt).text("Deselect All");
+                    $(icon).html("<i class=\"fas fa-circle\"></i>");
+                } else {
+                    selectAll = false;
+                    $(txt).text("Select All");
+                    $(icon).html("<i class=\"fas fa-check-circle\"></i>");
+                }
+
+            });
+
+        });
+
+        let choosedAction = '';
+
+        function submitForm() {
+            let form = $('#mainFrm');
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                choosedAction = "save";
+                $('#confirmationModal').modal('show');
+            } else {
+                notify("Info", "info", "Please complete form below.");
+            }
+        }
+
+        function deleteForm() {
+            choosedAction = "delete";
+            $('#confirmationModal').modal('show');
+        }
+
+        function postForm() {
+            choosedAction = "post";
+            $('#confirmationModal').modal('show');
+        }
+
+        function uploadAttachment() {
+            let fv = $("#palletFile").val();
+            if (fv == undefined || fv == '') {
+                notify("Info", "info", "Please choose file.");
+                return false;
+            }
+            choosedAction = "upload_attachment";
+            $('#confirmationModal').modal('show');
+        }
+
+        $('#btnModalSave').click(function () {
+            switch (choosedAction) {
+                case "save":
+                    updateHeader();
+                    break;
+                case "delete":
+                    deleteData();
+                    break;
+                case "post":
+                    postData();
+                    break;
+                case "delete_item":
+                    doDeleteItem();
+                    break;
+                case "upload_attachment":
+                    doUpload();
+                    break;
+                case "delete_attachment":
+                    doDeleteAttachment();
+                    break;
+            }
+
+        });
+
+        function updateHeader() {
+            let form = $('#mainFrm');
+            //double validation, prevent duplication
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                saveData(form);
+            } else {
+                notify("Info", "info", "Please complete form below.");
+            }
+
+        }
+
+        function saveData(form) {
+            $("#preloader").show();
+            $.ajax({
+                type: 'POST',
+                url: form.action,
+                data: $(form).serialize(),
+                success: function (response) {
+
+                    if (response.stat) {
+                        location.reload();
+                    } else {
+                        notify("Warning", "warning", response.msg);
+                        $("#preloader").fadeOut("slow");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    notify("Error", "error", "Oops! Something went wrong.");
+                    $("#preloader").fadeOut("slow");
+                },
+                complete: function () {
+                    //$("#preloader").fadeOut("slow");
+                }
+            });
+        }
+
+        function deleteData() {
+            $("#preloader").show();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Delete")',
+                data: { x : id},
+                success: function (response) {
+                    if (response.stat) {
+                        goBack();
+                    } else {
+                        notify("Warning", "warning", response.msg);
+                        $("#preloader").fadeOut("slow");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    notify("Error", "error", "Oops! Something went wrong.");
+                    $("#preloader").fadeOut("slow");
+                },
+                complete: function () {
+                    //$("#preloader").fadeOut("slow");
+                }
+            });
+        }
+
+        function postData() {
+            $("#preloader").show();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Close")',
+                data: { x: id },
+                success: function (response) {
+                    if (response.stat) {
+                        location.reload();
+                    } else {
+                        notify("Warning", "warning", response.msg);
+                        $("#preloader").fadeOut("slow");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    notify("Error", "error", "Oops! Something went wrong.");
+                    $("#preloader").fadeOut("slow");
+                },
+                complete: function () {
+                    //$("#preloader").fadeOut("slow");
+                }
+            });
+        }
+
+        function Refresh() {
+            location.reload();
+        }
+
+        function goBack() {
+            location.href = '@Url.Action("Index")';
+        }
+
+        function resetForm() {
+            $("#preloader").show();
+            location.reload();
+        }
+
+        $('#tab-2').on('shown.bs.tab', function (e) {
+            RefreshItem();
+        });
+
+        function RefreshItem() {
+            itemTable.ajax.reload();
+        }
+
+
+         let recordsTotal = 0;
+        let selectedRow = 0;
+        let selectAll = false;
+
+
+        $('#btnSelectAll').click(function () {
+            if(recordsTotal < 1){
+                return false;
+            }
+            selectAll = !selectAll ?  true : false;
+            let txt = $(this).find('.text');
+            let icon = $(this).find('.icon');
+            $('.chkItem').prop('checked', selectAll);
+            checkedIds = [];
+            removedIds = [];
+            if (selectAll) {
+                $(txt).text("Deselect All");
+                $(icon).html("<i class=\"fas fa-circle\"></i>");
+                //add array
+                $('.chkItem:checked').each(function () {
+                    if (!isChecked(this.value)) {
+                        checkedIds.push(this.value);
+                    }
+                });
+                selectedRow = recordsTotal;
+                $('#rowSelected').text(selectedRow);
+            } else {
+                $(txt).text("Select All");
+                $(icon).html("<i class=\"fas fa-check-circle\"></i>");
+                selectedRow = checkedIds.length;
+                $('#rowSelected').text(selectedRow);
+            }
+
+
+
+        });
+
+        let checkedIds = [];
+        let removedIds = [];
+
+        var itemTable = $('#itemTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '@Url.Action("DatatableItem")?id=' + id,
+                    type: "POST",
+                    datatype: "json"
+                },
+                scrollY: "500px",
+                scrollX: true,
+                scrollCollapse: true,
+                paging: true,
+                //fixedColumns: true
+                fixedColumns: {
+                    leftColumns: 0
+                },
+            columnDefs: [
+                {
+                    "orderable": false, "targets": 0, "className": 'dt-body-center', "width" : "1%",
+                    "render": function (data, type, full, meta) {
+                            return '<input type="checkbox" name="TransactionItemId[]" class="chkItem" value="'+ data.TransactionItemId +'"> ';
+                    }}
+            ],
+            order: [[1, "asc"]],
+            columns: [
+                    { "data": null, "name": null, "autoWidth": true },
+                    { "data": "TagId", "name": "TagId", "autoWidth": true },
+                    { "data": "PalletTypeName", "name": "PalletName", "autoWidth": true },
+                    { "data": "ReasonType", "name": "ReasonType", "autoWidth": true },
+                    { "data": "ReasonName", "name": "ReasonName", "autoWidth": true },
+                    { "data": "ScannedBy", "name": "ScannedBy", "autoWidth": true },
+                    { "data": "ScannedAt", "name": "ScannedAt", "autoWidth": true },
+
+            ],
+            rowCallback: function (row, data) {
+
+                if (selectAll) {
+                    //check if value exist in removedIds, do not push
+                    if (!isRemoved(data.TransactionItemId)) {
+                        //prevent duplicate value, remove check first then insert.
+                        deleteChecked(data.TransactionItemId);
+                        checkedIds.push(data.TransactionItemId);
+                    }
+                }
+
+                $('.chkItem', row).prop('checked', isChecked(data.TransactionItemId));
+            },
+            drawCallback: function (settings) {
+                let transactionStatus = '@ViewBag.TransactionStatus';
+                let reasonType = '@Model.AccidentType';
+                if (transactionStatus == "CLOSED" || reasonType !== "INSPECTION") {
+                    var column = itemTable.column(0);
+                    column.visible(false);
+                }
+            }
+        });
+
+        function isChecked(id) {
+            return ($.inArray(id, checkedIds) > -1);
+        }
+
+        function isRemoved(id) {
+            return ($.inArray(id, removedIds) > -1);
+        }
+
+        function deleteChecked(value) {
+            let index = $.inArray(value, checkedIds);
+            if (isChecked(value)) {
+                checkedIds.splice(index, 1);
+            }
+        }
+
+        function deleteRemoved(value) {
+            let index = $.inArray(value, removedIds);
+            if (isRemoved(value)) {
+                removedIds.splice(index, 1);
+            }
+        }
+
+        itemTable.on('xhr', function () {
+            let response = itemTable.ajax.json();
+            //recordsTotal = response.recordsTotal;
+            recordsTotal = response.recordsTotal;
+            $('#totalRecords').html(recordsTotal);
+        });
+
+
+        function DeleteItem() {
+            if (selectedRow < 1) {
+                notify("Info", "info", "Please select at least 1 row.");
+                return false;
+            }
+
+            choosedAction = "delete_item";
+            $('#confirmationModal').modal('show');
+
+        }
+
+        function doDeleteItem() {
+            //if selectAll == true, then ignore array list. just clear all item by transactionId
+            //else, remove item by transactionItemId
+            let items =  checkedIds.filter(function (item, pos) {
+                return checkedIds.indexOf(item) == pos;
+            });
+            if (selectAll) {
+                items = [];
+            }
+
+            let data = { "x": id, "selectAll": selectAll, "items": items }
+            $("#preloader").show();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteItem")?',
+                data: data,
+                success: function (response) {
+                    if (response.stat) {
+                        location.reload();
+                    } else {
+                        notify("Warning", "warning", response.msg);
+                        $("#preloader").fadeOut("slow");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    notify("Error", "error", "Oops! Something went wrong.");
+                    $("#preloader").fadeOut("slow");
+                },
+                complete: function () {
+                    //$("#preloader").fadeOut("slow");
+                }
+            });
+    }
+
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        if (fileName)
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        else
+            resetUpload();
+    });
+
+    function resetUpload() {
+        $('#palletFile').val('');
+        $('.custom-file-label').html('Choose file');
+    }
+
+    function uploadItem() {
+
+        let fv = $("#palletFile").val();
+        if (fv == undefined || fv == '') {
+            notify("Info", "info", "Please choose file.");
+            return false;
+        }
+
+        choosedAction = "upload_item";
+        $('#confirmationModal').modal('show');
+    }
+
+    function doUpload() {
+        var formData = new FormData();
+        var files = document.getElementById("palletFile").files;
+
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            formData.append("palletFile", file);
+        }
+
+        $("#preloader").show();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadAttachment")?x=' + id,
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.stat) {
+                    location.reload();
+                } else {
+                    notify("Warning", "warning", response.msg);
+                    $("#preloader").fadeOut("slow");
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                notify("Error", "error", "Oops! Something went wrong.");
+                $("#preloader").fadeOut("slow");
+            },
+            complete: function () {
+                //$("#preloader").fadeOut("slow");
+            }
+        });
+    }
+
+    function generatePDF() {
+        window.open('@Url.Action("GeneratePDFAsync")?x=' + id, '_blank');
+    }
+
+    function ViewAttachment(row, url) {
+        window.open(url, '_blank', 'fullscreen=yes');
+        return false;
+    }
+
+
+    let attachmentRow;
+    let attachmentFileName;
+
+    function DeleteAttachment(row, fileName) {
+        attachmentRow = row;
+        attachmentFileName = fileName;
+        choosedAction = "delete_attachment";
+        $('#confirmationModal').modal('show');
+    }
+
+    function DownloadAttachment(fileName) {
+        window.location.href = '@Url.Action("DownloadAttachment")?id=' + id + "&fileName=" + fileName;
+    }
+
+    function doDeleteAttachment() {
+        $("#preloader").show();
+        $.post('@Url.Action("DeleteAttachment")', { id: id, fileName: attachmentFileName}, function (data) {
+            if (data.stat)
+                $(attachmentRow).closest('tr').remove();
+
+            $("#preloader").fadeOut("slow");
+            $('#confirmationModal').modal('hide');
+        }, "json");
+    }
+</script>
+}

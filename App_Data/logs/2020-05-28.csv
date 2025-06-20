@@ -1,0 +1,50 @@
+time,level,logger,message,callsite,exception
+2020-05-28 13:34:31.1132,Error,Facelift_App.Repositories.MenuRepository,An exception has been raised that is likely due to a transient failure. If you are connecting to a SQL Azure database consider using SqlAzureExecutionStrategy.,Facelift_App.Repositories.MenuRepository.GetByUsername,"System.Data.Entity.Core.EntityException: An exception has been raised that is likely due to a transient failure. If you are connecting to a SQL Azure database consider using SqlAzureExecutionStrategy. ---> System.Data.Entity.Core.EntityException: The underlying provider failed on Open. ---> System.Data.Entity.Core.EntityException: An exception has been raised that is likely due to a transient failure. If you are connecting to a SQL Azure database consider using SqlAzureExecutionStrategy. ---> System.Data.SqlClient.SqlException: A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server) ---> System.ComponentModel.Win32Exception: The specified network name is no longer available
+   --- End of inner exception stack trace ---
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling, SqlAuthenticationProviderManager sqlAuthProviderManager)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext](TTarget target, Action`2 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   at System.Data.Entity.Infrastructure.Interception.DbConnectionDispatcher.Open(DbConnection connection, DbInterceptionContext interceptionContext)
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.<>c__DisplayClass1.<Execute>b__0()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   --- End of inner exception stack trace ---
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   --- End of inner exception stack trace ---
+   at System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   at System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__5()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   --- End of inner exception stack trace ---
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   at System.Data.Entity.Core.Objects.ObjectQuery`1.<System.Collections.Generic.IEnumerable<T>.GetEnumerator>b__0()
+   at System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.FindInStore(WrappedEntityKey key, String keyValuesParamName)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   at Facelift_App.Repositories.MenuRepository.GetByUsername(String Username, String type) in D:\Duta Kalingga Pratama\Projects\Unilever\Facelift\Application\UNILEVER_Facelift\Facelift_App\Repositories\MenuRepository.cs:line 44"
+2020-05-28 13:47:55.1951,Error,Facelift_App.Helper.Mailing,SendEmail - SmtpException : Server does not support secure connections.,Facelift_App.Helper.Mailing+<SendEmail>d__7.MoveNext,
+2020-05-28 13:56:36.8461,Error,Facelift_App.Helper.Mailing,"SendEmail - SmtpException : Service not available, closing transmission channel. The server response was: too many errors",Facelift_App.Helper.Mailing+<SendEmail>d__7.MoveNext,
+2020-05-28 14:22:06.0357,Error,Facelift_App.Helper.Mailing,SendEmail - SmtpException : The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.57 SMTP; Client was not authenticated to send anonymous mail during MAIL FROM,Facelift_App.Helper.Mailing+<SendEmail>d__7.MoveNext,
+2020-05-28 14:28:22.9325,Error,Facelift_App.Helper.Mailing,"SendEmail - SmtpException : Service not available, closing transmission channel. The server response was: too many errors",Facelift_App.Helper.Mailing+<SendEmail>d__7.MoveNext,
+2020-05-28 14:34:06.2483,Error,Facelift_App.Helper.Mailing,SendEmail - SmtpException : The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.57 SMTP; Client was not authenticated to send anonymous mail during MAIL FROM,Facelift_App.Helper.Mailing+<SendEmail>d__7.MoveNext,
+2020-05-28 14:45:48.7173,Error,Facelift_App.Helper.Mailing,SendEmail - SmtpException : Failure sending mail.,Facelift_App.Helper.Mailing.SendEmail,
+2020-05-28 15:21:10.0434,Error,Facelift_App.Helper.Mailing,SendEmail - SmtpException : Failure sending mail.,Facelift_App.Helper.Mailing.SendEmail,
+2020-05-28 15:22:59.0449,Error,Facelift_App.Helper.Mailing,SendEmail - SmtpException : Failure sending mail.,Facelift_App.Helper.Mailing.SendEmail,
+2020-05-28 15:29:43.9487,Error,Facelift_App.Helper.Mailing,SendEmail - SmtpException : Failure sending mail.,Facelift_App.Helper.Mailing.SendEmail,
+2020-05-28 15:31:05.3303,Info,Facelift_App.Helper.Mailing,SendEmail - Facelift - Informasi Berita Acara sent to bhovdair@sgp-dkp.com,Facelift_App.Helper.Mailing.SendEmail,
+2020-05-28 15:35:02.3128,Error,Facelift_App.Helper.Mailing,SendEmail - SmtpException : Mailbox unavailable. The server response was: 5.7.60 SMTP; Client does not have permissions to send as this sender,Facelift_App.Helper.Mailing.SendEmail,
+2020-05-28 15:59:27.4125,Error,Facelift_App.Helper.Mailing,SendEmail - SmtpException : Mailbox unavailable. The server response was: 5.7.60 SMTP; Client does not have permissions to send as this sender,Facelift_App.Helper.Mailing.SendEmail,
+2020-05-28 16:06:05.9369,Error,Facelift_App.Helper.Mailing,SendEmail - SmtpException : Mailbox unavailable. The server response was: 5.7.60 SMTP; Client does not have permissions to send as this sender,Facelift_App.Helper.Mailing.SendEmail,

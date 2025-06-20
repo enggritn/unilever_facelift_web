@@ -1,0 +1,9 @@
+time;level;logger;message;callsite;exception
+2021-09-15 15:56:38.9108;Error;Facelift_App.Controllers.InspectionApprovalController;The given key was not present in the dictionary.;Facelift_App.Controllers.InspectionApprovalController.Datatable;"System.Collections.Generic.KeyNotFoundException: The given key was not present in the dictionary.
+   at System.ThrowHelper.ThrowKeyNotFoundException()
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Facelift_App.Controllers.InspectionApprovalController.Datatable() in C:\Users\Muhammad Bhovdair\Documents\Kretayuga\Projects\Unilever\UNILEVER_Facelift\Facelift_App\Controllers\InspectionApprovalController.cs:line 87"
+2021-09-15 15:56:52.1656;Error;Facelift_App.Controllers.InspectionApprovalController;The given key was not present in the dictionary.;Facelift_App.Controllers.InspectionApprovalController.Datatable;"System.Collections.Generic.KeyNotFoundException: The given key was not present in the dictionary.
+   at System.ThrowHelper.ThrowKeyNotFoundException()
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Facelift_App.Controllers.InspectionApprovalController.Datatable() in C:\Users\Muhammad Bhovdair\Documents\Kretayuga\Projects\Unilever\UNILEVER_Facelift\Facelift_App\Controllers\InspectionApprovalController.cs:line 87"

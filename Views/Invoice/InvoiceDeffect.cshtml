@@ -1,0 +1,163 @@
+﻿@{
+    Layout = null;
+    int i = 1;
+}
+@{string[] months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" };}
+@model Facelift_App.Models.InvoiceDeffectDTO
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@Model.TransactionCode</title>
+    <style type="text/css">
+        body {
+            font-family: "DejaVu Sans Mono", monospace;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+
+        .tableDetail {
+            border-collapse: collapse;
+        }
+
+        .tableDetail, .tableDetail th, .tableDetail td {
+            border: 1px solid black;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: gray;
+            color: white;
+            text-align: center;
+        }
+
+        .content {
+            margin-top: 10px;
+            margin-left: 150px;
+        }
+
+
+        header {
+            position: running(header);
+        }
+
+        footer {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        @@page {
+            margin-top: 500px;
+
+            @@top-left {
+                content: element(header);
+            }
+
+            @@bottom-left {
+                content: "@Model.TransactionCode";
+            }
+
+            @@bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+
+        <div class="header">
+            <table width='100%'>
+                <tbody>
+                    <tr>
+                        <td align="center" valign="middle">
+                            <img style="width:70px;height:70px;" src="@ViewBag.Logo" />
+                        </td>
+                        <td align="center" valign="middle">
+                            <h1>
+                                <b>Facelift [Invoice]</b>
+                                <br /> Damage/Loss
+                            </h1>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table width='100%'>
+                <tbody>
+                    <tr>
+                        <td width="29%">Document No.</td>
+                        <td width="1%">:</td>
+                        <td width="70%">@Model.TransactionCode</td>
+                    </tr>
+                    <tr>
+                        <td width="29%">Date</td>
+                        <td width="1%">:</td>
+                        <td width="70%">@Model.CreatedAt</td>
+                    </tr>
+                    <tr>
+                        <td>Created By</td>
+                        <td>:</td>
+                        <td>@Model.CreatedBy</td>
+                    </tr>
+                    <tr>
+                        <td>Period</td>
+                        <td>:</td>
+                        <td>@(months[Convert.ToInt32(Model.CurrentMonth) -1]) - @(Model.CurrentYear)</td>
+                    </tr>
+                    @*<tr>
+                        <td>Total Damage</td>
+                        <td>:</td>
+                        <td>@Model.TotalDamage</td>
+                    </tr>
+                    <tr>
+                        <td>Total Loss</td>
+                        <td>:</td>
+                        <td>@Model.TotalLoss</td>
+                    </tr>*@
+                    <tr>
+                        <td>Total Exceed</td>
+                        <td>:</td>
+                        <td>@Model.ExceedQty</td>
+                    </tr>
+                    <tr>
+                        <td>Total Price</td>
+                        <td>:</td>
+                        <td>@Model.TotalBilling</td>
+                    </tr>
+                    <tr>
+                        <td>Tax</td>
+                        <td>:</td>
+                        <td>@Model.Tax %</td>
+                    </tr>
+                    <tr>
+                        <td>Grand Total</td>
+                        <td>:</td>
+                        <td>@Model.GrandTotal</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </header>
+
+
+    <footer>
+        <table style="margin-top:2px;">
+            <tbody>
+                <tr>
+                    <td width="100%" style="font-size:10px;">Generated At @DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                </tr>
+            </tbody>
+        </table>
+    </footer>
+</body>
+
+
+</html>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7d839153d52840f08d194134fb358657" Name="Diagram1">
+        <EntityTypeShape EntityType="FaceliftModels.InvoiceEmail" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.LogAccidentDocument" Width="1.5" PointX="18" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.LogAccidentHeader" Width="1.5" PointX="18" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.LogCycleCountDocument" Width="1.5" PointX="17" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.LogCycleCountHeader" Width="1.5" PointX="17" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.LogInspectionDocument" Width="1.5" PointX="12" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.LogInspectionHeader" Width="1.5" PointX="12" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.LogRecallDocument" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.LogRecallHeader" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.LogRegistrationDocument" Width="1.5" PointX="13.5" PointY="25.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.LogRegistrationHeader" Width="1.5" PointX="13.5" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.LogShipmentDocument" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.LogShipmentHeader" Width="1.5" PointX="7.5" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.LogShipmentOfflineHeader" Width="1.5" PointX="19.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.LogShipmentOfflineItem" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsBillingConfiguration" Width="1.5" PointX="10.5" PointY="37.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsCompany" Width="1.5" PointX="3" PointY="32.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsDriver" Width="1.5" PointX="3" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsEquipment" Width="1.5" PointX="19.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsMainMenu" Width="1.5" PointX="3.75" PointY="50.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsMenu" Width="1.5" PointX="6" PointY="49.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsPallet" Width="1.5" PointX="5.25" PointY="25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsPalletAging" Width="1.5" PointX="10.5" PointY="32.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsPalletType" Width="1.5" PointX="3" PointY="36.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsProducer" Width="1.5" PointX="3" PointY="39.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsRole" Width="1.5" PointX="6" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsRolePermission" Width="1.5" PointX="8.25" PointY="33.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsStatusType" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsTransporter" Width="1.5" PointX="0.75" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsTransporterAccess" Width="1.5" PointX="8.25" PointY="27.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsTruck" Width="1.5" PointX="3" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsUser" Width="1.5" PointX="8.25" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsWarehouse" Width="1.5" PointX="3" PointY="25.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsWarehouseAccess" Width="1.5" PointX="10.5" PointY="21.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsWarehouseCategory" Width="1.5" PointX="0.75" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.MsWarehouseCompany" Width="1.5" PointX="8.25" PointY="30.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.NLog" Width="1.5" PointX="14.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.PalletAgingDaily" Width="1.5" PointX="11.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.PalletAgingDetail" Width="1.5" PointX="19.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxAccidentHeader" Width="1.5" PointX="15.75" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxAccidentItem" Width="1.5" PointX="18" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxBillingRentHistoryHeader" Width="1.5" PointX="5.25" PointY="44.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxBillingRentHistoryItem" Width="1.5" PointX="12.75" PointY="34.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxCycleCountHeader" Width="1.5" PointX="14.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxCycleCountItem" Width="1.5" PointX="17" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxInspectionHeader" Width="1.5" PointX="9.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxInspectionItem" Width="1.5" PointX="12" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxInvoiceDeffect" Width="1.5" PointX="9.75" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxInvoiceDeffectItem" Width="1.5" PointX="12" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxInvoiceRentHeader" Width="1.5" PointX="20.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxRecallHeader" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxRecallItem" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxRegistrationHeader" Width="1.5" PointX="11.25" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxRegistrationItem" Width="1.5" PointX="13.5" PointY="31.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxShipmentHeader" Width="1.5" PointX="5.25" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxShipmentItem" Width="1.5" PointX="7.5" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.TrxShipmentItemTemp" Width="1.5" PointX="20.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwAccidentItem" Width="1.5" PointX="20.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwAgingShipment" Width="1.5" PointX="21.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwBillingRentDetail" Width="1.5" PointX="21.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwBillingRentHistoryItem" Width="1.5" PointX="22.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwCycleCountItem" Width="1.5" PointX="22.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwInvoiceRent" Width="1.5" PointX="22.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwPallet" Width="1.5" PointX="23.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwPalletAge" Width="1.5" PointX="23.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwPalletAging" Width="1.5" PointX="24.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwPalletBilling" Width="1.5" PointX="24.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwPalletDeffectHistory" Width="1.5" PointX="20.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwPalletGroup" Width="1.5" PointX="24.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwPalletGroup2" Width="1.5" PointX="25.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwPalletHistory" Width="1.5" PointX="25.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwPalletMovement" Width="1.5" PointX="15.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwPalletShipment" Width="1.5" PointX="17.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwPalletWarehouse" Width="1.5" PointX="26.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwPalletWarehouseCondition" Width="1.5" PointX="26.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwRegistrationItem" Width="1.5" PointX="26.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwShipmentAccident" Width="1.5" PointX="26.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FaceliftModels.VwShipmentItem" Width="1.5" PointX="22.75" PointY="26.75" IsExpanded="true" />
+        <AssociationConnector Association="FaceliftModels.FK_LogAccidentDocument_TrxAccidentHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_LogAccidentHeader_TrxAccidentHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_LogCycleCountDocument_TrxCycleCountHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_LogCycleCountHeader_TrxCycleCountHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_LogInspectionDocument_TrxInspectionHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_LogInspectionHeader_TrxInspectionHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_LogRecallDocument_TrxRecallHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_LogRecallHeader_TrxRecallHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_LogRegistrationDocument_TrxRegistrationHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_LogRegistrationHeader_TrxRegistrationHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_LogShipmentDocument_TrxShipmentHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_LogShipmentHeader_TrxShipmentHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxInvoiceItem_MsBillingConfiguration" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_MsPallet_MsCompany" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_MsWarehouseCompany_MsCompany" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxRegistrationHeader_MsCompany" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_MsDriver_MsTransporter" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxShipmentHeader_MsDriver" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_MsMenu_MsMainMenu" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_RolePermission_MsMenu" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_MsPallet_MsPalletType" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_MsPallet_MsProducer" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_MsPallet_MsWarehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxInvoiceItem_MsPallet" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxPalletAging_MsPallet" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxInvoiceItem_MsPalletAging" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxPalletAging_MsWarehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxRegistrationHeader_MsPalletType" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxRegistrationHeader_MsProducer" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_MsUser_MsRole" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_RolePermission_MsRole" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_MsTransporterPic_MsTransporter" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_MsTruck_MsTransporter" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxShipmentHeader_MsTransporter" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_MsTransporterPic_MsWarehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxShipmentHeader_MsTruck" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_MsUser_MsWarehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_MsWarehouseAccess_MsUser" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_MsWarehouse_MsWarehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_MsWarehouseAccess_MsWarehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_MsWarehouseCompany_MsWarehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxInvoiceHeader_MsWarehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxRegistrationHeader_MsWarehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxShipmentHeader_MsWarehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxShipmentHeader_MsWarehouse1" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxAccidentItem_TrxAccidentHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxInvoiceItem_TrxInvoiceHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxCycleCountItem_TrxCycleCountHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxInspectionItem_TrxInspectionHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxInvoiceDeffectItem_TrxInvoiceDeffect" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxRecallItem_TrxRecallHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxRegistrationItem_TrxRegistrationHeader" ManuallyRouted="false" />
+        <AssociationConnector Association="FaceliftModels.FK_TrxShipmentItem_TrxShipmentHeader" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FaceliftModels.LogScanTagIdNotRegister" Width="1.5" PointX="28.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

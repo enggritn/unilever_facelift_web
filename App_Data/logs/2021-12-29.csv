@@ -1,0 +1,13 @@
+time;level;logger;message;callsite;exception
+2021-12-29 14:04:57.1296;Error;Facelift_App.Controllers.InvoiceController;The given key was not present in the dictionary.;Facelift_App.Controllers.InvoiceController.DatatableDamageLoss;"System.Collections.Generic.KeyNotFoundException: The given key was not present in the dictionary.
+   at System.ThrowHelper.ThrowKeyNotFoundException()
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Facelift_App.Controllers.InvoiceController.DatatableDamageLoss() in C:\Users\Muhammad Bhovdair\Documents\Kretayuga\Projects\Unilever\UNILEVER_Facelift\Facelift_App\Controllers\InvoiceController.cs:line 1166"
+2021-12-29 15:11:40.9301;Error;Facelift_App.Controllers.InvoiceController;The given key was not present in the dictionary.;Facelift_App.Controllers.InvoiceController.DatatableEmail;"System.Collections.Generic.KeyNotFoundException: The given key was not present in the dictionary.
+   at System.ThrowHelper.ThrowKeyNotFoundException()
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Facelift_App.Controllers.InvoiceController.DatatableEmail() in C:\Users\Muhammad Bhovdair\Documents\Kretayuga\Projects\Unilever\UNILEVER_Facelift\Facelift_App\Controllers\InvoiceController.cs:line 838"
+2021-12-29 15:11:44.0990;Error;Facelift_App.Controllers.InvoiceController;The given key was not present in the dictionary.;Facelift_App.Controllers.InvoiceController.DatatableEmail;"System.Collections.Generic.KeyNotFoundException: The given key was not present in the dictionary.
+   at System.ThrowHelper.ThrowKeyNotFoundException()
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Facelift_App.Controllers.InvoiceController.DatatableEmail() in C:\Users\Muhammad Bhovdair\Documents\Kretayuga\Projects\Unilever\UNILEVER_Facelift\Facelift_App\Controllers\InvoiceController.cs:line 838"

@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ULI_FACELIFTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="MsMenu">
+    <Key>
+      <PropertyRef Name="MenuId" />
+    </Key>
+    <Property Name="MenuId" Type="int" Nullable="false" />
+    <Property Name="MenuParentId" Type="int" />
+    <Property Name="MenuIndex" Type="int" />
+    <Property Name="MenuName" Type="nvarchar" MaxLength="50" />
+    <Property Name="MenuTitle" Type="nvarchar" MaxLength="50" />
+    <Property Name="MenuPath" Type="nvarchar" MaxLength="50" />
+    <Property Name="MenuIcon" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="MsRole">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="RoleDescription" Type="text" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MsUser">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="UserEmail" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="UserPassword" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="FullName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="RoleId" Type="varchar" MaxLength="40" />
+    <Property Name="LastActivity" Type="varchar" MaxLength="30" />
+    <Property Name="LastActivityAt" Type="datetime" />
+    <Property Name="LastLoginAt" Type="datetime" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MsWarehouse">
+    <Key>
+      <PropertyRef Name="WarehouseId" />
+    </Key>
+    <Property Name="WarehouseId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="WarehouseName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Address" Type="text" />
+    <Property Name="Phone" Type="varchar" MaxLength="20" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+    <Property Name="ModifiedAt" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ULI_FACELIFT.dbo.TrxMenuPermission' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="TrxMenuPermission">
+    <Key>
+      <PropertyRef Name="RoleCode" />
+      <PropertyRef Name="MenuId" />
+    </Key>
+    <Property Name="RoleCode" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="MenuId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="ULI_FACELIFTModelStoreContainer">
+    <EntitySet Name="MsMenu" EntityType="Self.MsMenu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsRole" EntityType="Self.MsRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsUser" EntityType="Self.MsUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MsWarehouse" EntityType="Self.MsWarehouse" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrxMenuPermission" EntityType="Self.TrxMenuPermission" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [TrxMenuPermission].[RoleCode] AS [RoleCode], 
+    [TrxMenuPermission].[MenuId] AS [MenuId]
+    FROM [dbo].[TrxMenuPermission] AS [TrxMenuPermission]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

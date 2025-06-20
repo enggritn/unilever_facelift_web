@@ -1,0 +1,4 @@
+time,level,logger,message,callsite,exception
+2020-06-25 00:23:19.1636,Error,Facelift_App.Helper.Mailing,SendEmail - SmtpException : Failure sending mail.,Facelift_App.Helper.Mailing.SendEmail,
+2020-06-25 04:11:24.7920,Error,Facelift_App.Helper.Mailing,SendEmail - SmtpException : Failure sending mail.,Facelift_App.Helper.Mailing.SendEmail,
+2020-06-25 04:11:45.7774,Error,Facelift_App.Helper.Mailing,SendEmail - SmtpException : Failure sending mail.,Facelift_App.Helper.Mailing.SendEmail,
