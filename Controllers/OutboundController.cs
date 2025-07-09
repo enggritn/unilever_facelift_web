@@ -183,13 +183,6 @@ namespace Facelift_App.Controllers
                 }
             }
 
-            //pallet quantity mgv validation with all stock in current warehouse
-            //if (dataVM.PalletQty > 0)
-            //{
-            //    ModelState["PalletQty"].Errors.Clear();
-            //    ModelState.AddModelError("PalletQty", "test");
-            //}
-
             if (dataVM.PalletQty > 0)
             {
                 WarehouseValidator validator = new WarehouseValidator(IWarehouses);
@@ -251,6 +244,9 @@ namespace Facelift_App.Controllers
                     message = "Create data succeeded.";
                     TempData["TempMessage"] = message;
                     response.Add("transactionId", Utilities.EncodeTo64(Encryptor.Encrypt(data.TransactionId, Constant.facelift_encryption_key)));
+
+                    //Task AutoDispacthShipment()
+                    IEnumerable<TrxShipmentHeader> list = await IShipments.GetDataAllOutboundTransactionProgress();
                 }
                 else
                 {
@@ -350,8 +346,7 @@ namespace Facelift_App.Controllers
                 ViewBag.TotalPalletAccident = accidentHeader.TrxAccidentItems.Count();
                 ViewBag.TotalUnscannedPalletAccident = accidentHeader.TrxAccidentItems.Where(z => string.IsNullOrEmpty(z.ReasonType ) || string.IsNullOrEmpty(z.ReasonName)).ToList().Count();
                 ViewBag.TotalScannedPalletAccident = ViewBag.TotalPalletAccident - ViewBag.TotalUnscannedPalletAccident;
-            }
-           
+            }           
 
             return View(dataVM);
         }
@@ -501,7 +496,6 @@ namespace Facelift_App.Controllers
             }
 
             data.IsDeleted = true;
-
             data.ModifiedBy = Session["username"].ToString();
 
             result = await IShipments.DeleteAsync(data);
@@ -633,8 +627,7 @@ namespace Facelift_App.Controllers
             catch (Exception e)
             {
                 return Json(new { result = false, message = e.Message }, JsonRequestBehavior.AllowGet);
-            }
-           
+            }           
         }
 
         [HttpPost]
@@ -988,6 +981,9 @@ namespace Facelift_App.Controllers
             if (status)
             {
                 message = "Pallet dispatch successfuly.";
+
+                //Task AutoDispacthShipment()
+                IEnumerable<TrxShipmentHeader> list = await IShipments.GetDataAllOutboundTransactionProgress();
             }
             else
             {
@@ -1214,7 +1210,6 @@ namespace Facelift_App.Controllers
 
             return Json(new { stat = result, msg = message, list = drivers }, JsonRequestBehavior.AllowGet);
         }
-
 
         [HttpGet]
         public async Task<JsonResult> GetTruckByTransporterId(string transporterId)

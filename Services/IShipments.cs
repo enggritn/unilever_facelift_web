@@ -39,7 +39,6 @@ namespace Facelift_App.Services
         IEnumerable<TrxShipmentHeader> GetListOutbound(string warehouseId);
         IEnumerable<TrxShipmentHeader> GetListInbound(string warehouseId);
 
-
         //Task<bool> CreateAccidentReportAsync(TrxShipmentHeader data);
         Task<bool> CreateAccidentReportAsync(TrxShipmentHeader data, string username);
 
@@ -51,14 +50,10 @@ namespace Facelift_App.Services
         IEnumerable<TrxShipmentHeader> GetIncomingData(string WarehouseId, string OriginId, string startDate, string endDate);
         int GetTotalIncoming(string WarehouseId, string OriginId, string startDate, string endDate);
 
-
-
-
         IEnumerable<TrxShipmentHeader> GetAllOutboundTransactions(string warehouseId);
         IEnumerable<TrxShipmentHeader> GetAllInboundTransactions(string warehouseId);
         Task<IEnumerable<TrxShipmentHeader>> GetDataAllInboundTransactionProgress();
-
-
+        Task<IEnumerable<TrxShipmentHeader>> GetDataAllOutboundTransactionProgress();
 
         Task<bool> DispatchManualAsync(TrxShipmentHeader data);
         Task<bool> ReceiveManualAsync(TrxShipmentHeader data);

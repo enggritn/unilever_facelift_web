@@ -1,5 +1,0 @@
-time;level;logger;message;callsite;exception
-2021-09-28 21:11:25.9707;Info;Facelift_App.Helper.Mailing;SendEmail - Facelift - Test Email sent to tss1@sgp-dkp.com;Facelift_App.Helper.Mailing.SendEmail;
-2021-09-28 21:25:42.8849;Error;Facelift_App.Helper.Mailing;SendEmail - SmtpException : The remote certificate is invalid according to the validation procedure.;Facelift_App.Helper.Mailing.SendEmail;
-2021-09-28 21:26:55.1369;Error;Facelift_App.Helper.Mailing;SendEmail - SmtpException : The remote certificate is invalid according to the validation procedure.;Facelift_App.Helper.Mailing.SendEmail;
-2021-09-28 21:28:18.8186;Error;Facelift_App.Helper.Mailing;SendEmail - SmtpException : Failure sending mail.;Facelift_App.Helper.Mailing.SendEmail;

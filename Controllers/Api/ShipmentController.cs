@@ -84,7 +84,6 @@ namespace Facelift_App.Controllers.Api
                             message = "Delivery note is valid.";
                             TransactionId = header.TransactionId;
                             ShipmentType = "OUTBOUND";
-
                         }
                         else if (header.DestinationId.Equals(warehouse.WarehouseId))
                         {
@@ -102,14 +101,12 @@ namespace Facelift_App.Controllers.Api
                         else
                         {
                             throw new Exception("Unrecognized warehouse for current transaction.");
-                        }
-                        
+                        }                        
                     }
                     else
                     {
                         return BadRequest();
                     }
-
                 }
                 else
                 {
@@ -132,7 +129,6 @@ namespace Facelift_App.Controllers.Api
                 //return InternalServerError();
 
             }
-
 
             obj.Add("status", status);
             obj.Add("message", message);
@@ -245,23 +241,26 @@ namespace Facelift_App.Controllers.Api
                                         int index = detail.IndexOf(item);
                                         detail[index] = item;
                                     }
+
+                                    if (cek_pallet != null)
+                                    {
+                                        // insert data temp outbound
+                                        TrxShipmentItemTemp itemtemp = await IShipments.GetDataByTransactionTagIdTempAsync(header.TransactionId, tagId, "OUTBOUND");
+                                        if (itemtemp == null)
+                                        {
+                                            itemtemp = new TrxShipmentItemTemp();
+                                            itemtemp.TempID = Utilities.CreateGuid("SHI");
+                                            itemtemp.TransactionId = header.TransactionId;
+                                            itemtemp.TagId = tagId;
+                                            itemtemp.ScannedBy = username;
+                                            itemtemp.ScannedAt = currentDate;
+                                            itemtemp.StatusShipment = "OUTBOUND";
+
+                                            await IShipments.InsertItemTempAsync(itemtemp);
+                                        }
+                                    }
                                 }                                
                                 count++;
-
-                                // insert data temp outbound
-                                TrxShipmentItemTemp itemtemp = await IShipments.GetDataByTransactionTagIdTempAsync(header.TransactionId, tagId, "OUTBOUND");
-                                if (itemtemp == null)
-                                {
-                                    itemtemp = new TrxShipmentItemTemp();
-                                    itemtemp.TempID = Utilities.CreateGuid("SHI");
-                                    itemtemp.TransactionId = header.TransactionId;
-                                    itemtemp.TagId = tagId;
-                                    itemtemp.ScannedBy = username;
-                                    itemtemp.ScannedAt = currentDate;
-                                    itemtemp.StatusShipment = "OUTBOUND";
-
-                                    await IShipments.InsertItemTempAsync(itemtemp);
-                                }
                             }
 
                             if (!header.PalletQty.Equals(header.TrxShipmentItems.Count()))
@@ -352,43 +351,24 @@ namespace Facelift_App.Controllers.Api
                                         detail[index] = item;
                                     }
                                 }
-                                //else
-                                //{
-                                //    //extra found
-                                //    item = new TrxShipmentItem();
-                                //    item.TransactionItemId = Utilities.CreateGuid("SHI");
-                                //    item.TransactionId = header.TransactionId;
-                                //    item.TagId = tagId;
-                                //    item.ScannedBy = username;
-                                //    item.ScannedAt = DateTime.Now;
-                                //    item.ReceivedBy = username;
-                                //    item.ReceivedAt = DateTime.Now;
-                                //    item.PalletMovementStatus = Constant.PalletMovementStatus.IN.ToString();
 
-                                //    MsPallet pallet = await IPallets.GetDataByTagWarehouseIdAsync(tagId, header.WarehouseId);
-                                //    if (pallet != null
-                                //        && pallet.PalletMovementStatus.Equals(Constant.PalletMovementStatus.ST.ToString())
-                                //        && pallet.PalletCondition.Equals(Constant.PalletCondition.GOOD.ToString()))
-                                //    {
-                                //        //update pallet status in pallet stock, stock validation
-                                //        header.TrxShipmentItems.Add(item);
-                                //    }
-                                //}
-
-
-                                // insert data temp inbound
-                                TrxShipmentItemTemp itemtemp = await IShipments.GetDataByTransactionTagIdTempAsync(header.TransactionId, tagId, "INBOUND");
-                                if (itemtemp == null)
+                                MsPallet cek_pallet = await IPallets.GetDataByTagIdAsync(tagId);
+                                if (cek_pallet != null)
                                 {
-                                    itemtemp = new TrxShipmentItemTemp();
-                                    itemtemp.TempID = Utilities.CreateGuid("SHI");
-                                    itemtemp.TransactionId = header.TransactionId;
-                                    itemtemp.TagId = tagId;
-                                    itemtemp.ScannedBy = username;
-                                    itemtemp.ScannedAt = currentDate;
-                                    itemtemp.StatusShipment = "INBOUND";
+                                    // insert data temp inbound
+                                    TrxShipmentItemTemp itemtemp = await IShipments.GetDataByTransactionTagIdTempAsync(header.TransactionId, tagId, "INBOUND");
+                                    if (itemtemp == null)
+                                    {
+                                        itemtemp = new TrxShipmentItemTemp();
+                                        itemtemp.TempID = Utilities.CreateGuid("SHI");
+                                        itemtemp.TransactionId = header.TransactionId;
+                                        itemtemp.TagId = tagId;
+                                        itemtemp.ScannedBy = username;
+                                        itemtemp.ScannedAt = currentDate;
+                                        itemtemp.StatusShipment = "INBOUND";
 
-                                    await IShipments.InsertItemTempAsync(itemtemp);
+                                        await IShipments.InsertItemTempAsync(itemtemp);
+                                    }
                                 }
                             }
 
@@ -459,8 +439,59 @@ namespace Facelift_App.Controllers.Api
                             status = await IShipments.ReceiveItemAsync(header, username, actionName);
                             if (status)
                             {
-                                message = "Pallet receive successfuly.";
+                                if (totalRow == totalScanned)
+                                {
+                                    message = "Pallet receive successfuly.";
+                                }
+                                else
+                                {
+                                    message = totalScanned.ToString() + " Pallet receive parsial successfuly.";
+                                }
 
+                                string username_ext = "System";
+                                IEnumerable<TrxShipmentHeader> list = await IShipments.GetDataAllInboundTransactionProgress();
+                                if (list != null)
+                                {
+                                    foreach (var shipmentHeader in list)
+                                    {
+                                        TrxShipmentHeader headerext = await IShipments.GetDataByIdAsync(shipmentHeader.TransactionId);
+
+                                        DateTime currentDate_ext = DateTime.Now;
+                                        string[] items = headerext.TrxShipmentItems.Where(m => m.TransactionId.Equals(shipmentHeader.TransactionId)).Select(m => m.TagId).ToArray();
+
+                                        List<TrxShipmentItem> detailext = headerext.TrxShipmentItems.ToList();
+                                        foreach (var tag in items)
+                                        {
+                                            string tagId = Utilities.ConvertTag(tag);
+                                            TrxShipmentItem item = detailext.Where(m => m.TagId.Equals(tagId)).FirstOrDefault();
+                                            if (item != null)
+                                            {
+                                                if (item.PalletMovementStatus.Equals(Constant.PalletMovementStatus.OT.ToString()))
+                                                {
+                                                    item.ReceivedBy = username_ext;
+                                                    item.ReceivedAt = currentDate_ext;
+                                                    item.PalletMovementStatus = Constant.PalletMovementStatus.IN.ToString();
+                                                    //update current data index
+                                                    int index = detailext.IndexOf(item);
+                                                    detailext[index] = item;
+                                                }
+                                            }
+                                        }
+
+                                        headerext.TransactionStatus = Constant.TransactionStatus.CLOSED.ToString();
+                                        headerext.ShipmentStatus = Constant.ShipmentStatus.RECEIVE.ToString();
+
+                                        // delete data temp by transaction id trxshipmentheader
+                                        TrxShipmentItemTemp itemp = await IShipments.GetDataByTransactionIdTempAsync(header.TransactionId);
+                                        if (itemp != null)
+                                        {
+                                            bool delete = await IShipments.DeleteItemTempAsync(itemp);
+                                        }
+
+                                        string actionName_ext = string.Format("Receive {0} Item (System)", detailext.Count());
+                                        status = await IShipments.ReceiveItemAsync(headerext, username_ext, actionName_ext);
+                                    }
+                                }
                             }
                             else
                             {
@@ -476,7 +507,6 @@ namespace Facelift_App.Controllers.Api
                     {
                         return BadRequest();
                     }
-
                 }
                 else
                 {
@@ -534,7 +564,7 @@ namespace Facelift_App.Controllers.Api
             razorViewResult.View.Render(viewContext, writer);
 
             return writer.ToString();
-        }
+        }        
     }
 
     public class EmptyController : ControllerBase { protected override void ExecuteCore() { } }

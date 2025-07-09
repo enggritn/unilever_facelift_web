@@ -1,9 +1,0 @@
-time,level,logger,message,callsite,exception
-2020-06-18 10:36:02.2348,Error,Facelift_App.Repositories.WarehouseRepository,Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.,Facelift_App.Repositories.WarehouseRepository.UpdateAsync,"System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
-   at System.Data.Entity.Internal.InternalContext.SaveChangesAsync(CancellationToken cancellationToken)
-   at System.Data.Entity.Internal.LazyInternalContext.SaveChangesAsync(CancellationToken cancellationToken)
-   at System.Data.Entity.DbContext.SaveChangesAsync(CancellationToken cancellationToken)
-   at System.Data.Entity.DbContext.SaveChangesAsync()
-   at Facelift_App.Repositories.WarehouseRepository.<UpdateAsync>d__9.MoveNext() in D:\Duta Kalingga Pratama\Projects\Unilever\Facelift\Application\UNILEVER_Facelift\Facelift_App\Repositories\WarehouseRepository.cs:line 182"
-2020-06-18 11:02:23.0806,Info,Facelift_App.Helper.Mailing,SendEmail - Facelift - Informasi Berita Acara sent to System.Collections.Generic.List`1[System.String],Facelift_App.Helper.Mailing.SendEmail,
-2020-06-18 11:02:23.0806,Info,Facelift_App.Helper.Mailing,SendEmail - Facelift - Informasi Berita Acara sent to System.Collections.Generic.List`1[System.String],Facelift_App.Helper.Mailing.SendEmail,

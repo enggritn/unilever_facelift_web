@@ -1,0 +1,64 @@
+# Build results
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+*.log
+*.tlog
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code settings
+.vscode/
+
+# Visual Studio working folder
+.vs/
+
+# Web publish folder
+App_Data/logs/
+App_Data/*.csv
+
+# IIS Express
+*.vspscc
+*.vssscc
+
+# Publish profiles
+*.pubxml
+*.pubxml.user
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+project.lock.json
+project.fragment.lock.json
+
+# Rider IDE
+.idea/
+
+# Deployment results
+*.deploy*
+*.zip
+
+# Build artifacts
+*.dll
+*.pdb
+*.cache
+*.tmp
+*.bak
+*.dbmdl
+
+# Others
+*.vsidx
+*.csproj.user
+*.sdf
+*.db

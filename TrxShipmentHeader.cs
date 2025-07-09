@@ -20,6 +20,7 @@ namespace Facelift_App
             this.LogShipmentDocuments = new HashSet<LogShipmentDocument>();
             this.LogShipmentHeaders = new HashSet<LogShipmentHeader>();
             this.TrxShipmentItems = new HashSet<TrxShipmentItem>();
+            this.TrxShipmentItemTemps = new HashSet<TrxShipmentItemTemp>();
         }
     
         public string TransactionId { get; set; }
@@ -62,5 +63,6 @@ namespace Facelift_App
         public virtual MsWarehouse MsWarehouse1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TrxShipmentItem> TrxShipmentItems { get; set; }
+        public virtual ICollection<TrxShipmentItemTemp> TrxShipmentItemTemps { get; set; }
     }
 }

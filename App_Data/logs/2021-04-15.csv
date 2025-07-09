@@ -1,4 +1,0 @@
-time;level;logger;message;callsite;exception
-2021-04-15 14:19:10.2199;Info;Facelift_App.Helper.Mailing;SendEmail - Facelift_Invoice_WHC002_SKIN_3_2021 sent to tss2@sgp-dkp.com;Facelift_App.Helper.Mailing.SendEmail;
-2021-04-15 14:19:11.0859;Info;Facelift_App.Helper.Mailing;"SendEmail - Facelift_Invoice_WHC003_MANUCHAR_3_2021 sent to tss1@sgp-dkp.com;tss2@sgp-dkp.com";Facelift_App.Helper.Mailing.SendEmail;
-2021-04-15 14:19:14.8934;Info;Facelift_App.Helper.Mailing;SendEmail - Facelift_Invoice_WHC001_CRMS_3_2021 sent to tss2@sgp-dkp.com;Facelift_App.Helper.Mailing.SendEmail;
