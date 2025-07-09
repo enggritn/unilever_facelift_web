@@ -734,6 +734,7 @@
                     onComplete: function () {
                         var ctx = this.chart.ctx;
                         var textSize = ctx.canvas.width / 80;
+                        ctx.font = textSize + "px Arial"; 
                         ctx.textAlign = 'center';
                         ctx.textBaseline = 'bottom';
                         ctx.fillStyle = '#fff';
@@ -749,8 +750,8 @@
                                     end_angle = model.endAngle,
                                     mid_angle = start_angle + (end_angle - start_angle) / 2;
 
-                                var x = mid_radius * Math.cos(mid_angle);
-                                var y = mid_radius * Math.sin(mid_angle);
+                                var x = (mid_radius + 40) * Math.cos(mid_angle);
+                                var y = (mid_radius + 40) * Math.sin(mid_angle);
 
                                 if (curr_data && model.circumference) {
                                     curr_data = curr_data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -796,6 +797,7 @@
                     onComplete: function () {
                         var ctx = this.chart.ctx;
                         var textSize = ctx.canvas.width / 80;
+                        ctx.font = textSize + "px Arial"; 
                         ctx.textAlign = 'center';
                         ctx.textBaseline = 'bottom';
                         ctx.fillStyle = '#fff';
@@ -811,15 +813,20 @@
                                     end_angle = model.endAngle,
                                     mid_angle = start_angle + (end_angle - start_angle) / 2;
 
-                                var x = mid_radius * Math.cos(mid_angle);
-                                var y = mid_radius * Math.sin(mid_angle);
+                                var x = (mid_radius + 40) * Math.cos(mid_angle);
+                                var y = (mid_radius + 40) * Math.sin(mid_angle);
 
                                 if (curr_data && model.circumference) {
+                                    //var percentage = curr_data / total;
+                                    //var n = percentage.toFixed(3) * 100;
+                                    //n = n.toFixed(2);
+                                    ////var percent = String(Math.round(curr_data / total * 100)) + "%";
+                                    //var percent = String(n);
+                                    //ctx.fillText(percent, model.x + x, model.y + y + 8);
+
                                     var percentage = curr_data / total;
-                                    var n = percentage.toFixed(3) * 100;
-                                    n = n.toFixed(2);
-                                    //var percent = String(Math.round(curr_data / total * 100)) + "%";
-                                    var percent = String(n) + "%";
+                                    var n = (percentage * 100).toFixed(1); // <- 1 angka di belakang koma
+                                    var percent = String(n);
                                     ctx.fillText(percent, model.x + x, model.y + y + 8);
                                 }
                             }
@@ -875,6 +882,7 @@
                     onComplete: function () {
                         var ctx = this.chart.ctx;
                         var textSize = ctx.canvas.width / 80;
+                        ctx.font = textSize + "px Arial"; 
                         ctx.textAlign = 'center';
                         ctx.textBaseline = 'bottom';
                         ctx.fillStyle = '#fff';
@@ -890,8 +898,8 @@
                                     end_angle = model.endAngle,
                                     mid_angle = start_angle + (end_angle - start_angle) / 2;
 
-                                var x = mid_radius * Math.cos(mid_angle);
-                                var y = mid_radius * Math.sin(mid_angle);
+                                var x = (mid_radius + 40) * Math.cos(mid_angle);
+                                var y = (mid_radius + 40) * Math.sin(mid_angle);
 
                                 if (curr_data && model.circumference) {
                                     curr_data = curr_data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -949,6 +957,7 @@
                     onComplete: function () {
                         var ctx = this.chart.ctx;
                         var textSize = ctx.canvas.width / 80;
+                        ctx.font = textSize + "px Arial"; 
                         ctx.textAlign = 'center';
                         ctx.textBaseline = 'bottom';
                         ctx.fillStyle = '#fff';
@@ -964,8 +973,8 @@
                                     end_angle = model.endAngle,
                                     mid_angle = start_angle + (end_angle - start_angle) / 2;
 
-                                var x = mid_radius * Math.cos(mid_angle);
-                                var y = mid_radius * Math.sin(mid_angle);
+                                var x = (mid_radius + 40) * Math.cos(mid_angle);
+                                var y = (mid_radius + 40) * Math.sin(mid_angle);
 
                                 if (curr_data && model.circumference) {
                                     curr_data = curr_data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -1023,6 +1032,7 @@
                     onComplete: function () {
                         var ctx = this.chart.ctx;
                         var textSize = ctx.canvas.width / 80;
+                        ctx.font = textSize + "px Arial"; 
                         ctx.textAlign = 'center';
                         ctx.textBaseline = 'bottom';
                         ctx.fillStyle = '#fff';
@@ -1038,8 +1048,8 @@
                                     end_angle = model.endAngle,
                                     mid_angle = start_angle + (end_angle - start_angle) / 2;
 
-                                var x = mid_radius * Math.cos(mid_angle);
-                                var y = mid_radius * Math.sin(mid_angle);
+                                var x = (mid_radius + 40) * Math.cos(mid_angle);
+                                var y = (mid_radius + 40) * Math.sin(mid_angle);
 
                                 if (curr_data && model.circumference) {
                                     curr_data = curr_data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

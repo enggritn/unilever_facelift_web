@@ -6,6 +6,7 @@ using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -24,7 +25,6 @@ namespace Facelift_App.Controllers
         private readonly IPallets IPallets;
         private readonly IAccidents IAccidents;
         private readonly IUsers IUsers;
-
 
         public InboundController(IShipments Shipments, IWarehouses Warehouses, IPallets Pallets, IAccidents Accidents, IUsers Users)
         {
@@ -62,9 +62,7 @@ namespace Facelift_App.Controllers
             int recordsTotal = IShipments.GetTotalInboundData(warehouseId, stats);
             int recordsFilteredTotal = list.Count();
 
-
             list = list.Skip(start).Take(length).ToList();
-
 
             //re-format
             if (list != null && list.Count() > 0)
@@ -91,7 +89,6 @@ namespace Facelift_App.Controllers
                                 ApprovedAt = Utilities.NullDateTimeToString(x.ApprovedAt)
                             };
             }
-
 
             return Json(new { draw = draw, recordsFiltered = recordsFilteredTotal, recordsTotal = recordsTotal, data = pagedData },
                             JsonRequestBehavior.AllowGet);
@@ -205,7 +202,6 @@ namespace Facelift_App.Controllers
 
                 list = list.Skip(start).Take(length).ToList();
 
-
                 //re-format
                 if (list != null && list.Count() > 0)
                 {
@@ -276,17 +272,6 @@ namespace Facelift_App.Controllers
             {
                 return RedirectToAction("Index");
             }
-
-
-            //AccidentVM dataVM = new AccidentVM
-            //{
-            //    TransactionCode = data.TransactionCode,
-            //    ReasonType = Constant.ReasonList[reasonName].ToString(),
-            //    ReasonName = reasonName,
-            //    WarehouseId = data.DestinationId,
-            //    WarehouseCode = data.DestinationCode,
-            //    WarehouseName = data.DestinationName
-            //};
 
             AccidentVM dataVM = new AccidentVM
             {
@@ -433,11 +418,12 @@ namespace Facelift_App.Controllers
         }
 
         [HttpPost]
-        public async Task AutoClosedShipment() //Task AutoClosedShipment()
+        public async Task AutoClosedShipment() 
         {
             bool status = false;           
             string username = "System";
 
+            //Task AutoClosedShipment()
             IEnumerable<TrxShipmentHeader> list = await IShipments.GetDataAllInboundTransactionProgress();
             if (list != null)
             {
@@ -466,21 +452,6 @@ namespace Facelift_App.Controllers
                                 detail[index] = item;
                             }
                         }
-
-                        // insert data temp inbound
-                        TrxShipmentItemTemp itemtemp = await IShipments.GetDataByTransactionTagIdTempAsync(header.TransactionId, tagId, "INBOUND");
-                        if (itemtemp == null)
-                        {
-                            itemtemp = new TrxShipmentItemTemp();
-                            itemtemp.TempID = Utilities.CreateGuid("SHI");
-                            itemtemp.TransactionId = header.TransactionId;
-                            itemtemp.TagId = tagId;
-                            itemtemp.ScannedBy = username;
-                            itemtemp.ScannedAt = currentDate;
-                            itemtemp.StatusShipment = "INBOUND";
-
-                            await IShipments.InsertItemTempAsync(itemtemp);
-                        }
                     }
 
                     header.TransactionStatus = Constant.TransactionStatus.CLOSED.ToString();
@@ -497,8 +468,11 @@ namespace Facelift_App.Controllers
                     status = await IShipments.ReceiveItemAsync(header, username, actionName);
                 }
             }
-        }
 
+            //Task AutoDispacthShipment()
+            IEnumerable<TrxShipmentHeader> list2 = await IShipments.GetDataAllOutboundTransactionProgress();
+        }
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> CreateBA(string x, AccidentVM dataVM)
@@ -552,8 +526,6 @@ namespace Facelift_App.Controllers
             }
             string accidentType = Constant.AccidentType.INBOUND.ToString();
 
-            //dataVM.ReasonType = Constant.ReasonList[reasonName].ToString();
-            //dataVM.ReasonName = reasonName;
             dataVM.WarehouseId = warehouseId;
 
             ModelState["AccidentType"].Errors.Clear();
@@ -584,8 +556,6 @@ namespace Facelift_App.Controllers
                     item.TransactionItemId = Utilities.CreateGuid("BAI");
                     item.TransactionId = data.TransactionId;
                     item.TagId = tag;
-                    //item.ScannedBy = Session["username"].ToString();
-                    //item.ScannedAt = DateTime.Now;
                     data.TrxAccidentItems.Add(item);
                 }
 
@@ -646,13 +616,11 @@ namespace Facelift_App.Controllers
                         {
                             Task.Factory.StartNew(() => mailing.SendEmail(emailTransporter, "Facelift - Informasi Berita Acara", transporter));
                         }
-
                     }
                     else
                     {
                         message = "Create BA failed. Please contact system administrator.";
                     }
-
                 }
                 else
                 {
@@ -701,7 +669,6 @@ namespace Facelift_App.Controllers
             ExcelPackage excel = new ExcelPackage();
             var workSheet = excel.Workbook.Worksheets.Add("Sheet1");
             workSheet.TabColor = System.Drawing.Color.Black;
-
 
             workSheet.Row(1).Height = 25;
             workSheet.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
@@ -779,7 +746,6 @@ namespace Facelift_App.Controllers
             var workSheet = excel.Workbook.Worksheets.Add("Sheet1");
             workSheet.TabColor = System.Drawing.Color.Black;
 
-
             workSheet.Row(1).Height = 25;
             workSheet.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             workSheet.Row(1).Style.VerticalAlignment = ExcelVerticalAlignment.Center;
@@ -809,8 +775,7 @@ namespace Facelift_App.Controllers
             workSheet.Cells[1, 23].Value = "Dispatched By";
             workSheet.Cells[1, 24].Value = "Dispatched At";
             workSheet.Cells[1, 25].Value = "Received By";
-            workSheet.Cells[1, 26].Value = "Received At";
-           
+            workSheet.Cells[1, 26].Value = "Received At";           
 
             int recordIndex = 2;
             foreach (TrxShipmentHeader header in list)

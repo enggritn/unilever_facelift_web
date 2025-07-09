@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace Facelift_App.Repositories
 {
@@ -1044,21 +1045,194 @@ namespace Facelift_App.Repositories
 
         public async Task<IEnumerable<TrxShipmentHeader>> GetDataAllInboundTransactionProgress()
         {
-            IQueryable<TrxShipmentHeader> query = db.TrxShipmentHeaders.Where(x => x.TransactionStatus.Equals("PROGRESS") 
-                        && x.ShipmentStatus.Equals("DISPATCH") && x.IsDeleted == false);
-            IEnumerable <TrxShipmentHeader> list = null;
+            DateTime batasWaktu = DateTime.Now.AddHours(-18); // ambil yang > 18 jam lalu
+
+            IQueryable<TrxShipmentHeader> query = db.TrxShipmentHeaders.Where(x =>
+                x.TransactionStatus.Equals("PROGRESS") &&
+                x.ShipmentStatus.Equals("DISPATCH") &&
+                x.IsDeleted == false &&
+                x.CreatedAt <= batasWaktu 
+            );
+
+            IEnumerable<TrxShipmentHeader> list = null;
+
             try
             {
-                query = query.Where(header => db.TrxShipmentItems.Any(item => item.TransactionId == header.TransactionId && item.PalletMovementStatus == "ST"));
                 query = query.OrderByDescending(header => header.TransactionCode);
                 list = await query.ToListAsync();
+
+                DateTime twoDaysAgo = DateTime.Now.AddDays(-2);
+
+                var palletsToUpdate = await db.MsPallets
+                    .Where(p => p.PalletMovementStatus == "OT" &&
+                                p.PalletCondition == "GOOD" &&
+                                p.LastTransactionName != "INSPECTION" &&
+                                p.LastTransactionDate <= twoDaysAgo)
+                    .ToListAsync();
+
+                foreach (var pallet in palletsToUpdate)
+                {
+                    pallet.PalletMovementStatus = Constant.PalletMovementStatus.ST.ToString();
+                }
+
+                await db.SaveChangesAsync(); 
             }
             catch (Exception e)
             {
                 string errMsg = (e.InnerException != null) ? e.InnerException.InnerException.Message : e.Message;
                 logger.Error(e, errMsg);
             }
+
             return list;
+        }
+
+        public async Task<IEnumerable<TrxShipmentHeader>> GetDataAllOutboundTransactionProgress()
+        {
+            string username = "System";
+            DateTime currentDate = DateTime.Now;
+            DateTime batasWaktu = DateTime.Now.AddHours(-1); // ambil yang > 1 jam lalu
+
+            IQueryable<TrxShipmentHeader> query = db.TrxShipmentHeaders.Where(x =>
+                x.TransactionStatus.Equals("PROGRESS") &&
+                x.ShipmentStatus.Equals("LOADING") &&
+                x.IsDeleted == false &&
+                x.CreatedAt <= batasWaktu 
+            );
+
+            IEnumerable<TrxShipmentHeader> list = null;
+
+            try
+            {
+                query = query.OrderByDescending(header => header.TransactionCode);
+                list = await query.ToListAsync();
+
+                // auto close shipment
+                foreach (var shipmentHeader in list)
+                {
+                    TrxShipmentHeader header = await GetDataByIdAsync(shipmentHeader.TransactionId);
+
+                    string[] items = header.TrxShipmentItems.Where(m => m.TransactionId.Equals(shipmentHeader.TransactionId)).Select(m => m.TagId).ToArray();
+
+                    List<TrxShipmentItem> detail = header.TrxShipmentItems.ToList();
+
+                    // jika ada salah satu tag PalletMovementStatus.OT didalam shipment header
+                    if (detail.Any(x => x.PalletMovementStatus == Constant.PalletMovementStatus.OT.ToString()))
+                    {
+                        foreach (var tag in items)
+                        {
+                            string tagId = Utilities.ConvertTag(tag);
+                            TrxShipmentItem item = detail.Where(m => m.TagId.Equals(tagId)).FirstOrDefault();
+                            if (item != null)
+                            {
+                                if (item.PalletMovementStatus.Equals(Constant.PalletMovementStatus.OT.ToString()))
+                                {
+                                    item.ReceivedBy = username;
+                                    item.ReceivedAt = currentDate;
+                                    item.PalletMovementStatus = Constant.PalletMovementStatus.IN.ToString();
+                                    //update current data index
+                                    int index = detail.IndexOf(item);
+                                    detail[index] = item;
+                                }
+                            }
+                        }
+
+                        header.TransactionStatus = Constant.TransactionStatus.CLOSED.ToString();
+                        header.ShipmentStatus = Constant.ShipmentStatus.RECEIVE.ToString();
+
+                        // delete data temp by transaction id trxshipmentheader
+                        TrxShipmentItemTemp itemp = await GetDataByTransactionIdTempAsync(header.TransactionId);
+                        if (itemp != null)
+                        {
+                            bool delete = await DeleteItemTempAsync(itemp);
+                        }
+
+                        string actionName = string.Format("Receive {0} Item (System)", detail.Count());
+                        await ReceiveItemAsync(header, username, actionName);
+                    }
+                }
+                                
+                // insert pallet to TrxShipmentItem from TrxShipmentItemTemp
+                foreach (var shipmentHeader in list)
+                {
+                    TrxShipmentHeader header = await GetDataByIdAsync(shipmentHeader.TransactionId);
+                    int maxQty = shipmentHeader.PalletQty;
+
+                    // Ambil TagId dari Temp sesuai limit PalletQty
+                    var tempTagIds = header.TrxShipmentItemTemps
+                        .Where(m => m.TransactionId == shipmentHeader.TransactionId && m.StatusShipment == "INBOUND")
+                        .OrderBy(m => m.ScannedAt)
+                        .Select(m => m.TagId)
+                        .Take(maxQty)
+                        .ToList();
+
+                    var existingTagIds = new HashSet<string>(
+                    header.TrxShipmentItems
+                        .Where(x => x.TransactionId == shipmentHeader.TransactionId)
+                        .Select(x => x.TagId));
+
+                    var tempItems = header.TrxShipmentItemTemps
+                        .Where(m => tempTagIds.Contains(m.TagId))
+                        .ToList();
+
+                    foreach (var tempItem in tempItems)
+                    {
+                        if (!existingTagIds.Contains(tempItem.TagId))
+                        {
+                            TrxShipmentItem newItem = new TrxShipmentItem
+                            {
+                                TransactionId = tempItem.TransactionId,
+                                TagId = tempItem.TagId,
+                                ScannedBy = tempItem.ScannedBy,
+                                ScannedAt = tempItem.ScannedAt,
+                                DispatchedBy = username,
+                                DispatchedAt = currentDate,
+                                ReceivedBy = username,
+                                ReceivedAt = currentDate,
+                                PalletMovementStatus = Constant.PalletMovementStatus.OP.ToString()
+                            };
+
+                            db.TrxShipmentItems.Add(newItem);
+                        }
+                    }
+                }
+                await db.SaveChangesAsync();
+
+                // update pallet qty shipment
+                foreach (var shipmentHeader in list)
+                {
+                    List<TrxShipmentItem> detail = shipmentHeader.TrxShipmentItems?.ToList() ?? new List<TrxShipmentItem>();
+
+                    int currentPalletQty = shipmentHeader.PalletQty; 
+                    int detailCount = detail.Count;
+
+                    if (Math.Abs(currentPalletQty - detailCount) <= 5)
+                    {
+                        shipmentHeader.PalletQty = detailCount;
+                    }
+                }
+                await db.SaveChangesAsync();
+
+
+                // re dispatch shipment
+                foreach (var shipmentHeader in list)
+                {
+                    TrxShipmentHeader header = await GetDataByIdAsync(shipmentHeader.TransactionId);
+
+                    header.TransactionStatus = Constant.TransactionStatus.PROGRESS.ToString();
+                    header.ShipmentStatus = Constant.ShipmentStatus.DISPATCH.ToString();
+                    header.ModifiedBy = username;
+                    header.ModifiedAt = currentDate;
+
+                    await DispatchItemAsync(header, username, "Dispatch Item (Scan)");
+                }
+            }
+            catch (Exception e)
+            {
+                string errMsg = e.InnerException?.InnerException?.Message ?? e.InnerException?.Message ?? e.Message;
+                logger.Error(e, errMsg);
+            }
+
+            return list ?? new List<TrxShipmentHeader>();
         }
 
         public async Task<bool> CreateAccidentReportAsync(TrxShipmentHeader data, string username)
