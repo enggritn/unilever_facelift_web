@@ -1090,7 +1090,7 @@ namespace Facelift_App.Repositories
         {
             string username = "System";
             DateTime currentDate = DateTime.Now;
-            DateTime batasWaktu = DateTime.Now.AddHours(-1); // ambil yang > 1 jam lalu
+            DateTime batasWaktu = DateTime.Now.AddMinutes(-30); // ambil yang > 30 menit lalu
 
             IQueryable<TrxShipmentHeader> query = db.TrxShipmentHeaders.Where(x =>
                 x.TransactionStatus.Equals("PROGRESS") &&
@@ -1159,7 +1159,7 @@ namespace Facelift_App.Repositories
 
                     // Ambil TagId dari Temp sesuai limit PalletQty
                     var tempTagIds = header.TrxShipmentItemTemps
-                        .Where(m => m.TransactionId == shipmentHeader.TransactionId && m.StatusShipment == "INBOUND")
+                        .Where(m => m.TransactionId == shipmentHeader.TransactionId && m.StatusShipment == "OUTBOUND")
                         .OrderBy(m => m.ScannedAt)
                         .Select(m => m.TagId)
                         .Take(maxQty)
