@@ -1204,10 +1204,23 @@ namespace Facelift_App.Repositories
 
                     int currentPalletQty = shipmentHeader.PalletQty; 
                     int detailCount = detail.Count;
+                    int diff = Math.Abs(currentPalletQty - detailCount);
 
-                    if (Math.Abs(currentPalletQty - detailCount) <= 5)
+                    if (diff > 0 && diff <= 5) // hanya 1‑5
                     {
                         shipmentHeader.PalletQty = detailCount;
+                        string suffix = $"Update pallet qty by system from {currentPalletQty} to {detailCount}";
+
+                        if (string.IsNullOrWhiteSpace(shipmentHeader.Remarks))
+                        {
+                            // Remarks masih kosong ­→ langsung isi
+                            shipmentHeader.Remarks = suffix;
+                        }
+                        else
+                        {
+                            // Remarks sudah ada ­→ tambahkan titik + spasi lebih dulu
+                            shipmentHeader.Remarks += ". " + suffix;
+                        }
                     }
                 }
                 await db.SaveChangesAsync();

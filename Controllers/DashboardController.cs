@@ -66,22 +66,26 @@ namespace Facelift_App.Controllers
             int totalGood = IPallets.GetTotalByCondition(warehouseId, Constant.PalletCondition.GOOD.ToString());
             int totalDamage = IPallets.GetTotalByCondition(warehouseId, Constant.PalletCondition.DAMAGE.ToString());
             int totalLoss = IPallets.GetTotalByCondition(warehouseId, Constant.PalletCondition.LOSS.ToString());
+            int totalFreeze = IPallets.GetTotalByCondition(warehouseId, Constant.PalletCondition.FREEZE.ToString());
             ViewBag.totalRegistered = totalStock;
             dashboard.TotalPallet = Utilities.FormatThousand(totalStock);
             dashboard.TotalPalletGood = Utilities.FormatThousand(totalGood);
             dashboard.TotalPalletDamage = Utilities.FormatThousand(totalDamage);
             dashboard.TotalPalletLoss = Utilities.FormatThousand(totalLoss);
+            dashboard.TotalPalletFreeze = Utilities.FormatThousand(totalFreeze);
 
             //actual pallet
             int actualStock = IPallets.GetActualStock(warehouseId);
             int actualGood = IPallets.GetActualByCondition(warehouseId, Constant.PalletCondition.GOOD.ToString());
             int actualDamage = IPallets.GetActualByCondition(warehouseId, Constant.PalletCondition.DAMAGE.ToString());
             int actualLoss = IPallets.GetActualByCondition(warehouseId, Constant.PalletCondition.LOSS.ToString());
+            int actualFreeze = IPallets.GetActualByCondition(warehouseId, Constant.PalletCondition.FREEZE.ToString());
             dashboard.TotalActualPallet = Utilities.FormatThousand(actualStock);
             dashboard.TotalActualGood = Utilities.FormatThousand(actualGood);
             dashboard.TotalActualDamage = Utilities.FormatThousand(actualDamage);
             dashboard.TotalActualLoss = Utilities.FormatThousand(actualLoss);
-          
+            dashboard.TotalActualFreeze = Utilities.FormatThousand(actualFreeze);
+
             //shipment header
             dashboard.TotalOutboundLoading = Utilities.FormatThousand(IDashboards.TotalOutboundLoading(warehouseId));
             dashboard.TotalOutboundTransit = Utilities.FormatThousand(IDashboards.TotalOutboundTransit(warehouseId));
