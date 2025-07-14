@@ -14,9 +14,11 @@ namespace Facelift_App.Models
         public string TotalPalletGood { get; set; }
         public string TotalPalletDamage { get; set; }
         public string TotalPalletLoss { get; set; }
+        public string TotalPalletFreeze { get; set; }
         public string TotalActualGood { get; set; }
         public string TotalActualDamage { get; set; }
         public string TotalActualLoss { get; set; }
+        public string TotalActualFreeze { get; set; }
         public string PercentageRegistration { get; set; }
         public string PercentageShipment { get; set; }
         public string PercentageCycleCount { get; set; }
