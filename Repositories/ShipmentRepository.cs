@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using static Facelift_App.Helper.Constant;
 using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace Facelift_App.Repositories
@@ -216,6 +217,35 @@ namespace Facelift_App.Repositories
             try
             {
                 data = await db.TrxShipmentHeaders.FindAsync(id);
+            }
+            catch (Exception e)
+            {
+                string errMsg = (e.InnerException != null) ? e.InnerException.InnerException.Message : e.Message;
+                logger.Error(e, errMsg);
+            }
+            return data;
+        }
+
+        public async Task<TrxShipmentHeader> GetDataByIdExtAsync(string id)
+        {
+            TrxShipmentHeader data = null;
+            try
+            {
+                // Ambil header dulu (tanpa Include)
+                data = await db.TrxShipmentHeaders
+                                 .FirstOrDefaultAsync(h => h.TransactionId == id);
+
+                if (data != null)
+                {
+                    // Ambil relasi manual
+                    data.TrxShipmentItemTemps = await db.TrxShipmentItemTemps
+                                                          .Where(t => t.TransactionId == id)
+                                                          .ToListAsync();
+
+                    data.TrxShipmentItems = await db.TrxShipmentItems
+                                                      .Where(t => t.TransactionId == id)
+                                                      .ToListAsync();
+                }
             }
             catch (Exception e)
             {
@@ -1045,7 +1075,7 @@ namespace Facelift_App.Repositories
 
         public async Task<IEnumerable<TrxShipmentHeader>> GetDataAllInboundTransactionProgress()
         {
-            DateTime batasWaktu = DateTime.Now.AddHours(-18); // ambil yang > 18 jam lalu
+            DateTime batasWaktu = DateTime.Now.AddHours(-17); // ambil yang > 17 jam lalu
 
             IQueryable<TrxShipmentHeader> query = db.TrxShipmentHeaders.Where(x =>
                 x.TransactionStatus.Equals("PROGRESS") &&
@@ -1105,69 +1135,24 @@ namespace Facelift_App.Repositories
             {
                 query = query.OrderByDescending(header => header.TransactionCode);
                 list = await query.ToListAsync();
-
-                // auto close shipment
-                foreach (var shipmentHeader in list)
-                {
-                    TrxShipmentHeader header = await GetDataByIdAsync(shipmentHeader.TransactionId);
-
-                    string[] items = header.TrxShipmentItems.Where(m => m.TransactionId.Equals(shipmentHeader.TransactionId)).Select(m => m.TagId).ToArray();
-
-                    List<TrxShipmentItem> detail = header.TrxShipmentItems.ToList();
-
-                    // jika ada salah satu tag PalletMovementStatus.OT didalam shipment header
-                    if (detail.Any(x => x.PalletMovementStatus == Constant.PalletMovementStatus.OT.ToString()))
-                    {
-                        foreach (var tag in items)
-                        {
-                            string tagId = Utilities.ConvertTag(tag);
-                            TrxShipmentItem item = detail.Where(m => m.TagId.Equals(tagId)).FirstOrDefault();
-                            if (item != null)
-                            {
-                                if (item.PalletMovementStatus.Equals(Constant.PalletMovementStatus.OT.ToString()))
-                                {
-                                    item.ReceivedBy = username;
-                                    item.ReceivedAt = currentDate;
-                                    item.PalletMovementStatus = Constant.PalletMovementStatus.IN.ToString();
-                                    //update current data index
-                                    int index = detail.IndexOf(item);
-                                    detail[index] = item;
-                                }
-                            }
-                        }
-
-                        header.TransactionStatus = Constant.TransactionStatus.CLOSED.ToString();
-                        header.ShipmentStatus = Constant.ShipmentStatus.RECEIVE.ToString();
-
-                        // delete data temp by transaction id trxshipmentheader
-                        TrxShipmentItemTemp itemp = await GetDataByTransactionIdTempAsync(header.TransactionId);
-                        if (itemp != null)
-                        {
-                            bool delete = await DeleteItemTempAsync(itemp);
-                        }
-
-                        string actionName = string.Format("Receive {0} Item (System)", detail.Count());
-                        await ReceiveItemAsync(header, username, actionName);
-                    }
-                }
-                                
+                                                
                 // insert pallet to TrxShipmentItem from TrxShipmentItemTemp
                 foreach (var shipmentHeader in list)
                 {
-                    TrxShipmentHeader header = await GetDataByIdAsync(shipmentHeader.TransactionId);
-                    int maxQty = shipmentHeader.PalletQty;
+                    TrxShipmentHeader header = await GetDataByIdExtAsync(shipmentHeader.TransactionId);
+                    int maxQty = header.PalletQty;
 
                     // Ambil TagId dari Temp sesuai limit PalletQty
-                    var tempTagIds = header.TrxShipmentItemTemps
-                        .Where(m => m.TransactionId == shipmentHeader.TransactionId && m.StatusShipment == "OUTBOUND")
-                        .OrderBy(m => m.ScannedAt)
-                        .Select(m => m.TagId)
+                    var tempTagIds = new HashSet<string>(
+                    header.TrxShipmentItemTemps
+                        .Where(m => m.TransactionId == header.TransactionId && m.StatusShipment == Constant.StatusShipment.OUTBOUND.ToString())
+                        .Select(m => m.TagId))
                         .Take(maxQty)
                         .ToList();
 
                     var existingTagIds = new HashSet<string>(
                     header.TrxShipmentItems
-                        .Where(x => x.TransactionId == shipmentHeader.TransactionId)
+                        .Where(x => x.TransactionId == header.TransactionId)
                         .Select(x => x.TagId));
 
                     var tempItems = header.TrxShipmentItemTemps
@@ -1180,14 +1165,13 @@ namespace Facelift_App.Repositories
                         {
                             TrxShipmentItem newItem = new TrxShipmentItem
                             {
+                                TransactionItemId = Utilities.CreateGuid("SHI"),
                                 TransactionId = tempItem.TransactionId,
                                 TagId = tempItem.TagId,
                                 ScannedBy = tempItem.ScannedBy,
                                 ScannedAt = tempItem.ScannedAt,
                                 DispatchedBy = username,
                                 DispatchedAt = currentDate,
-                                ReceivedBy = username,
-                                ReceivedAt = currentDate,
                                 PalletMovementStatus = Constant.PalletMovementStatus.OP.ToString()
                             };
 
@@ -1505,6 +1489,11 @@ namespace Facelift_App.Repositories
                     .Where(x => x.DestinationId.Equals(WarehouseId)
                     && x.IsDeleted == false
                     && x.TransactionStatus.Equals(Constant.TransactionStatus.CLOSED.ToString()));
+
+                    if (OriginId == "undefined")
+                    {
+                        OriginId = "";
+                    }
 
                     if (!string.IsNullOrEmpty(OriginId))
                     {

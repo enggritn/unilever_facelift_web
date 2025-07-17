@@ -25,6 +25,8 @@ namespace Facelift_App.Models
         public string Day { get; set; }
         public string Date { get; set; }
         public string Time { get; set; }
+        public string ReasonType { get; set; }
+        public string ReasonName { get; set; }
         public IEnumerable<AccidentItemDTO> Items { get; set; }
     }
 }

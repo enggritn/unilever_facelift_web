@@ -135,28 +135,6 @@
     @Scripts.Render("~/Content/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js")
     @Scripts.Render("~/Content/vendor/select2/js/select2.js")
 <script>
-
-
-        //$(".startDate").datepicker({
-        //    format: "dd M yyyy",
-        //    todayBtn: "linked",
-        //    todayHighlight: true,
-        //    orientation: "left",
-        //    autoclose: true,
-        //}).on('changeDate', function (selected) {
-        //    var minDate = new Date(selected.date.valueOf());
-        //    $('.endDate').datepicker('setStartDate', minDate);
-        //});
-
-        //$(".endDate").datepicker({
-        //    format: "dd M yyyy",
-        //    orientation: "left",
-        //    autoclose: true,
-        //}).on('changeDate', function (selected) {
-        //    var maxDate = new Date(selected.date.valueOf());
-        //    $('.startDate').datepicker('setEndDate', maxDate);
-        //});
-
         var startDate = new Date();
         $('.startDate1').datepicker({
             todayBtn: "linked",
@@ -238,7 +216,7 @@
         });
 
         function ExportExcel() {
-            window.location.href = '@Url.Action("ExportListToExcel", "ReportAccident")';
+            window.location.href = '@Url.Action("ExportListToExcel", "ReportAccident")' + '?startDate=' + $('[name="startDate1"]').val() + '&endDate=' + $('[name="endDate1"]').val();
         }
 
 </script>

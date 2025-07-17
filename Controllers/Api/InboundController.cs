@@ -272,7 +272,8 @@ namespace Facelift_App.Controllers.Api
                                     }
                                 }
 
-                                if (pallet != null)
+                                MsPallet cek_pallet = await IPallets.GetDataByTagIdAsync(tagId);
+                                if (cek_pallet != null)
                                 {
                                     // insert data temp inbound
                                     TrxShipmentItemTemp itemtemp = await IShipments.GetDataByTransactionTagIdTempAsync(header.TransactionId, tagId, "INBOUND");

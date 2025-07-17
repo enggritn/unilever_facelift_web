@@ -89,14 +89,14 @@ namespace Facelift_App.Controllers
                             JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ExportListToExcel()
+        public ActionResult ExportListToExcel(string startDate, string endDate)
         {
             String date = DateTime.Now.ToString("yyyyMMddhhmmss");
             String fileName = String.Format("filename=Facelift_Report_Cycle_count_{0}.xlsx", date);
 
             string warehouseId = Session["warehouseAccess"].ToString();
-            string startDate = Request["startDate"];
-            string endDate = Request["endDate"];
+            //string startDate = Request["startDate"];
+            //string endDate = Request["endDate"];
 
             IEnumerable<TrxCycleCountHeader> list = ICycleCounts.GetCycleCountData(warehouseId, startDate, endDate);
 

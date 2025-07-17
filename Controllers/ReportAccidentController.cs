@@ -73,7 +73,10 @@ namespace Facelift_App.Controllers
                                 AccidentType = x.AccidentType,
                                 Remarks = x.Remarks,
                                 Qty = x.TrxAccidentItems.Count().ToString(),
-                                TransactionCode = x.TransactionCode
+                                TransactionCode = x.TransactionCode,
+                                ReasonType = "-",       
+                                ReasonName = "-"        
+
                             };
             }
 
@@ -82,14 +85,12 @@ namespace Facelift_App.Controllers
                             JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ExportListToExcel()
+        public ActionResult ExportListToExcel(string startDate, string endDate)
         {
             String date = DateTime.Now.ToString("yyyyMMddhhmmss");
             String fileName = String.Format("filename=Facelift_Report_Accident_{0}.xlsx", date);
 
             string warehouseId = Session["warehouseAccess"].ToString();
-            string startDate = Request["startDate"];
-            string endDate = Request["endDate"];
 
             IEnumerable<TrxAccidentHeader> list = IAccidents.GetAccidentData(warehouseId, startDate, endDate);
 
@@ -106,9 +107,9 @@ namespace Facelift_App.Controllers
             workSheet.Cells[1, 2].Value = "Transaction Date";
             workSheet.Cells[1, 3].Value = "Ref Number";
             workSheet.Cells[1, 4].Value = "Accident Type";
-            workSheet.Cells[1, 6].Value = "Remarks";
-            workSheet.Cells[1, 7].Value = "Warehouse";
-            workSheet.Cells[1, 8].Value = "Qty";
+            workSheet.Cells[1, 5].Value = "Remarks";
+            workSheet.Cells[1, 6].Value = "Warehouse";
+            workSheet.Cells[1, 7].Value = "Qty";
 
             int recordIndex = 2;
             foreach (TrxAccidentHeader header in list)
@@ -118,9 +119,9 @@ namespace Facelift_App.Controllers
                 workSheet.Cells[recordIndex, 2].Style.Numberformat.Format = "yyyy-MM-dd";
                 workSheet.Cells[recordIndex, 3].Value = header.RefNumber;
                 workSheet.Cells[recordIndex, 4].Value = header.AccidentType;
-                workSheet.Cells[recordIndex, 6].Value = header.Remarks;
-                workSheet.Cells[recordIndex, 7].Value = header.WarehouseName;
-                workSheet.Cells[recordIndex, 8].Value = header.TrxAccidentItems.Count;
+                workSheet.Cells[recordIndex, 5].Value = header.Remarks;
+                workSheet.Cells[recordIndex, 6].Value = header.WarehouseName;
+                workSheet.Cells[recordIndex, 7].Value = header.TrxAccidentItems.Count;
                 recordIndex++;
             }
 
