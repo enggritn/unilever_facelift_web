@@ -300,19 +300,22 @@ namespace Facelift_App.Controllers.Api
                                     }
                                 }
 
-                                // insert data temp outbound
-                                TrxShipmentItemTemp itemtemp = await IShipments.GetDataByTransactionTagIdTempAsync(header.TransactionId, tagId, "OUTBOUND");
-                                if (itemtemp == null)
+                                if (cek_pallet != null)
                                 {
-                                    itemtemp = new TrxShipmentItemTemp();
-                                    itemtemp.TempID = Utilities.CreateGuid("SHI");
-                                    itemtemp.TransactionId = header.TransactionId;
-                                    itemtemp.TagId = tagId;
-                                    itemtemp.ScannedBy = username;
-                                    itemtemp.ScannedAt = currentDate;
-                                    itemtemp.StatusShipment = "OUTBOUND";
+                                    // insert data temp outbound
+                                    TrxShipmentItemTemp itemtemp = await IShipments.GetDataByTransactionTagIdTempAsync(header.TransactionId, tagId, "OUTBOUND");
+                                    if (itemtemp == null)
+                                    {
+                                        itemtemp = new TrxShipmentItemTemp();
+                                        itemtemp.TempID = Utilities.CreateGuid("SHI");
+                                        itemtemp.TransactionId = header.TransactionId;
+                                        itemtemp.TagId = tagId;
+                                        itemtemp.ScannedBy = username;
+                                        itemtemp.ScannedAt = currentDate;
+                                        itemtemp.StatusShipment = "OUTBOUND";
 
-                                    await IShipments.InsertItemTempAsync(itemtemp);
+                                        await IShipments.InsertItemTempAsync(itemtemp);
+                                    }
                                 }
                             }
 

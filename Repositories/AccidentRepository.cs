@@ -671,6 +671,8 @@ namespace Facelift_App.Repositories
                     cols.Add("WarehouseCode", x => x.WarehouseCode);
                     cols.Add("WarehouseName", x => x.WarehouseName);
                     cols.Add("TransactionStatus", x => x.TransactionStatus);
+                    cols.Add("ReasonType", x => "-");
+                    cols.Add("ReasonName", x => "-");
                     cols.Add("CreatedBy", x => x.CreatedBy);
                     cols.Add("CreatedAt", x => x.CreatedAt);
                     cols.Add("ModifiedBy", x => x.ModifiedBy);

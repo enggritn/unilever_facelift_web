@@ -86,6 +86,12 @@ namespace Facelift_App.Helper
             RECEIVE
         }
 
+        public enum StatusShipment
+        {
+            INBOUND,
+            OUTBOUND
+        }
+
         public enum AccidentType
         {
             INBOUND,
